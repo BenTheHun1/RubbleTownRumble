@@ -21,10 +21,12 @@ public class PlayerController : MonoBehaviour
 
     public RaycastHit ray;
 
+    float desiredHeight;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        desiredHeight = 2;
     }
 
     // Update is called once per frame
@@ -57,6 +59,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("Main");
+        }
+
+        controller.height = Mathf.Lerp(controller.height, desiredHeight, Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            desiredHeight = 1f;
+        }
+        else
+        {
+            desiredHeight = 2f;
         }
 
 
