@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("Main");
         }
 
-        controller.height = Mathf.Lerp(controller.height, desiredHeight, Time.deltaTime);
+        controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
