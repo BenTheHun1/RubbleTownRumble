@@ -11,23 +11,22 @@ public class EnemyAI : MonoBehaviour
     private float stoppingradius = 2f;
     private bool isDamaged;
     private Renderer rend;
-    //private Color color = Color.red;
-    public Material damaged;
-    public Material normal;
+    private Color32 color;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
         qTo = transform.rotation;
-        normal = gameObject.GetComponent<Renderer>().material;
         rend = gameObject.GetComponent<Renderer>();
+        color = new Color32(225, 0, 0, 0);
+        rend.material.color = color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) <= detectionradius)
+        if (Vector3.Distance(player.transform.position, transform.position) <= detectionradius && !isDamaged)
         {
 
             Vector3 lookDirection = (player.transform.position - transform.position).normalized;
@@ -52,13 +51,11 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator Damage()
     {
-        //color = new Color32(color.r - 147, color.g, color.b, 0);
-        rend.material = damaged;
-        //rend.material.color = color;
+        color = new Color32(108, 0, 0, 0);
+        rend.material.color = color;
         yield return new WaitForSeconds(2f);
-        //color = new Color32(color.r + 147, color.g, color.b, 0);
-        //rend.material.color = color;
-        rend.material = normal;
+        color = new Color32(225, 0, 0, 0);
+        rend.material.color = color;
         isDamaged = false;
     }
 }
