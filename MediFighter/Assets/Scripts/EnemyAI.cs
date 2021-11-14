@@ -5,11 +5,13 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     public float movementSpeed;
+    public bool isDamaged;
     private Quaternion qTo;
+    private Rigidbody rb;
     private GameObject player;
-    private float detectionradius = 10f;
-    private float stoppingradius = 2f;
-    private bool isDamaged;
+    private GameObject spawnManager;
+    //private float detectionradius = 10f;
+    private float stoppingradius = 1.1f;
     private Renderer rend;
     private Color32 color;
 
@@ -17,7 +19,9 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        spawnManager = GameObject.Find("Spawns");
         qTo = transform.rotation;
+        rb = gameObject.GetComponent<Rigidbody>();
         rend = gameObject.GetComponent<Renderer>();
         color = new Color32(225, 0, 0, 0);
         rend.material.color = color;
@@ -26,8 +30,8 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) <= detectionradius && !isDamaged)
-        {
+        //if (Vector3.Distance(player.transform.position, transform.position) <= detectionradius) //&& !isDamaged)
+        //{
 
             Vector3 lookDirection = (player.transform.position - transform.position).normalized;
             lookDirection.y = 0;
@@ -36,20 +40,37 @@ public class EnemyAI : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed * Time.deltaTime);
             }
-        }
+        //}
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("Sword") && !isDamaged)
+        if (collision.gameObject.CompareTag("Sword") && !isDamaged)
         {
             isDamaged = true;
-            Debug.Log("Damaged");
-            StartCoroutine(Damage());
+            //Debug.Log("Damaged");
+            Kill();
+            //StartCoroutine(Damage());
         }
     }
 
-    IEnumerator Damage()
+    void Kill()
+    {
+        spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
+        color = new Color32(108, 0, 0, 0);
+        rend.material.color = color;
+        rb.freezeRotation = false;
+        this.enabled = false;
+        StartCoroutine(Remove());
+    }
+
+    IEnumerator Remove()
+    {
+        yield return new WaitForSeconds(6f);
+        Destroy(gameObject);
+    }
+
+    /*IEnumerator Damage()
     {
         color = new Color32(108, 0, 0, 0);
         rend.material.color = color;
@@ -57,5 +78,6 @@ public class EnemyAI : MonoBehaviour
         color = new Color32(225, 0, 0, 0);
         rend.material.color = color;
         isDamaged = false;
-    }
+    }*/
+
 }
