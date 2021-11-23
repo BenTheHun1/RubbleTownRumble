@@ -667,7 +667,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750728983}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fedd02ffa8e336143bad17d78c2f3d49, type: 3}
   m_Name: 
@@ -773,7 +773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &800794033
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1895,6 +1895,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 2
   isDamaged: 0
+  enemyObject: {fileID: 0}
+  rend: {fileID: 0}
 --- !u!1 &214992229087032122
 GameObject:
   m_ObjectHideFlags: 0
