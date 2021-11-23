@@ -9,13 +9,15 @@ public class CameraController : MonoBehaviour
     public float mouseSensitivity;
     public Transform playerBody;
     private float xRotation = 0f;
-
+    public KickController kicker;
     private RaycastHit hit;
 
+    public bool inControl;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        inControl = true;
     }
 
     // Update is called once per frame
@@ -33,7 +35,23 @@ public class CameraController : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        if (inControl)
+        {
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            
+        }
+        else
+        {
+            float angle = Mathf.LerpAngle(transform.eulerAngles.x, 20f, 0.1f);
+            transform.localRotation = Quaternion.Euler(angle, 0, 0);
+            if (Mathf.Approximately(transform.localRotation.eulerAngles.x, 20f))
+            {
+                xRotation = angle;
+                inControl = true;
+            }
+        }
         playerBody.Rotate(Vector3.up * mouseX);
+        
+
     }
 }
