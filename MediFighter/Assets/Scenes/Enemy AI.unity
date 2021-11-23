@@ -674,8 +674,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveText: {fileID: 1314418041}
   enemyPrefabs:
-  - {fileID: 2137328325717476819, guid: b697fb4d25373334f9d5476cd163c90c, type: 3}
-  - {fileID: 6925420988337070690, guid: 99bb3b1712df11b47bb67b815ba8edf8, type: 3}
+  - {fileID: 3478649002137706581, guid: cfc09f5a048e1834bbe3e5c22b8a96d7, type: 3}
+  - {fileID: 4195808447191893085, guid: 78d382ebfe8a66d4481ec4b0b951f128, type: 3}
   spawns: []
   enemyAmount: []
   enemiesLeft: 0
@@ -773,7 +773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &800794033
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1178,7 +1178,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -33, y: -78}
+  m_AnchoredPosition: {x: -25.190002, y: -35.04}
   m_SizeDelta: {x: 87.4234, y: 116.7764}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1172323094
