@@ -14,8 +14,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
 
 
-    public GameObject footL;
-    public GameObject footR;
+    public GameObject foot;
     private float footHeightDefault; // Same for L & R
 
     private float speed = 4f;
@@ -28,12 +27,12 @@ public class PlayerController : MonoBehaviour
     public RaycastHit ray;
 
     float desiredHeight;
+    bool canKick;
 
     // Start is called before the first frame update
     void Start()
     {
-        desiredHeight = 2f;
-        footHeightDefault = footL.transform.localPosition.y;
+        canKick = true;
     }
 
     // Update is called once per frame
@@ -68,12 +67,6 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("Main");
         }
 
-        if (desiredHeight == 2f)
-        {
-            footL.transform.localPosition = new Vector3(footL.transform.localPosition.x, Mathf.Lerp(footL.transform.localPosition.y, footHeightDefault, 0.1f), footL.transform.localPosition.z);
-            footR.transform.localPosition = new Vector3(footR.transform.localPosition.x, Mathf.Lerp(footR.transform.localPosition.y, footHeightDefault, 0.1f), footR.transform.localPosition.z);
-        }
-
         controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
 
         if (Input.GetKey(KeyCode.LeftControl))
@@ -94,12 +87,20 @@ public class PlayerController : MonoBehaviour
             animSword.SetBool("Swing", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && canKick)
         {
             cc.inControl = false;
-            cc.kicker.Kick();
+            canKick = false;
+            foot.SetActive(true);
+            StartCoroutine(FootDissapear());
         }
 
-        
+        IEnumerator FootDissapear()
+        {
+            yield return new WaitForSeconds(0.75f);
+            cc.inControl = true;
+            foot.SetActive(false);
+            canKick = true;
+        }
     }
 }
