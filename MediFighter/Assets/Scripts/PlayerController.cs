@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
     public CameraController cc;
+    public Animator animSword;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
@@ -84,9 +85,13 @@ public class PlayerController : MonoBehaviour
             desiredHeight = 2f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-
+            animSword.SetBool("Swing", true);
+        }
+        else
+        {
+            animSword.SetBool("Swing", false);
         }
 
         if (Input.GetKeyDown(KeyCode.F))
