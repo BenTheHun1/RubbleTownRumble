@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && canKick)
         {
-            cc.inControl = false;
+            //cc.inControl = false;
             canKick = false;
             foot.SetActive(true);
             StartCoroutine(FootDissapear());
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
         IEnumerator FootDissapear()
         {
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.5f);
             cc.inControl = true;
             foot.SetActive(false);
             canKick = true;
