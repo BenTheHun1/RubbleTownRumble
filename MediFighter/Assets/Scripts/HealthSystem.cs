@@ -10,15 +10,20 @@ public class HealthSystem : MonoBehaviour
     public Text playerHealthText;
     public Text gameOverText;
     private GameObject player;
-    private GameObject camera;
+    private GameObject cam;
     private bool isDamaged;
-    private int playerHealth = 3;
+    private int playerHealth;
+    private int maxHealth;
+    public Image disHealth;
 
     // Start is called before the first frame update
     void Start()
     {
+        maxHealth = 3;
+        playerHealth = maxHealth - 1;
         player = GameObject.Find("Player");
-        camera = GameObject.Find("Main Camera");
+        cam = GameObject.Find("Main Camera");
+        disHealth = GameObject.Find("HP").GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -35,16 +40,15 @@ public class HealthSystem : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && !isDamaged && other.gameObject.GetComponent<EnemyAI>().isDamaged == false)
         {
             isDamaged = true;
-            playerHealth -= 1;
-            if (playerHealth < 0)
+            if (playerHealth > 0)
             {
-                playerHealth = 0;
+                playerHealth -= 1;
             }
-            playerHealthText.text = playerHealth.ToString();
             if (playerHealth > 0)
             {
                 hurtDisplay.gameObject.SetActive(true);
             }
+            disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
             StartCoroutine(Damage());
         }
     }
@@ -53,7 +57,7 @@ public class HealthSystem : MonoBehaviour
     {
         gameOverText.gameObject.SetActive(true);
         player.GetComponent<PlayerController>().enabled = false;
-        camera.GetComponent<CameraController>().enabled = false;
+        cam.GetComponent<CameraController>().enabled = false;
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -64,6 +68,7 @@ public class HealthSystem : MonoBehaviour
         hurtDisplay.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.6f);
         isDamaged = false;
+        
     }
 
 }
