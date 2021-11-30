@@ -7,14 +7,16 @@ using UnityEngine.SceneManagement;
 public class HealthSystem : MonoBehaviour
 {
     public RawImage hurtDisplay;
-    public Text playerHealthText;
     public Text gameOverText;
     private GameObject player;
     private GameObject cam;
     private bool isDamaged;
     private int playerHealth;
     private int maxHealth;
-    public Image disHealth;
+    private Image disHealth;
+
+    public int beards;
+    private Text disBeards;
 
     // Start is called before the first frame update
     void Start()
@@ -24,15 +26,13 @@ public class HealthSystem : MonoBehaviour
         player = GameObject.Find("Player");
         cam = GameObject.Find("Main Camera");
         disHealth = GameObject.Find("HP").GetComponent<Image>();
+        disBeards = GameObject.Find("BeardAmount").GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerHealth <= 0)
-        {
-            StartCoroutine(GameOver());
-        }
+        disBeards.text = beards.ToString() + " x";
     }
 
     void OnTriggerEnter(Collider other)
@@ -43,12 +43,13 @@ public class HealthSystem : MonoBehaviour
             if (playerHealth > 0)
             {
                 playerHealth -= 1;
-            }
-            if (playerHealth > 0)
-            {
                 hurtDisplay.gameObject.SetActive(true);
+                disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
             }
-            disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
+            if (playerHealth <= 0)
+            {
+                StartCoroutine(GameOver());
+            }
             StartCoroutine(Damage());
         }
     }
