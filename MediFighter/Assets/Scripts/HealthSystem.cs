@@ -22,7 +22,7 @@ public class HealthSystem : MonoBehaviour
     void Start()
     {
         maxHealth = 3;
-        playerHealth = maxHealth - 1;
+        playerHealth = maxHealth;
         player = GameObject.Find("Player");
         cam = GameObject.Find("Main Camera");
         disHealth = GameObject.Find("HP").GetComponent<Image>();
