@@ -155,11 +155,10 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  foot: {fileID: 6489439178350646131}
   velocity: {x: 0, y: 0, z: 0}
   isOnGround: 0
+  foot: {fileID: 6489439178350646131}
   buyableItem: {fileID: 0}
-  shopInfo: {fileID: 0}
   hs: {fileID: 1098093900}
 --- !u!143 &4932589195320033711
 CharacterController:
@@ -390,7 +389,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtDisplay: {fileID: 0}
-  playerHealthText: {fileID: 0}
   gameOverText: {fileID: 0}
   beards: 0
 --- !u!1001 &4932589195028164794
