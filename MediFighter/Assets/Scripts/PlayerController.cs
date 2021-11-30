@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     float desiredHeight;
     bool canKick;
 
+    public GameObject buyableItem;
+    public Text shopInfo;
     // Start is called before the first frame update
     void Start()
     {
@@ -98,12 +101,40 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(FootDissapear());
         }
 
-        IEnumerator FootDissapear()
+        //Debug.Log(ray.transform.gameObject.name);
+        if (ray.transform != null)
         {
-            yield return new WaitForSeconds(0.5f);
-            cc.inControl = true;
-            foot.SetActive(false);
-            canKick = true;
+            if (ray.transform.gameObject.CompareTag("Item"))
+            {
+                buyableItem = ray.transform.gameObject;
+                if (buyableItem.name == "BuyHelm")
+                {
+                    shopInfo.text = "A dwarven helmet for extra defense. 10 Beards";
+                }
+            }
+            else
+            {
+                buyableItem = null;
+                shopInfo.text = "";
+            }
         }
+
+        if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
+        {
+            if (buyableItem.name == "BuyHelm")
+            {
+                //beard -= 10
+                //defense ++
+                buyableItem.SetActive(false);
+            }
+        }
+    }
+
+    IEnumerator FootDissapear()
+    {
+        yield return new WaitForSeconds(0.5f);
+        cc.inControl = true;
+        foot.SetActive(false);
+        canKick = true;
     }
 }
