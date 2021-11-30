@@ -78,18 +78,21 @@ public class PlayerController : MonoBehaviour
             desiredHeight = 2f;
         }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            animSword.SetBool("Swing", true);
-        }
-        else
-        {
-            animSword.SetBool("Swing", false);
+            if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            {
+                animSword.SetTrigger("Swing2");
+            }
+            else
+            {
+                animSword.SetTrigger("Swing");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F) && canKick)
         {
-            cc.inControl = false;
+            //cc.inControl = false;
             canKick = false;
             foot.SetActive(true);
             StartCoroutine(FootDissapear());
@@ -97,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
         IEnumerator FootDissapear()
         {
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.5f);
             cc.inControl = true;
             foot.SetActive(false);
             canKick = true;
