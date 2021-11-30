@@ -78,13 +78,16 @@ public class PlayerController : MonoBehaviour
             desiredHeight = 2f;
         }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            animSword.SetBool("Swing", true);
-        }
-        else
-        {
-            animSword.SetBool("Swing", false);
+            if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            {
+                animSword.SetTrigger("Swing2");
+            }
+            else
+            {
+                animSword.SetTrigger("Swing");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F) && canKick)
