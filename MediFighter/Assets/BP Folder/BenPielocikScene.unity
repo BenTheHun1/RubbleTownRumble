@@ -335,6 +335,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dwarfanim
       objectReference: {fileID: 0}
+    - target: {fileID: 7445401513251038511, guid: bcce42e2d5ee3774f9fe1c2bff90a143,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 536abab1395928a42a31fa9e30bb9391, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcce42e2d5ee3774f9fe1c2bff90a143, type: 3}
 --- !u!1 &722908801
