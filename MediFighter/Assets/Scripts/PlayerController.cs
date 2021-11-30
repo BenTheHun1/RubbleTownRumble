@@ -31,10 +31,12 @@ public class PlayerController : MonoBehaviour
     bool canKick;
 
     public GameObject buyableItem;
-    public Text shopInfo;
+    private Text shopInfo;
+    public HealthSystem hs;
     // Start is called before the first frame update
     void Start()
     {
+        shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
         canKick = true;
     }
 
@@ -109,7 +111,7 @@ public class PlayerController : MonoBehaviour
                 buyableItem = ray.transform.gameObject;
                 if (buyableItem.name == "BuyHelm")
                 {
-                    shopInfo.text = "A dwarven helmet for extra defense. 10 Beards";
+                    shopInfo.text = "A dwarven helmet for extra defense.\n10 Beards\n\nBuy with [E]";
                 }
             }
             else
@@ -121,9 +123,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
         {
-            if (buyableItem.name == "BuyHelm")
+            if (buyableItem.name == "BuyHelm" && hs.beards >= 10)
             {
-                //beard -= 10
+                hs.beards -= 10;
                 //defense ++
                 buyableItem.SetActive(false);
             }
