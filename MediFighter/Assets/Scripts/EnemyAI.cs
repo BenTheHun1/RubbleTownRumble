@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    public Rigidbody[] rigids;
     public float movementSpeed;
     public bool isDamaged;
     public GameObject enemyObject;
@@ -21,11 +22,11 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rigids = GetComponentsInChildren<Rigidbody>();
         player = GameObject.Find("Player");
         spawnManager = GameObject.Find("Spawns");
         qTo = transform.rotation;
         rb = gameObject.GetComponent<Rigidbody>();
-        cj = gameObject.GetComponent<ConfigurableJoint>();
         color = new Color32(225, 0, 0, 0);
         rend.sharedMaterial.color = color;
     }
@@ -64,8 +65,11 @@ public class EnemyAI : MonoBehaviour
         color = new Color32(108, 0, 0, 0);
         rend.material.color = color;
         rb.freezeRotation = false;
-        Destroy(cj);
         this.enabled = false;
+        foreach (Rigidbody rb in rigids)
+        {
+            rb.isKinematic = false;
+        }
         StartCoroutine(Remove());
     }
 

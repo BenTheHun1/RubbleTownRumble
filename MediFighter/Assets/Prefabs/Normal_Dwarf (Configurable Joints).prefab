@@ -1567,7 +1567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4255185293157546735}
   m_Layer: 9
-  m_Name: Normal_Dwarf
+  m_Name: Normal_Dwarf (Configurable Joints)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
