@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    //Variables
     public CharacterController controller;
     public CameraController cc;
     public Animator animSword;
@@ -12,10 +14,6 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     private float groundDistance = 0.4f;
     public LayerMask groundMask;
-
-
-    public GameObject foot;
-    private float footHeightDefault; // Same for L & R
 
     private float speed = 4f;
     private float gravity = -9.81f * 6;
@@ -28,21 +26,25 @@ public class PlayerController : MonoBehaviour
 
     float desiredHeight;
     bool canKick;
+    public GameObject foot;
 
-    // Start is called before the first frame update
+    public GameObject buyableItem;
+    private Text shopInfo;
+    public HealthSystem hs;
+
     void Start()
     {
+        shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
         canKick = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //Checks if you are on a Ground layer object
 
         if (isOnGround && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = -2f; //Stops y velocity from infinitely decreasing
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -64,11 +66,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Quick Reload of Scene
         }
 
-        controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
-
+        //Crouching System
         if (Input.GetKey(KeyCode.LeftControl))
         {
             desiredHeight = 1f;
@@ -77,30 +78,65 @@ public class PlayerController : MonoBehaviour
         {
             desiredHeight = 2f;
         }
+        controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        //Sword Animatons
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            animSword.SetBool("Swing", true);
-        }
-        else
-        {
-            animSword.SetBool("Swing", false);
+            if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            {
+                animSword.SetTrigger("Swing2");
+            }
+            else
+            {
+                animSword.SetTrigger("Swing");
+            }
         }
 
+        //Kicking
         if (Input.GetKeyDown(KeyCode.F) && canKick)
         {
-            cc.inControl = false;
             canKick = false;
             foot.SetActive(true);
             StartCoroutine(FootDissapear());
         }
 
-        IEnumerator FootDissapear()
+        //Bringing up info on buyable item you're looking at
+        if (ray.transform != null)
         {
-            yield return new WaitForSeconds(0.75f);
-            cc.inControl = true;
-            foot.SetActive(false);
-            canKick = true;
+            if (ray.transform.gameObject.CompareTag("Item"))
+            {
+                buyableItem = ray.transform.gameObject;
+                if (buyableItem.name == "BuyHelm")
+                {
+                    shopInfo.text = "A dwarven helmet for extra defense.\n10 Beards\n\nBuy with [E]"; // \n = New line
+                }
+            }
+            else
+            {
+                buyableItem = null;
+                shopInfo.text = "";
+            }
         }
+
+        //Buy buyable item you're looking at
+        if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
+        {
+            if (buyableItem.name == "BuyHelm" && hs.beards >= 10)
+            {
+                hs.beards -= 10;
+                //defense ++
+                buyableItem.SetActive(false);
+            }
+        }
+    }
+
+    //Hide foot after done playing anim
+    IEnumerator FootDissapear()
+    {
+        yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+        cc.inControl = true;
+        foot.SetActive(false);
+        canKick = true;
     }
 }
