@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
         //Sword Animatons
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            hitBox.enabled = true;
             if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
             {
                 animSword.SetTrigger("Swing2");
@@ -144,7 +145,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Slaying()
     {
-        hitBox.enabled = true;
         yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
         hitBox.enabled = false;
     }

@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+	public GameObject rotationCorrection;
+	public GameObject mimicker;
 	public Animator animEnemy;
 	public ConfigurableJoint[] XDrivejoints;
 	public ConfigurableJoint[] YZDrivejoints;
 	public ConfigurableJoint[] XYZMotions;
-	//public Rigidbody[] rigids;
 	public GameObject rootJoint;
 	public BoxCollider hitBox;
-	public GameObject mimicRootJoint;
 	public float movementSpeed;
 	public bool isDamaged;
 	public GameObject enemyObject;
 	public Renderer rend;
-	//private Quaternion qTo;
 	private Rigidbody rb;
-	private ConfigurableJoint cj;
 	private GameObject player;
 	private GameObject spawnManager;
-	//private float detectionradius	= 10f;
-	private float stoppingradius = 1.3f;
-	private float lookSpeed = 2.0f;
+	private float stoppingradius = 1f;
 	private float driveValue;
 	private ConfigurableJointMotion XYZMotionValue;
 	private Color32 color;
@@ -38,44 +34,37 @@ public class EnemyAI : MonoBehaviour
 
 	void Start()
 	{
-		//rigids = GetComponentsInChildren<Rigidbody>();
+		mimicker = GameObject.Find("Mimic");
+		animEnemy = mimicker.GetComponent<Animator>();
 		XYZMotions = GetComponentsInChildren<ConfigurableJoint>();
 		XDrivejoints = GetComponentsInChildren<ConfigurableJoint>();
 		YZDrivejoints = GetComponentsInChildren<ConfigurableJoint>();
 		player = GameObject.Find("Player");
 		spawnManager = GameObject.Find("Spawns");
-		//qTo = rootJoint.gameObject.transform.rotation;
 		rb = gameObject.GetComponent<Rigidbody>();
 	}
 
 	void Update()
 	{
-		//if	(Vector3.Distance(player.transform.position, transform.position) <=	detectionradius) //&&	!isDamaged)
-		//{
-
-		Vector3 lookDirectionPlayer = (player.transform.position - transform.position).normalized;
-		lookDirectionPlayer.y = 0;
-		mimicRootJoint.transform.localRotation = Quaternion.Slerp(mimicRootJoint.transform.localRotation, Quaternion.LookRotation(lookDirectionPlayer), Time.deltaTime * lookSpeed);
-
-		//Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-		//Vector3 lookDirection = (rootJoint.transform.position - player.transform.position).normalized;
-		//lookDirection.y = 0;
-		//qTo = Quaternion.LookRotation(lookDirection);
 		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isDamaged)
 		{
 			hitBox.enabled = false;
 			animEnemy.SetTrigger("Walking");
-			//rootJoint.gameObject.transform.localPosition = new Vector3(0, 0, 0);
 			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed * Time.deltaTime);
-			joint.SetTargetRotationLocal(mimicRootJoint.transform.localRotation, initialRotation);
-			//transform.rotation = Quaternion.Slerp(transform.rotation,	qTo, Time.deltaTime	* lookSpeed);
+			joint.SetTargetRotationLocal(rotationCorrection.transform.localRotation, initialRotation);
 		}
 		else
 		{
 			hitBox.enabled = true;
 			animEnemy.SetTrigger("Attacking");
 		}
-		//}
+
+		if (gameObject.transform.position.y < -25)
+		{
+			spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(enemyObject);
+			Destroy(gameObject);
+			Debug.Log("AAAAAAAAAAAAAAAAAAAA");
+		}
 	}
 
 	void OnCollisionEnter(Collision collision)
@@ -83,35 +72,25 @@ public class EnemyAI : MonoBehaviour
 		if (collision.gameObject.CompareTag("Sword") && !isDamaged)
 		{
 			isDamaged = true;
-			//Debug.Log("Damaged");
 			Ragdoll();
-			//StartCoroutine(Damage());
 		}
 
 		if (collision.gameObject.CompareTag("Boot") && !isDamaged)
 		{
 			isDamaged = true;
-			//Debug.Log("Damaged");
 			Ragdoll();
-			//StartCoroutine(Damage());
 		}
 
 	}
 
 	void Ragdoll()
 	{
-		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(enemyObject);
 		color = new Color32(108, 0, 0, 0);
 		rend.material.color = color;
 		rb.freezeRotation = false;
-		//this.enabled = false;
 		XYZMotionValue = ConfigurableJointMotion.Locked;
 		driveValue = 0f;
 		ConfigurableJointModifier();
-		/*foreach (Rigidbody rb	in rigids)
-		{
-			rb.isKinematic = false;
-		}*/
 		StartCoroutine(Damage());
 	}
 
@@ -125,7 +104,6 @@ public class EnemyAI : MonoBehaviour
 				joint.angularYMotion = XYZMotionValue;
 				joint.angularZMotion = XYZMotionValue;
 			}
-
 		}
 		foreach (ConfigurableJoint joint in XDrivejoints)
 		{
@@ -141,12 +119,6 @@ public class EnemyAI : MonoBehaviour
 		}
 	}
 
-	/*IEnumerator Remove()
-	{
-	yield return new WaitForSeconds(6f);
-	Destroy(enemyObject);
-	}*/
-
 	IEnumerator Damage()
 	{
 		color = new Color32(108, 108, 108, 0);
@@ -154,7 +126,6 @@ public class EnemyAI : MonoBehaviour
 		yield return new WaitForSeconds(6f);
 		color = new Color32(225, 255, 255, 0);
 		rend.material.color = color;
-		//this.enabled = true;
 		XYZMotionValue = ConfigurableJointMotion.Free;
 		driveValue = 800f;
 		ConfigurableJointModifier();
