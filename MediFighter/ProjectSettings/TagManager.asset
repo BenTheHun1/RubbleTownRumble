@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Sword
   - SpawnPoint
   - Enemy
-  - Kick
+  - Sword
   - Item
+  - Boot
   layers:
   - Default
   - TransparentFX
@@ -16,10 +16,10 @@ TagManager:
   - 
   - Water
   - UI
+  - Enemy
   - 
   - 
-  - Ground
-  - Character
+  - 
   - 
   - 
   - 
