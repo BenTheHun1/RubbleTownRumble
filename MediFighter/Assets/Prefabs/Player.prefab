@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1870430620}
   m_Layer: 0
   m_Name: KickArea
-  m_TagString: Untagged
+  m_TagString: Boot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,7 +66,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4727061832764698456}
   m_Material: {fileID: 13400000, guid: 4fdc34cb2a988c14ca96ece7e7725bb2, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.8
   m_Height: 7.2
   m_Direction: 1
@@ -112,6 +112,8 @@ GameObject:
   - component: {fileID: 4932589195320033710}
   - component: {fileID: 4932589195320033705}
   - component: {fileID: 4932589195320033711}
+  - component: {fileID: 1466808218}
+  - component: {fileID: 1466808219}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -151,6 +153,7 @@ MonoBehaviour:
   controller: {fileID: 4932589195320033711}
   cc: {fileID: 4932589195579258792}
   animSword: {fileID: 9166715548836056437}
+  hitBox: {fileID: 1891570381}
   groundCheck: {fileID: 4932589195270346316}
   groundMask:
     serializedVersion: 2
@@ -159,7 +162,7 @@ MonoBehaviour:
   isOnGround: 0
   foot: {fileID: 6489439178350646131}
   buyableItem: {fileID: 0}
-  hs: {fileID: 1098093900}
+  hs: {fileID: 1098093900, guid: cdf66788ada4ab145a640a19b4af6f65, type: 3}
 --- !u!143 &4932589195320033711
 CharacterController:
   m_ObjectHideFlags: 0
@@ -178,6 +181,35 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &1466808218
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932589195320033708}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1466808219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932589195320033708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01eb663e9c897124887fc61273909636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtDisplay: {fileID: 0}
+  gameOverText: {fileID: 0}
+  beards: 0
 --- !u!1 &4932589195579258796
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,11 +322,9 @@ GameObject:
   - component: {fileID: 4932589195619241869}
   - component: {fileID: 4932589195619241874}
   - component: {fileID: 4932589195619241875}
-  - component: {fileID: 4932589195619241872}
-  - component: {fileID: 1098093900}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -362,35 +392,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4932589195619241872
+--- !u!136 &1589391782
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4932589195619241873}
+  m_GameObject: {fileID: 8055482647566728880}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1098093900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4932589195619241873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01eb663e9c897124887fc61273909636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtDisplay: {fileID: 0}
-  gameOverText: {fileID: 0}
-  beards: 0
+  m_Radius: 0.7
+  m_Height: 2.6
+  m_Direction: 0
+  m_Center: {x: -0.7, y: -0.3, z: 0}
 --- !u!1001 &4932589195028164794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,6 +524,12 @@ GameObject:
 --- !u!4 &5856032053457816009 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1526963941856704883, guid: 22bbcf33e99889d44ab48d8e46c64b1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4932589195028164794}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8055482647566728880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3152169497161158154, guid: 22bbcf33e99889d44ab48d8e46c64b1a,
     type: 3}
   m_PrefabInstance: {fileID: 4932589195028164794}
   m_PrefabAsset: {fileID: 0}
