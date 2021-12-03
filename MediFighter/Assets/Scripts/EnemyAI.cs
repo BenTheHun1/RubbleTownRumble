@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-	public GameObject rotationCorrection;
-	public GameObject mimicker;
-	public Animator animEnemy;
 	public ConfigurableJoint[] XDrivejoints;
 	public ConfigurableJoint[] YZDrivejoints;
 	public ConfigurableJoint[] XYZMotions;
+	public GameObject enemyObject;
+	public GameObject rotationCorrection;
+	public GameObject mimicker;
 	public GameObject rootJoint;
-	public BoxCollider hitBox;
+	public Animator animEnemy;
+	public Renderer rend;
 	public float movementSpeed;
 	public bool isDamaged;
-	public GameObject enemyObject;
-	public Renderer rend;
-	private Rigidbody rb;
+	public bool isRagdoll;
+	public bool isKicked;
+	public bool isAttacking;
 	private GameObject player;
 	private GameObject spawnManager;
 	private float stoppingradius = 1f;
@@ -41,21 +42,20 @@ public class EnemyAI : MonoBehaviour
 		YZDrivejoints = GetComponentsInChildren<ConfigurableJoint>();
 		player = GameObject.Find("Player");
 		spawnManager = GameObject.Find("Spawns");
-		rb = gameObject.GetComponent<Rigidbody>();
 	}
 
 	void Update()
 	{
-		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isDamaged)
+		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isDamaged && !isRagdoll)
 		{
-			hitBox.enabled = false;
+			isAttacking = false;
 			animEnemy.SetTrigger("Walking");
 			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed * Time.deltaTime);
 			joint.SetTargetRotationLocal(rotationCorrection.transform.localRotation, initialRotation);
 		}
 		else
 		{
-			hitBox.enabled = true;
+			isAttacking = true;
 			animEnemy.SetTrigger("Attacking");
 		}
 
@@ -69,25 +69,37 @@ public class EnemyAI : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject.CompareTag("Sword") && !isDamaged)
+
+		if (collision.gameObject.CompareTag("Sword") && !isDamaged && !isRagdoll)
 		{
 			isDamaged = true;
 			Ragdoll();
 		}
 
-		if (collision.gameObject.CompareTag("Boot") && !isDamaged)
+		if (collision.gameObject.CompareTag("Boot") && !isDamaged && !isRagdoll)
 		{
+			isKicked = true;
 			isDamaged = true;
 			Ragdoll();
 		}
 
 	}
 
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<EnemyAI>().isKicked == true && other.gameObject.GetComponent<EnemyAI>().isRagdoll == true)
+		{
+			isDamaged = true;
+			isKicked = true;
+			Ragdoll();
+		}
+	}
+
 	void Ragdoll()
 	{
-		color = new Color32(108, 0, 0, 0);
+		color = new Color32(108, 108, 108, 0);
 		rend.material.color = color;
-		rb.freezeRotation = false;
+		isRagdoll = true;
 		XYZMotionValue = ConfigurableJointMotion.Locked;
 		driveValue = 0f;
 		ConfigurableJointModifier();
@@ -121,9 +133,13 @@ public class EnemyAI : MonoBehaviour
 
 	IEnumerator Damage()
 	{
-		color = new Color32(108, 108, 108, 0);
-		rend.material.color = color;
+		if (isKicked)
+		{
+			yield return new WaitForSeconds(0.5f);
+			isKicked = false;
+		}
 		yield return new WaitForSeconds(6f);
+		isRagdoll = false;
 		color = new Color32(225, 255, 255, 0);
 		rend.material.color = color;
 		XYZMotionValue = ConfigurableJointMotion.Free;
