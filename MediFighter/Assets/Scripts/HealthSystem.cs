@@ -37,7 +37,7 @@ public class HealthSystem : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy") && !isDamaged && other.gameObject.GetComponent<EnemyAI>().isDamaged == false)
+        if (other.gameObject.CompareTag("Enemy") && !isDamaged && other.gameObject.GetComponent<EnemyAI>().isRagdoll == false && other.gameObject.GetComponent<EnemyAI>().isAttacking == true && other.gameObject.GetComponent<EnemyAI>().isDamaged == false)
         {
             isDamaged = true;
             if (playerHealth > 0)
