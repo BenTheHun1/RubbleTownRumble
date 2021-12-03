@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController controller;
     public CameraController cc;
     public Animator animSword;
+    public CapsuleCollider hitBox;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
@@ -91,6 +92,7 @@ public class PlayerController : MonoBehaviour
             {
                 animSword.SetTrigger("Swing");
             }
+            StartCoroutine(Slaying());
         }
 
         //Kicking
@@ -139,4 +141,12 @@ public class PlayerController : MonoBehaviour
         foot.SetActive(false);
         canKick = true;
     }
+
+    IEnumerator Slaying()
+    {
+        hitBox.enabled = true;
+        yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+        hitBox.enabled = false;
+    }
+
 }
