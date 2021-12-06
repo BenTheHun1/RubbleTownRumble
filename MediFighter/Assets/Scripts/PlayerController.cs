@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     bool blocking;
     public GameObject shield;
+    bool hasShield;
 
     void Start()
     {
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
 
-        if (Input.GetKey(KeyCode.Mouse1))
+        if (Input.GetKey(KeyCode.Mouse1) && hasShield)
         {
             blocking = true;
             shield.SetActive(true);
@@ -137,6 +138,10 @@ public class PlayerController : MonoBehaviour
                 {
                     shopInfo.text = "Heal yourself back to full health.\n10 Beards\n\nBuy with [E]";
                 }
+                else if (buyableItem.name == "BuyShield")
+                {
+                    shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
+                }
             }
             else
             {
@@ -164,10 +169,12 @@ public class PlayerController : MonoBehaviour
                 hs.beards -= 10;
                 hs.playerHealth = hs.maxHealth;
             }
-            else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
+            else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
             {
                 hs.beards -= 10;
                 hs.playerHealth = hs.maxHealth;
+                buyableItem.SetActive(false);
+                hasShield = true;
             }
         }
     }
