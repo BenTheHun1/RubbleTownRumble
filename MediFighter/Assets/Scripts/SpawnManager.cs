@@ -25,6 +25,7 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(NextWave());
         waveText = GameObject.Find("Wave").GetComponent<Text>();
+        waveText.gameObject.SetActive(false);
         foreach (Transform spawn in transform)
         {
             if (spawn.tag == "SpawnPoint")
