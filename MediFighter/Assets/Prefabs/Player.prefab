@@ -162,7 +162,7 @@ MonoBehaviour:
   isOnGround: 0
   foot: {fileID: 6489439178350646131}
   buyableItem: {fileID: 0}
-  hs: {fileID: 1098093900, guid: cdf66788ada4ab145a640a19b4af6f65, type: 3}
+  hs: {fileID: 0}
 --- !u!143 &4932589195320033711
 CharacterController:
   m_ObjectHideFlags: 0

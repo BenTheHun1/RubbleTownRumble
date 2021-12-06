@@ -37,7 +37,7 @@ public class HealthSystem : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy") && !isDamaged && other.gameObject.GetComponent<EnemyAI>().isRagdoll == false && other.gameObject.GetComponent<EnemyAI>().isAttacking == true && other.gameObject.GetComponent<EnemyAI>().isDamaged == false)
+        if (other.gameObject.CompareTag("EnemyAxe") && !isDamaged && other.transform.root.GetComponent<EnemyAICharacterJoints>().isRagdoll == false && other.transform.root.GetComponent<EnemyAICharacterJoints>().isAttacking == true && other.transform.root.GetComponent<EnemyAICharacterJoints>().isDamaged == false && other.transform.root.GetComponent<EnemyAICharacterJoints>().animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             isDamaged = true;
             if (playerHealth > 0)
@@ -67,7 +67,7 @@ public class HealthSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         hurtDisplay.gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
         isDamaged = false;
         
     }

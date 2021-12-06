@@ -61,7 +61,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -168,14 +168,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437265454497452631}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &459490417034396727
@@ -239,7 +240,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -346,14 +347,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459490417034396727}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &701692388298081770
@@ -417,7 +419,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -524,14 +526,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701692388298081770}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &833069525629534791
@@ -595,7 +598,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -702,14 +705,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833069525629534791}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &884003340785074410
@@ -773,7 +777,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -880,14 +884,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884003340785074410}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &2078448744952281788
@@ -1093,9 +1098,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 0}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &2743029375057158278
@@ -1159,7 +1165,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1266,14 +1272,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2743029375057158278}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &3148706440811661986
@@ -1473,7 +1480,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1580,14 +1587,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3375100133480018524}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &3703476001789863512
@@ -1635,6 +1643,7 @@ GameObject:
   - component: {fileID: 980666412378440024}
   - component: {fileID: 3944276722240784088}
   - component: {fileID: 980666412625371650}
+  - component: {fileID: 8852438162245281016}
   m_Layer: 0
   m_Name: Normal_Dwarf (Configurable Joints)
   m_TagString: Enemy
@@ -1686,7 +1695,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1798,9 +1807,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 0}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!114 &3944276722240784088
@@ -1815,18 +1825,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951e152f66fed9148a37f3464130e7a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationCorrection: {fileID: 8856285230534119460}
-  mimicker: {fileID: 0}
-  animEnemy: {fileID: 0}
   XDrivejoints: []
   YZDrivejoints: []
   XYZMotions: []
+  enemyObject: {fileID: 3944276722240784089}
+  rotationCorrection: {fileID: 8856285230534119460}
+  mimicker: {fileID: 0}
   rootJoint: {fileID: 3944276722240784089}
-  hitBox: {fileID: 980666412625371650}
+  animEnemy: {fileID: 0}
+  rend: {fileID: 6217407118409454614}
   movementSpeed: 1
   isDamaged: 0
-  enemyObject: {fileID: 3944276722240784089}
-  rend: {fileID: 6217407118409454614}
+  isRagdoll: 0
+  isKicked: 0
+  isAttacking: 0
+  isWalking: 0
 --- !u!65 &980666412625371650
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1840,6 +1853,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.03, y: 0.05, z: 0.06}
   m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!95 &8852438162245281016
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3944276722240784089}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f4b0b11bbb1d8b64d97b482a005d9b99, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4300831067378731137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,7 +1996,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2071,14 +2103,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5075977634568484704}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &5108263686740886179
@@ -2141,7 +2174,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2253,9 +2286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &6254663095366364829
@@ -2319,7 +2353,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2426,14 +2460,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6254663095366364829}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &6325139854965654917
@@ -2609,9 +2644,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 0}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &6423509014000344159
@@ -2675,7 +2711,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2782,14 +2818,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6423509014000344159}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &6944858588882944124
@@ -2884,7 +2921,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2991,14 +3028,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7369023278985388644}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &7609098147553270116
@@ -3062,7 +3100,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3169,14 +3207,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7609098147553270116}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &7686430484630809660
@@ -3240,7 +3279,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3347,14 +3386,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7686430484630809660}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &7790837419732559633
@@ -3480,7 +3520,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3587,14 +3627,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8441590839579260639}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 3944276722240784088}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
 --- !u!1 &8830861208438644414
@@ -3783,7 +3824,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3890,13 +3931,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8881278449920656442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8412cb92a0d5b3408ec2094d2565f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 0}
+  player: {fileID: 0}
   mimicker: {fileID: 0}
   MimickerLimbs: []
-  test: 0
   targetLimb: {fileID: 0}
   m_ConfigurableJoint: {fileID: 0}
