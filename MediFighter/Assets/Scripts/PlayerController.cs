@@ -145,18 +145,6 @@ public class PlayerController : MonoBehaviour
             }
 
 
-            private Vector3 grav;
-
-            Physics.gravity *= 1.5f;
-            
-
-            else
-            {
-                buyableItem = null;
-                shopInfo.text = "";
-            }
-        }
-
         //Buy buyable item you're looking at
         if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
         {
