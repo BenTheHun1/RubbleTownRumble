@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
-    public Text waveText;
+    private Text waveText;
     public GameObject[] enemyPrefabs;
     public List <GameObject> spawns;
     public List <GameObject> enemyAmount;
@@ -24,7 +24,8 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(NextWave());
-
+        waveText = GameObject.Find("Wave").GetComponent<Text>();
+        waveText.gameObject.SetActive(false);
         foreach (Transform spawn in transform)
         {
             if (spawn.tag == "SpawnPoint")

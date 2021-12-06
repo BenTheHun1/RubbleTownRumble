@@ -9,14 +9,12 @@ public class CameraController : MonoBehaviour
     public float mouseSensitivity;
     public Transform playerBody;
     private float xRotation = 0f;
-    public KickController kicker;
     private RaycastHit hit;
 
     public bool inControl;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         inControl = true;
     }
 
