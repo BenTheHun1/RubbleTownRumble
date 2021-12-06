@@ -9,6 +9,7 @@ TagManager:
   - Sword
   - Item
   - Boot
+  - EnemyAxe
   layers:
   - Default
   - TransparentFX

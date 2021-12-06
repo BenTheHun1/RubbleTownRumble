@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAIConfigurableJoints : MonoBehaviour
 {
 	public ConfigurableJoint[] XDrivejoints;
 	public ConfigurableJoint[] YZDrivejoints;
 	public ConfigurableJoint[] XYZMotions;
+	public GameObject Test;
 	public GameObject enemyObject;
 	public GameObject rotationCorrection;
 	public GameObject mimicker;
@@ -18,6 +19,7 @@ public class EnemyAI : MonoBehaviour
 	public bool isRagdoll;
 	public bool isKicked;
 	public bool isAttacking;
+	public bool isWalking;
 	private GameObject player;
 	private GameObject spawnManager;
 	private float stoppingradius = 1f;
@@ -48,6 +50,7 @@ public class EnemyAI : MonoBehaviour
 	{
 		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isDamaged && !isRagdoll)
 		{
+			isWalking = true;
 			isAttacking = false;
 			animEnemy.SetTrigger("Walking");
 			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed * Time.deltaTime);
@@ -56,6 +59,7 @@ public class EnemyAI : MonoBehaviour
 		else
 		{
 			isAttacking = true;
+			isWalking = false;
 			animEnemy.SetTrigger("Attacking");
 		}
 
@@ -87,7 +91,7 @@ public class EnemyAI : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<EnemyAI>().isKicked == true && other.gameObject.GetComponent<EnemyAI>().isRagdoll == true)
+		if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<EnemyAIConfigurableJoints>().isKicked == true && other.gameObject.GetComponent<EnemyAIConfigurableJoints>().isRagdoll == true)
 		{
 			isDamaged = true;
 			isKicked = true;

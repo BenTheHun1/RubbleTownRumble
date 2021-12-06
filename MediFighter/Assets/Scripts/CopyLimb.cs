@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CopyLimb : MonoBehaviour
 {
+    public EnemyAIConfigurableJoints enemyAI;
+    public GameObject player;
     public GameObject mimicker;
     public Transform[] MimickerLimbs;
     [SerializeField] private Transform targetLimb;
@@ -25,8 +27,10 @@ public class CopyLimb : MonoBehaviour
     }
     void Start()
     {
-        this.m_ConfigurableJoint = this.GetComponent<ConfigurableJoint>();
-        this.targetInitialRotation = this.targetLimb.transform.localRotation;
+        player = GameObject.Find("Player");
+        enemyAI = transform.root.GetComponent<EnemyAIConfigurableJoints>();
+        m_ConfigurableJoint = gameObject.GetComponent<ConfigurableJoint>();
+        targetInitialRotation = targetLimb.transform.localRotation;
     }
 
     void Update()
@@ -34,12 +38,22 @@ public class CopyLimb : MonoBehaviour
 
     }
 
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
-        this.m_ConfigurableJoint.targetRotation = copyRotation();
+        if (enemyAI.isWalking == true && enemyAI.isAttacking == false)
+        {
+            m_ConfigurableJoint.targetRotation = copyRotation();
+        }
+        else
+        {
+            if (enemyAI.isAttacking == true && Vector3.Distance(player.transform.position, enemyAI.transform.position) < 2f)
+            {
+                m_ConfigurableJoint.targetRotation = copyRotation();
+            }
+        }
     }
 
     private Quaternion copyRotation() {
-        return Quaternion.Inverse(this.targetLimb.localRotation) * this.targetInitialRotation;
+        return Quaternion.Inverse(targetLimb.localRotation) * targetInitialRotation;
     }
 }
