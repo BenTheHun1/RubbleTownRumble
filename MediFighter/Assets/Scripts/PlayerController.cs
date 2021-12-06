@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     //Variables
     public CharacterController controller;
     public CameraController cc;
+    public SpawnManager sm;
     public Animator animSword;
     public CapsuleCollider hitBox;
 
@@ -37,11 +38,16 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     bool hasShield;
 
+    private GameObject juice;
+
+
     void Start()
     {
         shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
+        juice = GameObject.Find("Juice");
         canKick = true;
         foot.SetActive(false);
+        sm = GameObject.Find("Spawns").GetComponent<SpawnManager>();
     }
 
     void Update()
@@ -142,6 +148,10 @@ public class PlayerController : MonoBehaviour
                 {
                     shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
                 }
+                else if (buyableItem.name == "StartGame")
+                {
+                    shopInfo.text = "Bring on the Dwarves!\nPress [E]";
+                }
             }
 
 
@@ -170,6 +180,11 @@ public class PlayerController : MonoBehaviour
                     hs.playerHealth = hs.maxHealth;
                     buyableItem.SetActive(false);
                     hasShield = true;
+                }
+                else if (buyableItem.name == "StartGame")
+                {
+                    juice.SetActive(false);
+                    //sm.intermission();
                 }
             }
         }
