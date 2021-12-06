@@ -157,7 +157,7 @@ MonoBehaviour:
   groundCheck: {fileID: 4932589195270346316}
   groundMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   velocity: {x: 0, y: 0, z: 0}
   isOnGround: 0
   foot: {fileID: 6489439178350646131}
@@ -637,6 +637,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c0c9616635a38ca448e089c7ed3a4a7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 21368368c6fc3ed41b68769cc46aad33, type: 2}
     - target: {fileID: -5754084199372789682, guid: c0c9616635a38ca448e089c7ed3a4a7f,
         type: 3}
       propertyPath: m_Mesh

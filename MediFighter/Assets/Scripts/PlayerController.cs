@@ -145,48 +145,49 @@ public class PlayerController : MonoBehaviour
             }
 
 
-        //Buy buyable item you're looking at
-        if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
-        {
-            if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
+            //Buy buyable item you're looking at
+            if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
             {
-                hs.beards -= 20;
-                hs.maxHealth += 5;
-                hs.playerHealth += 5;
-            }
-            else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
-            {
-                hs.beards -= 25;
-                //atk++;
-            }
-            else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
-            {
-                hs.beards -= 10;
-                hs.playerHealth = hs.maxHealth;
-            }
-            else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
-            {
-                hs.beards -= 10;
-                hs.playerHealth = hs.maxHealth;
-                buyableItem.SetActive(false);
-                hasShield = true;
+                if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
+                {
+                    hs.beards -= 20;
+                    hs.maxHealth += 5;
+                    hs.playerHealth += 5;
+                }
+                else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
+                {
+                    hs.beards -= 25;
+                    //atk++;
+                }
+                else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
+                {
+                    hs.beards -= 10;
+                    hs.playerHealth = hs.maxHealth;
+                }
+                else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
+                {
+                    hs.beards -= 10;
+                    hs.playerHealth = hs.maxHealth;
+                    buyableItem.SetActive(false);
+                    hasShield = true;
+                }
             }
         }
-    }
 
-    //Hide foot after done playing anim
-    IEnumerator FootDissapear()
-    {
-        yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
-        cc.inControl = true;
-        foot.SetActive(false);
-        canKick = true;
-    }
+        //Hide foot after done playing anim
+        IEnumerator FootDissapear()
+        {
+            yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+            cc.inControl = true;
+            foot.SetActive(false);
+            canKick = true;
+        }
 
-    IEnumerator Slaying()
-    {
-        yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
-        hitBox.enabled = false;
-    }
+        IEnumerator Slaying()
+        {
+            yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+            hitBox.enabled = false;
+        }
 
+    }
 }
