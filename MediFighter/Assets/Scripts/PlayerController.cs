@@ -143,6 +143,13 @@ public class PlayerController : MonoBehaviour
                     shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
                 }
             }
+
+
+            private Vector3 grav;
+
+            Physics.gravity *= 1.5f;
+            
+
             else
             {
                 buyableItem = null;
