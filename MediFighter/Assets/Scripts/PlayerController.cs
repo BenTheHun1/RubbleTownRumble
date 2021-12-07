@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
             else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
             {
                 hs.beards -= 25;
-                //atk++;
+                hs.AttackAmount++;
             }
             else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
             {
