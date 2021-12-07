@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 8643608522472854755}
   - component: {fileID: 1252763384678438145}
   - component: {fileID: 1806716704737774653}
+  - component: {fileID: 6111735922477797269}
   m_Layer: 0
   m_Name: pPlane20
   m_TagString: Untagged
@@ -118,6 +119,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -144,6 +146,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6111735922477797269
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003691955428282026}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6651890485984898336, guid: c983843a9ca0dae49b46b0d5c34d548a, type: 3}
 --- !u!1 &2349000735143627505
 GameObject:
   m_ObjectHideFlags: 0
