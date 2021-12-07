@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7699634570150179375}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pPlane27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 372332805127288849}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pPlane28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4334072519879059678}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlantWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7003453326162935022}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform80
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8474219074510629234}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform76
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2958940146380393393}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform78
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 734592267821932184}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCube244
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,8 @@ GameObject:
   - component: {fileID: 747156937164042791}
   - component: {fileID: 3753837441802736135}
   - component: {fileID: 7667482005941203400}
-  m_Layer: 0
+  - component: {fileID: 8812317371751584436}
+  m_Layer: 7
   m_Name: pPlane29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,6 +275,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -300,6 +302,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8812317371751584436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6513353218832569348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 314.72778, y: 92.20515, z: 113.18192}
+  m_Center: {x: 149.99988, y: 54.4, z: -50.00002}
 --- !u!1 &6952600549267629108
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2818885065822354804}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pPlane25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8220115871082409202}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pPlane26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4413482741337282309}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform79
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7399227462566269803}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform77
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SpawnManager : MonoBehaviour
 {
     public bool startWave;
-    public Text waveText;
+    public GameObject waveText;
     public GameObject[] enemyPrefabs;
     public List <GameObject> spawns;
     public List <GameObject> enemyAmount;
@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        waveText = GameObject.Find("Wave").GetComponent<Text>();
+        waveText = GameObject.Find("Wave");
         waveText.gameObject.SetActive(false);
         foreach (Transform spawn in transform)
         {

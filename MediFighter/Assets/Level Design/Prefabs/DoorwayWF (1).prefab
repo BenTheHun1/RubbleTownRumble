@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 605362865188622298}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCube118
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1457361307055905718}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DoorwayWF (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5580280453077032770}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCube82
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2314512064871427967}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,11 @@ GameObject:
   - component: {fileID: 284444095007887722}
   - component: {fileID: 2373186657699419244}
   - component: {fileID: 6812591984508095279}
-  m_Layer: 0
+  - component: {fileID: 13807620689391042}
+  - component: {fileID: 6974201361187434852}
+  - component: {fileID: 7453965247449697062}
+  - component: {fileID: 1715517501874503930}
+  m_Layer: 7
   m_Name: pCube127
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +184,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -207,6 +212,59 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &13807620689391042
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889953103654959575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.000001, y: 0.15997803, z: 2.9999816}
+  m_Center: {x: -1.5000005, y: -0.0709244, z: -1.4999908}
+--- !u!65 &6974201361187434852
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889953103654959575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27721485, y: 3.1509142, z: 1}
+  m_Center: {x: -0.13860743, y: 1.4245428, z: -0.50262624}
+--- !u!65 &7453965247449697062
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889953103654959575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27721485, y: 3.1509142, z: 1}
+  m_Center: {x: -0.13860743, y: 1.4245428, z: -2.51}
+--- !u!65 &1715517501874503930
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889953103654959575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4031126, y: 0.97058684, z: 1}
+  m_Center: {x: -0.2015563, y: 2.5147028, z: -1.4999877}
 --- !u!1 &8647748113416660097
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8325521927602341560}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform12
   m_TagString: Untagged
   m_Icon: {fileID: 0}

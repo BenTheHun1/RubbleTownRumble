@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5247731998651558808}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,10 @@ GameObject:
   - component: {fileID: 7491811135064561810}
   - component: {fileID: 5802986033020336212}
   - component: {fileID: 656546847640567759}
-  m_Layer: 0
+  - component: {fileID: 78765441792822851}
+  - component: {fileID: 1961128712798937849}
+  - component: {fileID: 7504752014503683791}
+  m_Layer: 7
   m_Name: pCube140
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,6 +88,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -112,6 +116,46 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &78765441792822851
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173097990831410165}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300.09607, y: 13.724732, z: 300.09607}
+  m_Center: {x: -150.18134, y: -8.235717, z: -149.9519}
+--- !u!65 &1961128712798937849
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173097990831410165}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 28.154352, y: 315.19418, z: 300.09607}
+  m_Center: {x: -14.210473, y: 142.49895, z: -149.9519}
+--- !u!65 &7504752014503683791
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173097990831410165}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300.09607, y: 315.19418, z: 27.30267}
+  m_Center: {x: -150.18134, y: 142.49895, z: -286.3479}
 --- !u!1 &3399587500774074383
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2622804162895639221}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CornerWallWF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5169253622405728830}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCube139
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1432645306132716599}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7454320168738756604}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCube138
   m_TagString: Untagged
   m_Icon: {fileID: 0}
