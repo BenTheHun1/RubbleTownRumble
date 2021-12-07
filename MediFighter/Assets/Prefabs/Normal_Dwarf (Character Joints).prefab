@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc700b0ed94a4b34ba791ab90939edd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleEffect: {fileID: 3365941808099789540, guid: 239f0f4f002074643bba45242f8e3fa8,
+    type: 3}
   lastPos: {x: 0, y: 0, z: 0}
   rootJoint: {fileID: 6233745509557671610}
   rootRigid: {fileID: 0}
@@ -205,6 +207,7 @@ MonoBehaviour:
   rend: {fileID: 7953414078384141097}
   Health: 0
   movementSpeed: 2
+  AttackAmount: 0
   isDamaged: 0
   isRagdoll: 0
   isKicked: 0
