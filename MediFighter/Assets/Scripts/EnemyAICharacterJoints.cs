@@ -291,26 +291,11 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator InvincibilityFrame()
 	{
-		if (invincible)
-		{
-			color = new Color32(0, 0, 108, 0);
-			rend.material.color = color;
-			yield return new WaitForSeconds(0.5f);
-			color = new Color32(255, 255, 255, 0);
-			rend.material.color = color;
-			invincible = false;
-		}
-		else
-        {
-			if (!invincible)
-			{
-				color = new Color32(108, 108, 108, 0);
-				rend.material.color = color;
-				yield return new WaitForSeconds(0.5f);
-				color = new Color32(255, 255, 255, 0);
-				rend.material.color = color;
-				invincible = false;
-			}
-		}		
+		color = new Color32(108, 108, 108, 0);
+		rend.material.color = color;
+		yield return new WaitForSeconds(0.5f);
+		color = new Color32(255, 255, 255, 0);
+		rend.material.color = color;
+		invincible = false;	
 	}
 }
