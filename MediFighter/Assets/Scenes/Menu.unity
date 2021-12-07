@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -856,18 +856,19 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.1
-  m_Text: 'Ben Hunsicker - Producer, Programmer, Game Designer, 2D Artist, 3D Modeller
+  m_Text: 'Ben Hunsicker - Producer, Programmer, Game Designer, 2D Artist, 3D Modeller,
+    Git Kraker
 
-    David
-    Rozell - Programmer, Game Designer
+    David Rozell - Programmer, Game Designer
 
-    Ben Pielocik - 3D Modeller, Concept Artist,
-    Game Designer
+    Ben Pielocik -
+    3D Modeller, Concept Artist, Game Designer
 
-    Kalynn Vazquez - 3D Modeller, Level Designer, Texture Artist
+    Kalynn Vazquez - 3D Modeller,
+    Level Designer, Texture Artist
 
-    Max
-    Campell - 2D Artist, Concept Artist, UI Designer
+    Max Campell - 2D Artist, Concept Artist,
+    UI Designer
 
     Shane Pielocik - Music'
 --- !u!222 &1449503111
@@ -1444,18 +1445,19 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.1
-  m_Text: 'Ben Hunsicker - Producer, Programmer, Game Designer, 2D Artist, 3D Modeller
+  m_Text: 'Ben Hunsicker - Producer, Programmer, Game Designer, 2D Artist, 3D Modeller,
+    Git Kraker
 
-    David
-    Rozell - Programmer, Game Designer
+    David Rozell - Programmer, Game Designer
 
-    Ben Pielocik - 3D Modeller, Concept Artist,
-    Game Designer
+    Ben Pielocik -
+    3D Modeller, Concept Artist, Game Designer
 
-    Kalynn Vazquez - 3D Modeller, Level Designer, Texture Artist
+    Kalynn Vazquez - 3D Modeller,
+    Level Designer, Texture Artist
 
-    Max
-    Campell - 2D Artist, Concept Artist, UI Designer
+    Max Campell - 2D Artist, Concept Artist,
+    UI Designer
 
     Shane Pielocik - Music'
 --- !u!222 &1893554229
