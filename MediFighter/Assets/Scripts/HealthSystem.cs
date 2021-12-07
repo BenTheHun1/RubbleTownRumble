@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class HealthSystem : MonoBehaviour
 {
-    public RawImage hurtDisplay;
-    public Text gameOverText;
+    private RawImage hurtDisplay;
+    private Text gameOverText;
     private GameObject player;
     private GameObject cam;
     private bool isDamaged;
-    private int playerHealth;
-    private int maxHealth;
+    public int playerHealth;
+    public int maxHealth;
     private Image disHealth;
 
     public int beards;
@@ -21,12 +21,17 @@ public class HealthSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 3;
+        beards += 100; //debug
+        maxHealth = 5;
         playerHealth = maxHealth;
         player = GameObject.Find("Player");
         cam = GameObject.Find("Main Camera");
         disHealth = GameObject.Find("HP").GetComponent<Image>();
         disBeards = GameObject.Find("BeardAmount").GetComponent<Text>();
+        hurtDisplay = GameObject.Find("Hurt").GetComponent<RawImage>();
+        hurtDisplay.gameObject.SetActive(false);
+        gameOverText = GameObject.Find("GameOver").GetComponent<Text>();
+        gameOverText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

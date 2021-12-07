@@ -24,6 +24,9 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(NextWave());
+        waveText = GameObject.Find("Wave").GetComponent<Text>();
+        waveText.gameObject.SetActive(false);
         foreach (Transform spawn in transform)
         {
             if (spawn.tag == "SpawnPoint")
