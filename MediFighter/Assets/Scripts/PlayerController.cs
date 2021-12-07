@@ -185,6 +185,7 @@ public class PlayerController : MonoBehaviour
                 hs.beards -= 20;
                 hs.maxHealth += 5;
                 hs.playerHealth += 5;
+                hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
             }
             else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
             {
@@ -195,6 +196,7 @@ public class PlayerController : MonoBehaviour
             {
                 hs.beards -= 10;
                 hs.playerHealth = hs.maxHealth;
+                hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
             }
             else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
             {
