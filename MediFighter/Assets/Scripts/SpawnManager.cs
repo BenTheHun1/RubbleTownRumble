@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
+    public bool startWave;
     public Text waveText;
     public GameObject[] enemyPrefabs;
     public List <GameObject> spawns;
@@ -23,8 +24,6 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(NextWave());
-
         foreach (Transform spawn in transform)
         {
             if (spawn.tag == "SpawnPoint")
@@ -38,6 +37,7 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (enemiesLeft != enemyAmount.Count)
         {
             enemiesLeft = enemyAmount.Count;
@@ -50,10 +50,11 @@ public class SpawnManager : MonoBehaviour
             StartCoroutine(SpawnEnemy());
         }
 
-        if (enemiesLeft + enemiesToSpawn <= 0 && !nextWave)
+        if (enemiesLeft + enemiesToSpawn <= 0 && !nextWave && startWave)
         {
             nextWave = true;
             loadingWave = true;
+            startWave = false;
             StartCoroutine(NextWave());
         }
     }
