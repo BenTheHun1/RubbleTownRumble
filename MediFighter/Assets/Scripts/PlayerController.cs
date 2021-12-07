@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    //Variables
     public CharacterController controller;
     public CameraController cc;
+    public SpawnManager sm;
+    public Animator animSword;
+    public CapsuleCollider hitBox;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
     public LayerMask groundMask;
-
-
-    public GameObject footL;
-    public GameObject footR;
-    private float footHeightDefault; // Same for L & R
 
     private float speed = 4f;
     private float gravity = -9.81f * 6;
@@ -27,22 +27,38 @@ public class PlayerController : MonoBehaviour
     public RaycastHit ray;
 
     float desiredHeight;
+    bool canKick;
+    public GameObject foot;
 
-    // Start is called before the first frame update
+    public GameObject buyableItem;
+    private Text shopInfo;
+    public HealthSystem hs;
+
+    bool blocking;
+    public GameObject shield;
+    bool hasShield;
+
+    public GameObject juice;
+
     void Start()
     {
-        desiredHeight = 2f;
-        footHeightDefault = footL.transform.localPosition.y;
+        shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
+        juice = GameObject.Find("Juice");
+        canKick = true;
+        foot.SetActive(false);
+        if (GameObject.Find("Spawns") != null)
+        {
+            sm = GameObject.Find("Spawns").GetComponent<SpawnManager>();
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //Checks if you are on a Ground layer object
 
         if (isOnGround && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = -2f; //Stops y velocity from infinitely decreasing
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -64,17 +80,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Quick Reload of Scene
         }
 
-        if (desiredHeight == 2f)
-        {
-            footL.transform.localPosition = new Vector3(footL.transform.localPosition.x, Mathf.Lerp(footL.transform.localPosition.y, footHeightDefault, 0.1f), footL.transform.localPosition.z);
-            footR.transform.localPosition = new Vector3(footR.transform.localPosition.x, Mathf.Lerp(footR.transform.localPosition.y, footHeightDefault, 0.1f), footR.transform.localPosition.z);
-        }
-
-        controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
-
+        //Crouching System
         if (Input.GetKey(KeyCode.LeftControl))
         {
             desiredHeight = 1f;
@@ -83,18 +92,140 @@ public class PlayerController : MonoBehaviour
         {
             desiredHeight = 2f;
         }
+        controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse1) && hasShield)
         {
-
+            blocking = true;
+            shield.SetActive(true);
+        }
+        else
+        {
+            blocking = false;
+            shield.SetActive(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        //Sword Animatons
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !blocking)
         {
-            cc.inControl = false;
-            cc.kicker.Kick();
+            hitBox.enabled = true;
+            if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            {
+                animSword.SetTrigger("Swing2");
+            }
+            else
+            {
+                animSword.SetTrigger("Swing");
+            }
+            StartCoroutine(Slaying());
         }
 
-        
+        //Kicking
+        if (Input.GetKeyDown(KeyCode.F) && canKick && !blocking)
+        {
+            canKick = false;
+            foot.SetActive(true);
+            StartCoroutine(FootDissapear());
+        }
+
+        //Bringing up info on buyable item you're looking at
+        if (ray.transform != null)
+        {
+            if (ray.transform.gameObject.CompareTag("Item"))
+            {
+                buyableItem = ray.transform.gameObject;
+                if (buyableItem.name == "ArmorKit")
+                {
+                    shopInfo.text = "Upgrade your Armor, increasing your max health.\n20 Beards\n\nBuy with [E]"; // \n = New line
+                }
+                else if (buyableItem.name == "SwordUpgrade")
+                {
+                    shopInfo.text = "Upgrade your Sword, increasing your attack power.\n25 Beards\n\nBuy with [E]";
+                }
+                else if (buyableItem.name == "HealthPotion")
+                {
+                    shopInfo.text = "Heal yourself back to full health.\n10 Beards\n\nBuy with [E]";
+                }
+                else if (buyableItem.name == "BuyShield")
+                {
+                    shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
+                }
+                else if (buyableItem.name == "StartGame" && juice.activeSelf)
+                {
+                    shopInfo.text = "Bring on the Dwarves!\nPress [E]";
+                }
+                else if (buyableItem.name == "Beard")
+                {
+                    shopInfo.text = "Pick up [E]";
+                }
+                else
+                {
+                    shopInfo.text = "";
+                    buyableItem = null;
+                }
+            }
+            else
+            {
+                shopInfo.text = "";
+                buyableItem = null;
+            }
+        }
+        else
+        {
+            shopInfo.text = "";
+            buyableItem = null;
+        }
+
+        //Buy buyable item you're looking at
+        if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
+        {
+            if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
+            {
+                hs.beards -= 20;
+                hs.maxHealth += 5;
+                hs.playerHealth += 5;
+            }
+            else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
+            {
+                hs.beards -= 25;
+                //atk++;
+            }
+            else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
+            {
+                hs.beards -= 10;
+                hs.playerHealth = hs.maxHealth;
+            }
+            else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
+            {
+                hs.beards -= 10;
+                hs.playerHealth = hs.maxHealth;
+                buyableItem.SetActive(false);
+                hasShield = true;
+            }
+            else if (buyableItem.name == "StartGame" && juice.activeSelf)
+            {
+                sm.startWave = true;
+            }
+            else if (buyableItem.name == "Beard")
+            {
+                hs.beards++;
+                Destroy(buyableItem);
+            }
+        }
+    }
+
+    //Hide foot after done playing anim
+    IEnumerator FootDissapear()
+    {
+        yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+        cc.inControl = true;
+        foot.SetActive(false);
+        canKick = true;
+    }
+
+    IEnumerator Slaying()
+    {
+        yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+        hitBox.enabled = false;
     }
 }
