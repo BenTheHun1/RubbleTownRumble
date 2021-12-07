@@ -18,19 +18,19 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public int Health;
 	public float movementSpeed;
 	public bool isDamaged;
-	private HealthSystem hs;
 	public bool isRagdoll;
 	public bool isKicked;
 	public bool isAttacking;
 	public bool isWalking;
 	public bool GetUp;
-	private bool invincible;
+	public bool invincible;
 	private Quaternion qTo;
 	private GameObject player;
 	private GameObject spawnManager;
 	private float lookSpeed = 2.0f;
 	private float stoppingradius = 1.7f;
 	private Color32 color;
+	private HealthSystem hs;
 
 	void Start()
 	{
@@ -90,18 +90,11 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject.CompareTag("Boot") && !isDamaged && !isRagdoll && !invincible)
+		if (collision.gameObject.CompareTag("Boot") && !isDamaged && !isRagdoll)//&& !invincible)
 		{
 			isKicked = true;
 			isDamaged = true;
 			Ragdoll();
-		}
-		else
-		{
-			if (collision.gameObject.CompareTag("Boot") && invincible)
-			{
-				StartCoroutine(InvincibilityFrame());
-			}
 		}
 	}
 
@@ -172,6 +165,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Ragdoll()
 	{
+		isDamaged = true;
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isRagdoll = true;
@@ -203,26 +197,32 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				bc.enabled = true;
 			}
 		}
-		if (Health > 0)
+		/*if (Health > 0)
 		{
 			color = new Color32(108, 108, 108, 0);
 			rend.material.color = color;
 		}
 		else
-        {
-			if (Health <= 0)
-			{
-				color = new Color32(108, 0, 0, 0);
-				rend.material.color = color;
-			}
+        */{
+		if (Health <= 0)
+		{
+			color = new Color32(108, 0, 0, 0);
+			rend.material.color = color;
 		}
-		StartCoroutine(KnockDown());
+
+		}
+		if (isKicked)
+		{
+			StartCoroutine(KnockDown());
+		}
+		
 	}
 	void Slashed()
     {
 		Health -= hs.AttackAmount;
 		if (Health <= 0)
 		{
+			isDamaged = true;
 			Ragdoll();
 			StartCoroutine(FinalDeath());
 		}
@@ -230,6 +230,9 @@ public class EnemyAICharacterJoints : MonoBehaviour
         {
 			if (Health > 0)
 			{
+				color = new Color32(108, 108, 108, 0);
+				rend.material.color = color;
+				isDamaged = false;
 				StartCoroutine(InvincibilityFrame());
 			}
 		}
@@ -247,6 +250,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator WakingUp()
     {
+		isKicked = false;
 		color = new Color32(255, 255, 255, 0);
 		rend.material.color = color;
 		yield return new WaitForSeconds(3f);
@@ -279,10 +283,9 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	IEnumerator InvincibilityFrame()
 	{
 		invincible = true;
-		color = new Color32(108, 108, 108, 0);
-		rend.material.color = color;
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0.5f);
 		color = new Color32(255, 255, 255, 0);
+		yield return new WaitForSeconds(1f);
 		rend.material.color = color;
 		invincible = false;	
 	}
