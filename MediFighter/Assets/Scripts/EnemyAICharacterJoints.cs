@@ -16,6 +16,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public Renderer rend;
 	public int Health;
 	public float movementSpeed;
+	public int AttackAmount;
 	public bool isDamaged;
 	public bool isRagdoll;
 	public bool isKicked;
@@ -33,6 +34,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	void Start()
 	{
 		Health = 3;
+		AttackAmount = 1;
 		invincible = false;
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
@@ -76,7 +78,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		{
 			spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 			Destroy(gameObject);
-			Debug.Log("AAAAAAAAAAAAAAAAAAAA");
 		}
 
 		if (GetUp)
@@ -93,7 +94,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		if (collision.gameObject.CompareTag("Sword") && !isDamaged && !isRagdoll && !invincible)
 		{
 			isDamaged = true;
-			Ragdoll();
+			StartCoroutine(LightDamage());
 		}
 
 		if (collision.gameObject.CompareTag("Boot") && !isDamaged && !isRagdoll && !invincible)
@@ -163,7 +164,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Ragdoll()
 	{
-		Health -= 1;
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isRagdoll = true;
@@ -208,9 +208,33 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				rend.material.color = color;
 			}
 		}
-		StartCoroutine(Damage());
+		StartCoroutine(CriticalDamage());
 	}
-	IEnumerator Damage()
+	IEnumerator LightDamage()
+    {
+		Health -= AttackAmount;
+		color = new Color32(108, 108, 108, 0);
+		rend.material.color = color;
+		yield return new WaitForSeconds(0.75f);
+		if (Health > 0)
+		{
+			color = new Color32(255, 255, 255, 0);
+			rend.material.color = color;
+			StartCoroutine(InvincibilityFrame());
+			yield return new WaitForSeconds(0.75f);
+			isDamaged = false;
+		}
+		else
+		{
+			if (Health <= 0)
+			{
+				Ragdoll();
+				StartCoroutine(FinalDeath());
+			}
+		}
+	}
+
+	IEnumerator CriticalDamage()
 	{
 		if (isKicked)
 		{
@@ -263,9 +287,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		color = new Color32(255, 255, 255, 0);
 		rend.material.color = color;
 		invincible = true;
-		yield return new WaitForSeconds(2f);
-		color = new Color32(255, 255, 255, 0);
-		rend.material.color = color;
+		yield return new WaitForSeconds(0.75f);
 		invincible = false;
 	}
 }
