@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1562648d6a6adc143b6954ac3d2d1448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kickForce: 4
 --- !u!136 &1891570381
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -65,7 +66,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4727061832764698456}
   m_Material: {fileID: 13400000, guid: 4fdc34cb2a988c14ca96ece7e7725bb2, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   m_Radius: 0.8
   m_Height: 7.2
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 4932589195320033711}
   cc: {fileID: 4932589195579258792}
+  sm: {fileID: 0}
   animSword: {fileID: 9166715548836056437}
   hitBox: {fileID: 1891570381}
   groundCheck: {fileID: 4932589195270346316}
@@ -164,6 +166,7 @@ MonoBehaviour:
   buyableItem: {fileID: 0}
   hs: {fileID: 1466808219}
   shield: {fileID: 5239228349188284885}
+  juice: {fileID: 0}
 --- !u!143 &4932589195320033711
 CharacterController:
   m_ObjectHideFlags: 0
@@ -210,6 +213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: 0
   maxHealth: 0
+  disHealth: {fileID: 0}
+  AttackAmount: 0
   beards: 0
 --- !u!1 &4932589195579258796
 GameObject:

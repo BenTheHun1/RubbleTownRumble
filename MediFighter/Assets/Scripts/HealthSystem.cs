@@ -13,7 +13,7 @@ public class HealthSystem : MonoBehaviour
     private bool isDamaged;
     public int playerHealth;
     public int maxHealth;
-    private Image disHealth;
+    public Image disHealth;
 
     public int AttackAmount;
     public int beards;
