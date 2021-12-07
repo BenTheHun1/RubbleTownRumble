@@ -17,8 +17,8 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public Renderer rend;
 	public int Health;
 	public float movementSpeed;
-	public int AttackAmount;
 	public bool isDamaged;
+	private HealthSystem hs;
 	public bool isRagdoll;
 	public bool isKicked;
 	public bool isAttacking;
@@ -35,7 +35,8 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	void Start()
 	{
 		Health = 3;
-		AttackAmount = 1;
+		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
+
 		invincible = false;
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
@@ -229,7 +230,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	}
 	IEnumerator Slashed()
     {
-		Health -= AttackAmount;
+		Health -= hs.AttackAmount;
 		if (Health <= 0)
 		{
 			Ragdoll();
@@ -284,6 +285,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		var particle = Instantiate(particleEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		particle.Play();
 		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
+		hs.beards++;
 		Destroy(gameObject);
 		yield return new WaitForSeconds(1.2f);
 		Destroy(particle);
@@ -291,26 +293,11 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator InvincibilityFrame()
 	{
-		if (invincible)
-		{
-			color = new Color32(0, 0, 108, 0);
-			rend.material.color = color;
-			yield return new WaitForSeconds(0.5f);
-			color = new Color32(255, 255, 255, 0);
-			rend.material.color = color;
-			invincible = false;
-		}
-		else
-        {
-			if (!invincible)
-			{
-				color = new Color32(108, 108, 108, 0);
-				rend.material.color = color;
-				yield return new WaitForSeconds(0.5f);
-				color = new Color32(255, 255, 255, 0);
-				rend.material.color = color;
-				invincible = false;
-			}
-		}		
+		color = new Color32(108, 108, 108, 0);
+		rend.material.color = color;
+		yield return new WaitForSeconds(0.5f);
+		color = new Color32(255, 255, 255, 0);
+		rend.material.color = color;
+		invincible = false;	
 	}
 }
