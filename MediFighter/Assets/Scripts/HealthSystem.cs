@@ -15,12 +15,14 @@ public class HealthSystem : MonoBehaviour
     public int maxHealth;
     private Image disHealth;
 
+    public int AttackAmount;
     public int beards;
     private Text disBeards;
 
     // Start is called before the first frame update
     void Start()
     {
+        AttackAmount = 1;
         maxHealth = 5;
         playerHealth = maxHealth;
         player = GameObject.Find("Player");
