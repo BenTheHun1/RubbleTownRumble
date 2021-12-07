@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
-    private Text waveText;
+    public bool startWave;
+    public GameObject waveText;
     public GameObject[] enemyPrefabs;
     public List <GameObject> spawns;
     public List <GameObject> enemyAmount;
@@ -20,11 +21,13 @@ public class SpawnManager : MonoBehaviour
     private bool nextWave;
     private bool loadingWave;
 
+    private PlayerController pc;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(NextWave());
-        waveText = GameObject.Find("Wave").GetComponent<Text>();
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        waveText = GameObject.Find("Wave");
         waveText.gameObject.SetActive(false);
         foreach (Transform spawn in transform)
         {
@@ -39,23 +42,33 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (enemiesLeft != enemyAmount.Count)
         {
             enemiesLeft = enemyAmount.Count;
         }
         
 
-        if (canSpawn && enemyAmount.Count >= 0 && enemiesToSpawn > 0 && loadingWave == false)
+        if (canSpawn && enemyAmount.Count >= 0 && enemiesToSpawn > 0 && !loadingWave)
         {
             canSpawn = false;
             StartCoroutine(SpawnEnemy());
         }
 
-        if (enemiesLeft + enemiesToSpawn <= 0 && !nextWave)
+        if (enemiesLeft + enemiesToSpawn <= 0 && !loadingWave)
+        {
+            pc.juice.SetActive(true);
+            pc.juice.GetComponent<AudioSource>().Stop();
+        }
+
+        if (!nextWave && startWave)
         {
             nextWave = true;
             loadingWave = true;
+            startWave = false;
             StartCoroutine(NextWave());
+            pc.juice.SetActive(false);
+            pc.juice.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -69,7 +82,6 @@ public class SpawnManager : MonoBehaviour
         enemiesToSpawn = enemySpawnInterval * waveNum;
         enemiesLeft = enemiesToSpawn;
         yield return new WaitForSeconds(3);
-        waveText.text = "Wave: " + waveNum.ToString();
         waveText.gameObject.SetActive(true);
         yield return new WaitForSeconds(nextWaveDelay);
         waveText.gameObject.SetActive(false);

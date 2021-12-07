@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAICharacterJoints : MonoBehaviour
 {
+	public ParticleSystem particleEffect;
 	public Vector3 lastPos;
 	public GameObject rootJoint;
 	public Rigidbody rootRigid;
@@ -16,6 +17,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public Renderer rend;
 	public int Health;
 	public float movementSpeed;
+	public int AttackAmount;
 	public bool isDamaged;
 	public bool isRagdoll;
 	public bool isKicked;
@@ -33,6 +35,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	void Start()
 	{
 		Health = 3;
+		AttackAmount = 1;
 		invincible = false;
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
@@ -76,11 +79,10 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		{
 			spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 			Destroy(gameObject);
-			Debug.Log("AAAAAAAAAAAAAAAAAAAA");
 		}
 
 		if (GetUp)
-        {
+		{
 			Quaternion q = Quaternion.FromToRotation(rootJoint.transform.up, Vector3.up) * rootJoint.transform.rotation;
 			rootJoint.transform.rotation = Quaternion.Slerp(rootJoint.transform.rotation, q, Time.deltaTime * lookSpeed);
 			rootJoint.transform.localPosition = Vector3.Slerp(rootJoint.transform.localPosition, new Vector3(rootJoint.transform.localPosition.x, rootJoint.transform.localPosition.y + 0.3f, rootJoint.transform.localPosition.z), Time.deltaTime * 2f);
@@ -89,20 +91,36 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-
-		if (collision.gameObject.CompareTag("Sword") && !isDamaged && !isRagdoll && !invincible)
-		{
-			isDamaged = true;
-			Ragdoll();
-		}
-
 		if (collision.gameObject.CompareTag("Boot") && !isDamaged && !isRagdoll && !invincible)
 		{
 			isKicked = true;
 			isDamaged = true;
 			Ragdoll();
 		}
+		else
+		{
+			if (collision.gameObject.CompareTag("Boot") && invincible)
+			{
+				StartCoroutine(InvincibilityFrame());
+			}
+		}
+	}
 
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Sword") && !isDamaged && !isRagdoll && !invincible)
+		{
+			isDamaged = true;
+			StartCoroutine(Slashed());
+		}
+		else
+        {
+			if (other.gameObject.CompareTag("Sword") && invincible)
+            {
+				invincible = true;
+				StartCoroutine(InvincibilityFrame());
+			}
+		}
 	}
 
 	/*void OnTriggerEnter(Collider other)
@@ -163,7 +181,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Ragdoll()
 	{
-		Health -= 1;
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isRagdoll = true;
@@ -208,15 +225,31 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				rend.material.color = color;
 			}
 		}
-		StartCoroutine(Damage());
+		StartCoroutine(KnockDown());
 	}
-	IEnumerator Damage()
-	{
-		if (isKicked)
+	IEnumerator Slashed()
+    {
+		Health -= AttackAmount;
+		if (Health <= 0)
 		{
-			yield return new WaitForSeconds(0.5f);
-			isKicked = false;
+			Ragdoll();
+			StartCoroutine(FinalDeath());
 		}
+		else
+        {
+			if (Health > 0)
+			{
+				StartCoroutine(InvincibilityFrame());
+				yield return new WaitForSeconds(0.75f);
+				isDamaged = false;
+			}
+		}
+
+	}
+
+	IEnumerator KnockDown()
+	{
+		isKicked = false;
 		yield return new WaitForSeconds(3f);
 		if (Health > 0)
 		{
@@ -225,13 +258,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			color = new Color32(255, 255, 255, 0);
 			rend.material.color = color;
 			StartCoroutine(WakingUp());
-		}
-		else
-        {
-			if (Health <= 0)
-            {
-				StartCoroutine(FinalDeath());
-            }
         }
 	}
 
@@ -243,6 +269,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		WakeUp();
 		ResetColliders();
 		isDamaged = false;
+		invincible = true;
 		StartCoroutine(InvincibilityFrame());
 	}
 	IEnumerator FinalDeath()
@@ -254,18 +281,36 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		GetUp = false;
 		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		yield return new WaitForSeconds(2f);
+		var particle = Instantiate(particleEffect, rootJoint.transform.position, rootJoint.transform.rotation);
+		particle.Play();
 		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 		Destroy(gameObject);
+		yield return new WaitForSeconds(1.2f);
+		Destroy(particle);
 	}
 
 	IEnumerator InvincibilityFrame()
 	{
-		color = new Color32(255, 255, 255, 0);
-		rend.material.color = color;
-		invincible = true;
-		yield return new WaitForSeconds(2f);
-		color = new Color32(255, 255, 255, 0);
-		rend.material.color = color;
-		invincible = false;
+		if (invincible)
+		{
+			color = new Color32(0, 0, 108, 0);
+			rend.material.color = color;
+			yield return new WaitForSeconds(0.5f);
+			color = new Color32(255, 255, 255, 0);
+			rend.material.color = color;
+			invincible = false;
+		}
+		else
+        {
+			if (!invincible)
+			{
+				color = new Color32(108, 108, 108, 0);
+				rend.material.color = color;
+				yield return new WaitForSeconds(0.5f);
+				color = new Color32(255, 255, 255, 0);
+				rend.material.color = color;
+				invincible = false;
+			}
+		}		
 	}
 }

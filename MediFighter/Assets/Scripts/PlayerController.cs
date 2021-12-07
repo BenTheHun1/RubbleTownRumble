@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     //Variables
     public CharacterController controller;
     public CameraController cc;
+    public SpawnManager sm;
     public Animator animSword;
     public CapsuleCollider hitBox;
 
@@ -37,11 +38,18 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     bool hasShield;
 
+    public GameObject juice;
+
     void Start()
     {
         shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
+        juice = GameObject.Find("Juice");
         canKick = true;
         foot.SetActive(false);
+        if (GameObject.Find("Spawns") != null)
+        {
+            sm = GameObject.Find("Spawns").GetComponent<SpawnManager>();
+        }
     }
 
     void Update()
@@ -142,19 +150,30 @@ public class PlayerController : MonoBehaviour
                 {
                     shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
                 }
+                else if (buyableItem.name == "StartGame" && juice.activeSelf)
+                {
+                    shopInfo.text = "Bring on the Dwarves!\nPress [E]";
+                }
+                else if (buyableItem.name == "Beard")
+                {
+                    shopInfo.text = "Pick up [E]";
+                }
+                else
+                {
+                    shopInfo.text = "";
+                    buyableItem = null;
+                }
             }
-
-
-            private Vector3 grav;
-
-            Physics.gravity *= 1.5f;
-            
-
             else
             {
-                buyableItem = null;
                 shopInfo.text = "";
+                buyableItem = null;
             }
+        }
+        else
+        {
+            shopInfo.text = "";
+            buyableItem = null;
         }
 
         //Buy buyable item you're looking at
@@ -183,6 +202,15 @@ public class PlayerController : MonoBehaviour
                 buyableItem.SetActive(false);
                 hasShield = true;
             }
+            else if (buyableItem.name == "StartGame" && juice.activeSelf)
+            {
+                sm.startWave = true;
+            }
+            else if (buyableItem.name == "Beard")
+            {
+                hs.beards++;
+                Destroy(buyableItem);
+            }
         }
     }
 
@@ -200,5 +228,4 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
         hitBox.enabled = false;
     }
-
 }
