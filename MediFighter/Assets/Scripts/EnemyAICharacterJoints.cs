@@ -36,8 +36,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	{
 		Health = 3;
 		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
-
-		invincible = false;
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
 		rootBoxCollide = GetComponent<BoxCollider>();
@@ -112,15 +110,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		if (other.gameObject.CompareTag("Sword") && !isDamaged && !isRagdoll && !invincible)
 		{
 			isDamaged = true;
-			StartCoroutine(Slashed());
-		}
-		else
-        {
-			if (other.gameObject.CompareTag("Sword") && invincible)
-            {
-				invincible = true;
-				StartCoroutine(InvincibilityFrame());
-			}
+			Slashed();
 		}
 	}
 
@@ -228,7 +218,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 		StartCoroutine(KnockDown());
 	}
-	IEnumerator Slashed()
+	void Slashed()
     {
 		Health -= hs.AttackAmount;
 		if (Health <= 0)
@@ -241,8 +231,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			if (Health > 0)
 			{
 				StartCoroutine(InvincibilityFrame());
-				yield return new WaitForSeconds(0.75f);
-				isDamaged = false;
 			}
 		}
 
@@ -250,20 +238,17 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator KnockDown()
 	{
-		isKicked = false;
+		isKicked = true;
 		yield return new WaitForSeconds(3f);
-		if (Health > 0)
-		{
-			GetUp = true;
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-			color = new Color32(255, 255, 255, 0);
-			rend.material.color = color;
-			StartCoroutine(WakingUp());
-        }
+		GetUp = true;
+		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+		StartCoroutine(WakingUp());
 	}
 
 	IEnumerator WakingUp()
     {
+		color = new Color32(255, 255, 255, 0);
+		rend.material.color = color;
 		yield return new WaitForSeconds(3f);
 		GetUp = false;
 		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -293,9 +278,10 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator InvincibilityFrame()
 	{
+		invincible = true;
 		color = new Color32(108, 108, 108, 0);
 		rend.material.color = color;
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(1f);
 		color = new Color32(255, 255, 255, 0);
 		rend.material.color = color;
 		invincible = false;	
