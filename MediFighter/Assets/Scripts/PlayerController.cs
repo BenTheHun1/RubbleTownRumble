@@ -47,7 +47,10 @@ public class PlayerController : MonoBehaviour
         juice = GameObject.Find("Juice");
         canKick = true;
         foot.SetActive(false);
-        sm = GameObject.Find("Spawns").GetComponent<SpawnManager>();
+        if (GameObject.Find("Spawns") != null)
+        {
+            sm = GameObject.Find("Spawns").GetComponent<SpawnManager>();
+        }
     }
 
     void Update()
@@ -152,42 +155,61 @@ public class PlayerController : MonoBehaviour
                 {
                     shopInfo.text = "Bring on the Dwarves!\nPress [E]";
                 }
+                else if (buyableItem.name == "Beard")
+                {
+                    shopInfo.text = "Pick up [E]";
+                }
             }
-
-
-            //Buy buyable item you're looking at
-            if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
+            else
             {
-                if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
-                {
-                    hs.beards -= 20;
-                    hs.maxHealth += 5;
-                    hs.playerHealth += 5;
-                }
-                else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
-                {
-                    hs.beards -= 25;
-                    //atk++;
-                }
-                else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
-                {
-                    hs.beards -= 10;
-                    hs.playerHealth = hs.maxHealth;
-                }
-                else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
-                {
-                    hs.beards -= 10;
-                    hs.playerHealth = hs.maxHealth;
-                    buyableItem.SetActive(false);
-                    hasShield = true;
-                }
-                else if (buyableItem.name == "StartGame")
-                {
-                    juice.SetActive(false);
-                    //sm.intermission();
-                }
+                shopInfo.text = "";
+                buyableItem = null;
             }
         }
+        else
+        {
+            shopInfo.text = "";
+            buyableItem = null;
+        }
+
+        //Buy buyable item you're looking at
+        if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
+        {
+            if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
+            {
+                hs.beards -= 20;
+                hs.maxHealth += 5;
+                hs.playerHealth += 5;
+            }
+            else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
+            {
+                hs.beards -= 25;
+                //atk++;
+            }
+            else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
+            {
+                hs.beards -= 10;
+                hs.playerHealth = hs.maxHealth;
+            }
+            else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
+            {
+                hs.beards -= 10;
+                hs.playerHealth = hs.maxHealth;
+                buyableItem.SetActive(false);
+                hasShield = true;
+            }
+            else if (buyableItem.name == "StartGame")
+            {
+                juice.SetActive(false);
+                //sm.intermission();
+            }
+            else if (buyableItem.name == "Beard")
+            {
+                hs.beards++;
+                Destroy(buyableItem);
+            }
+        }
+        
 
         //Hide foot after done playing anim
         IEnumerator FootDissapear()
