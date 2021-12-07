@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class HealthSystem : MonoBehaviour
 {
     private RawImage hurtDisplay;
-    private Text gameOverText;
+    private GameObject gameOverText;
     private GameObject player;
     private GameObject cam;
     private bool isDamaged;
@@ -30,8 +30,8 @@ public class HealthSystem : MonoBehaviour
         disBeards = GameObject.Find("BeardAmount").GetComponent<Text>();
         hurtDisplay = GameObject.Find("Hurt").GetComponent<RawImage>();
         hurtDisplay.gameObject.SetActive(false);
-        gameOverText = GameObject.Find("GameOver").GetComponent<Text>();
-        gameOverText.gameObject.SetActive(false);
+        gameOverText = GameObject.Find("GameOver");
+        gameOverText.SetActive(false);
     }
 
     // Update is called once per frame
