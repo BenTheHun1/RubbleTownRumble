@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     public int enemiesLeft;
     public int enemiesToSpawn;
     public int enemySpawnInterval = 5;
-    private int waveNum = 0;
+    public int waveNum = 0;
     private int nextWaveDelay = 5;
     private int spawnRate = 3;
     private float chancePercentage = 0f;
@@ -58,7 +58,7 @@ public class SpawnManager : MonoBehaviour
         if (enemiesLeft + enemiesToSpawn <= 0 && !loadingWave)
         {
             pc.juice.SetActive(true);
-            pc.juice.GetComponent<AudioSource>().Stop();
+            pc.juice.transform.root.GetComponent<AudioSource>().Stop();
         }
 
         if (!nextWave && startWave)
@@ -68,7 +68,7 @@ public class SpawnManager : MonoBehaviour
             startWave = false;
             StartCoroutine(NextWave());
             pc.juice.SetActive(false);
-            pc.juice.GetComponent<AudioSource>().Play();
+            pc.juice.transform.root.GetComponent<AudioSource>().Play();
         }
     }
 

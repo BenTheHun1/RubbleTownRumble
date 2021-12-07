@@ -152,7 +152,8 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
-                    shopInfo.text = "Bring on the Dwarves!\nPress [E]";
+                    var NextWaveNum = sm.waveNum + 1;
+                    shopInfo.text = "Bring on the Dwarves!\n" + "Wave: " + NextWaveNum.ToString() + "\nPress [E]";
                 }
                 else if (buyableItem.name == "Beard")
                 {
@@ -188,7 +189,7 @@ public class PlayerController : MonoBehaviour
             else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
             {
                 hs.beards -= 25;
-                //atk++;
+                hs.AttackAmount++;
             }
             else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
             {

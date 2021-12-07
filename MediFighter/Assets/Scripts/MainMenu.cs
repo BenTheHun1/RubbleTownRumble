@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Main"); //Do the level one;
+        SceneManager.LoadScene("Final");
     }
 
     public void ShowCredits()
