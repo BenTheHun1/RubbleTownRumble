@@ -11,7 +11,10 @@ GameObject:
   - component: {fileID: 3577628066059375319}
   - component: {fileID: 435039711747169650}
   - component: {fileID: 2444721334873237944}
-  m_Layer: 0
+  - component: {fileID: 972552521723578090}
+  - component: {fileID: 4037593051366862751}
+  - component: {fileID: 7281602354998978286}
+  m_Layer: 7
   m_Name: CornerWindowsWF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,6 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,3 +87,43 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &972552521723578090
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246218703242233965}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.999986, y: 0.13631476, z: 2.999986}
+  m_Center: {x: -1.499993, y: -0.08275636, z: -1.499993}
+--- !u!65 &4037593051366862751
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246218703242233965}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.9999864, y: 3.1509142, z: 0.24782138}
+  m_Center: {x: -1.4999932, y: 1.4245428, z: -2.8760877}
+--- !u!65 &7281602354998978286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246218703242233965}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27686882, y: 3.1509142, z: 2.9999895}
+  m_Center: {x: -0.13843441, y: 1.4245428, z: -1.4999948}

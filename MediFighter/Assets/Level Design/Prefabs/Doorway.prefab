@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 7546298175620367524}
   - component: {fileID: 6851678864625158913}
   - component: {fileID: 8715304110822801355}
+  - component: {fileID: 6632721532620177821}
+  - component: {fileID: 5259310562460867751}
+  - component: {fileID: 6887056986441200673}
   m_Layer: 0
   m_Name: Doorway
   m_TagString: Untagged
@@ -55,6 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,3 +84,43 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6632721532620177821
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201826012441058846}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.28213453, y: 2.9999878, z: 1.0160452}
+  m_Center: {x: 0.14106727, y: 1.4999939, z: -2.4919758}
+--- !u!65 &5259310562460867751
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201826012441058846}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.28213453, y: 2.9999857, z: 0.99376154}
+  m_Center: {x: 0.14106727, y: 1.4999928, z: -0.49688077}
+--- !u!65 &6887056986441200673
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201826012441058846}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.28213453, y: 0.95896745, z: 0.97900856}
+  m_Center: {x: 0.14106727, y: 2.520491, z: -1.4882246}
