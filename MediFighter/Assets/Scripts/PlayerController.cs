@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     bool hasShield;
 
-    private GameObject juice;
+    public GameObject juice;
 
 
     void Start()
@@ -151,13 +151,18 @@ public class PlayerController : MonoBehaviour
                 {
                     shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
                 }
-                else if (buyableItem.name == "StartGame")
+                else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
                     shopInfo.text = "Bring on the Dwarves!\nPress [E]";
                 }
                 else if (buyableItem.name == "Beard")
                 {
                     shopInfo.text = "Pick up [E]";
+                }
+                else
+                {
+                    shopInfo.text = "";
+                    buyableItem = null;
                 }
             }
             else
@@ -198,10 +203,10 @@ public class PlayerController : MonoBehaviour
                 buyableItem.SetActive(false);
                 hasShield = true;
             }
-            else if (buyableItem.name == "StartGame")
+            else if (buyableItem.name == "StartGame" && juice.activeSelf)
             {
                 juice.SetActive(false);
-                //sm.intermission();
+                sm.startWave = true;
             }
             else if (buyableItem.name == "Beard")
             {

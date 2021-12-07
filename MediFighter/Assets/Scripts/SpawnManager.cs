@@ -21,9 +21,12 @@ public class SpawnManager : MonoBehaviour
     private bool nextWave;
     private bool loadingWave;
 
+    private PlayerController pc;
+
     // Start is called before the first frame update
     void Start()
     {
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         waveText = GameObject.Find("Wave").GetComponent<Text>();
         waveText.gameObject.SetActive(false);
         foreach (Transform spawn in transform)
@@ -46,18 +49,24 @@ public class SpawnManager : MonoBehaviour
         }
         
 
-        if (canSpawn && enemyAmount.Count >= 0 && enemiesToSpawn > 0 && loadingWave == false)
+        if (canSpawn && enemyAmount.Count >= 0 && enemiesToSpawn > 0 && !loadingWave)
         {
             canSpawn = false;
             StartCoroutine(SpawnEnemy());
         }
 
-        if (enemiesLeft + enemiesToSpawn <= 0 && !nextWave && startWave)
+        if (enemiesLeft + enemiesToSpawn <= 0 && !loadingWave)
+        {
+            pc.juice.SetActive(true);
+        }
+
+        if (!nextWave && startWave)
         {
             nextWave = true;
             loadingWave = true;
             startWave = false;
             StartCoroutine(NextWave());
+            pc.juice.SetActive(false);
         }
     }
 
