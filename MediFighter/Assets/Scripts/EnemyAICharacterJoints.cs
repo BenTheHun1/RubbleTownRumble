@@ -17,7 +17,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public Renderer rend;
 	public int Health;
 	public float movementSpeed;
-	public bool isDamaged;
 	public bool isRagdoll;
 	public bool isKicked;
 	public bool isAttacking;
@@ -53,7 +52,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		lookDirection.y = 0;
 		qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
 		rootJoint.transform.SetParent(transform, true);
-		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isDamaged && !isRagdoll)
+		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll)
 		{
 			isWalking = true;
 			isAttacking = false;
@@ -66,7 +65,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 		else
 		{
-			if (!isDamaged && !isRagdoll)
+			if (!isRagdoll)
 			{
 				isAttacking = true;
 				isWalking = false;
@@ -90,19 +89,17 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject.CompareTag("Boot") && !isDamaged && !isRagdoll)//&& !invincible)
+		if (collision.gameObject.CompareTag("Boot") && !isRagdoll)//&& !invincible)
 		{
 			isKicked = true;
-			isDamaged = true;
 			Ragdoll();
 		}
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag("Sword") && !isDamaged && !isRagdoll && !invincible)
+		if (other.gameObject.CompareTag("Sword") && !invincible)
 		{
-			isDamaged = true;
 			Slashed();
 		}
 	}
@@ -165,7 +162,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Ragdoll()
 	{
-		isDamaged = true;
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isRagdoll = true;
@@ -203,13 +199,12 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			rend.material.color = color;
 		}
 		else
-        */{
+        
+		{*/
 		if (Health <= 0)
 		{
 			color = new Color32(108, 0, 0, 0);
 			rend.material.color = color;
-		}
-
 		}
 		if (isKicked)
 		{
@@ -222,7 +217,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		Health -= hs.AttackAmount;
 		if (Health <= 0)
 		{
-			isDamaged = true;
 			Ragdoll();
 			StartCoroutine(FinalDeath());
 		}
@@ -230,9 +224,8 @@ public class EnemyAICharacterJoints : MonoBehaviour
         {
 			if (Health > 0)
 			{
-				color = new Color32(108, 108, 108, 0);
+				color = new Color32(255, 0, 0, 0);
 				rend.material.color = color;
-				isDamaged = false;
 				StartCoroutine(InvincibilityFrame());
 			}
 		}
@@ -258,9 +251,8 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		WakeUp();
 		ResetColliders();
-		isDamaged = false;
-		invincible = true;
-		StartCoroutine(InvincibilityFrame());
+		//invincible = true;
+		//StartCoroutine(InvincibilityFrame());
 	}
 	IEnumerator FinalDeath()
 	{
