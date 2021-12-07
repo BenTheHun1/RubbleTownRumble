@@ -58,6 +58,7 @@ public class SpawnManager : MonoBehaviour
         if (enemiesLeft + enemiesToSpawn <= 0 && !loadingWave)
         {
             pc.juice.SetActive(true);
+            pc.juice.GetComponent<AudioSource>().Stop();
         }
 
         if (!nextWave && startWave)
@@ -67,6 +68,7 @@ public class SpawnManager : MonoBehaviour
             startWave = false;
             StartCoroutine(NextWave());
             pc.juice.SetActive(false);
+            pc.juice.GetComponent<AudioSource>().Play();
         }
     }
 

@@ -204,7 +204,6 @@ public class PlayerController : MonoBehaviour
             }
             else if (buyableItem.name == "StartGame" && juice.activeSelf)
             {
-                juice.SetActive(false);
                 sm.startWave = true;
             }
             else if (buyableItem.name == "Beard")
