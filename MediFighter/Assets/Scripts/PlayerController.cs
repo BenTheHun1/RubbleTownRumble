@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
 
     public GameObject juice;
 
-
     void Start()
     {
         shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
@@ -214,22 +213,20 @@ public class PlayerController : MonoBehaviour
                 Destroy(buyableItem);
             }
         }
-        
+    }
 
-        //Hide foot after done playing anim
-        IEnumerator FootDissapear()
-        {
-            yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
-            cc.inControl = true;
-            foot.SetActive(false);
-            canKick = true;
-        }
+    //Hide foot after done playing anim
+    IEnumerator FootDissapear()
+    {
+        yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+        cc.inControl = true;
+        foot.SetActive(false);
+        canKick = true;
+    }
 
-        IEnumerator Slaying()
-        {
-            yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
-            hitBox.enabled = false;
-        }
-
+    IEnumerator Slaying()
+    {
+        yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+        hitBox.enabled = false;
     }
 }

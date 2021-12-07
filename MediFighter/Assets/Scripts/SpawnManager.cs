@@ -80,7 +80,6 @@ public class SpawnManager : MonoBehaviour
         enemiesToSpawn = enemySpawnInterval * waveNum;
         enemiesLeft = enemiesToSpawn;
         yield return new WaitForSeconds(3);
-        waveText.text = "Wave: " + waveNum.ToString();
         waveText.gameObject.SetActive(true);
         yield return new WaitForSeconds(nextWaveDelay);
         waveText.gameObject.SetActive(false);

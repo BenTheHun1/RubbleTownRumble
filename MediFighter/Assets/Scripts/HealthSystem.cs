@@ -70,9 +70,9 @@ public class HealthSystem : MonoBehaviour
 
     IEnumerator Damage()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         hurtDisplay.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         isDamaged = false;
         
     }
