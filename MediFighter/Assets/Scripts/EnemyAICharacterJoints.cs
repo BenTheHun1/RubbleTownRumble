@@ -212,7 +212,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 		
 	}
-	void Slashed()
+	public void Slashed()
     {
 		Health -= hs.AttackAmount;
 		if (Health <= 0)

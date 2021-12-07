@@ -14,7 +14,6 @@ public class HealthSystem : MonoBehaviour
     public int playerHealth;
     public int maxHealth;
     private Image disHealth;
-
     public int AttackAmount;
     public int beards;
     private Text disBeards;
