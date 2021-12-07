@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
         //Bringing up info on buyable item you're looking at
         if (ray.transform != null)
         {
-            if (ray.transform.gameObject.CompareTag("Item"))
+            if (ray.transform.gameObject.CompareTag("Item") && Vector3.Distance(ray.transform.position, gameObject.transform.position) < 4f)
             {
                 buyableItem = ray.transform.gameObject;
                 if (buyableItem.name == "ArmorKit")
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (buyableItem.name == "BuyShield")
                 {
-                    shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
+                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n10 Beards\n\nBuy with [E]";
                 }
                 else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
