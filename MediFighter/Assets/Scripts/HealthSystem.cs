@@ -21,7 +21,6 @@ public class HealthSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        beards += 100; //debug
         maxHealth = 5;
         playerHealth = maxHealth;
         player = GameObject.Find("Player");
