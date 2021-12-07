@@ -9,6 +9,7 @@ public class Pause : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         pauseMenu.SetActive(false);
     }
 
@@ -17,26 +18,35 @@ public class Pause : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseGame();
+            if (Time.timeScale == 1)
+            {
+                PauseGame();
+            }
+            else
+            {
+                if (Time.timeScale == 0)
+                {
+                    ResumeGame();
+                }
+            }
+            
         }
     }
 
     public void PauseGame()
     {
-        if (Time.timeScale == 1)
-        {
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Time.timeScale = 1;
-            pauseMenu.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-
-        }
     }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    
 
     public void ToMenu()
     {
