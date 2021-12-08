@@ -154,28 +154,10 @@ public class EnemyAIConfigurableJoints : MonoBehaviour
 		}
 		if (other.transform.root != transform.root && other.gameObject.CompareTag("EnemyRoot") && isRagdoll && isKicked == true)
 		{
-			other.gameObject.GetComponent<EnemyAICharacterJoints>().isKicked = true;
-			other.gameObject.GetComponent<EnemyAICharacterJoints>().Ragdoll();
+			other.gameObject.GetComponent<EnemyAIConfigurableJoints>().isKicked = true;
+			other.gameObject.GetComponent<EnemyAIConfigurableJoints>().Ragdoll();
 		}
 	}
-
-	/*void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<EnemyAIConfigurableJoints>().isKicked == true && other.gameObject.GetComponent<EnemyAIConfigurableJoints>().isRagdoll == true)
-		{
-			isDamaged = true;
-			isKicked = true;
-			Ragdoll();
-		}
-	}*/
-
-	/*void Ragdoll()
-	{
-		//color = new Color32(255, 0, 0, 0);
-		//rend.material.color = color;
-		isRagdoll = true;
-		StartCoroutine(Damage());
-	}*/
 
 	void Ragdoll()
 	{
