@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class HealthSystem : MonoBehaviour
 {
+    private GameObject mimic;
     private RawImage hurtDisplay;
     private GameObject gameOverText;
     private GameObject player;
     private GameObject cam;
-    private bool isDamaged;
+    public bool isDamaged;
     public int playerHealth;
     public int maxHealth;
     public Image disHealth;
-
     public int AttackAmount;
     public int beards;
     private Text disBeards;
@@ -25,6 +25,7 @@ public class HealthSystem : MonoBehaviour
         AttackAmount = 1;
         maxHealth = 5;
         playerHealth = maxHealth;
+        mimic = GameObject.Find("Mimic");
         player = GameObject.Find("Player");
         cam = GameObject.Find("Main Camera");
         disHealth = GameObject.Find("HP").GetComponent<Image>();
@@ -43,20 +44,44 @@ public class HealthSystem : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("EnemyAxe") && !isDamaged && other.transform.root.GetComponent<EnemyAICharacterJoints>().isRagdoll == false && other.transform.root.GetComponent<EnemyAICharacterJoints>().isAttacking == true && other.transform.root.GetComponent<EnemyAICharacterJoints>().isDamaged == false && other.transform.root.GetComponent<EnemyAICharacterJoints>().animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if (other.gameObject.CompareTag("EnemyAxe") && other.transform.root.GetComponent<IsDrunk>().drunk == true && !isDamaged)
         {
-            isDamaged = true;
-            if (playerHealth > 0)
+            if (other.transform.root.GetComponent<EnemyAIConfigurableJoints>().isRagdoll == false)
             {
-                playerHealth -= 1;
-                hurtDisplay.gameObject.SetActive(true);
-                disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
-            }
-            if (playerHealth <= 0)
+                isDamaged = true;
+                if (playerHealth > 0)
+                {
+                    playerHealth -= 1;
+                    hurtDisplay.gameObject.SetActive(true);
+                    disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
+                }
+                if (playerHealth <= 0)
+                {
+                    StartCoroutine(GameOver());
+                }
+                StartCoroutine(Damage());
+            }    
+        }
+        else
+        {
+            if (other.gameObject.CompareTag("EnemyAxe") && other.transform.root.GetComponent<IsDrunk>().drunk == false && !isDamaged)
             {
-                StartCoroutine(GameOver());
+                if (other.transform.root.GetComponent<EnemyAICharacterJoints>().isRagdoll == false && other.transform.root.GetComponent<EnemyAICharacterJoints>().isAttacking == true && other.transform.root.GetComponent<EnemyAICharacterJoints>().animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                {
+                    isDamaged = true;
+                    if (playerHealth > 0)
+                    {
+                        playerHealth -= 1;
+                        hurtDisplay.gameObject.SetActive(true);
+                        disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
+                    }
+                    if (playerHealth <= 0)
+                    {
+                        StartCoroutine(GameOver());
+                    }
+                    StartCoroutine(Damage());
+                }
             }
-            StartCoroutine(Damage());
         }
     }
 

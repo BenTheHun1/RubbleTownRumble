@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 2440379747706379400}
   - component: {fileID: 8766768051790423756}
   - component: {fileID: 3348163288001876094}
+  - component: {fileID: 6129869939639283517}
   m_Layer: 0
   m_Name: pCube303
   m_TagString: Untagged
@@ -513,6 +514,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -542,6 +544,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6129869939639283517
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7712549223258069020}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2698244543113123190, guid: 59c7e2ac259ff47408746f5313183816, type: 3}
 --- !u!1 &7870350990843931516
 GameObject:
   m_ObjectHideFlags: 0
