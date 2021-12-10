@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class HealthSystem : MonoBehaviour
     public Image disHealth;
     public int AttackAmount;
     public int beards;
-    private Text disBeards;
+    private TextMeshProUGUI disBeards;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,7 @@ public class HealthSystem : MonoBehaviour
         player = GameObject.Find("Player");
         cam = GameObject.Find("Main Camera");
         disHealth = GameObject.Find("HP").GetComponent<Image>();
-        disBeards = GameObject.Find("BeardAmount").GetComponent<Text>();
+        disBeards = GameObject.Find("BeardAmount").GetComponent<TextMeshProUGUI>();
         hurtDisplay = GameObject.Find("Hurt").GetComponent<RawImage>();
         hurtDisplay.gameObject.SetActive(false);
         gameOverText = GameObject.Find("GameOver");
@@ -39,7 +40,7 @@ public class HealthSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        disBeards.text = beards.ToString() + " x";
+       disBeards.text = beards.ToString() + " x";
     }
 
     void OnTriggerEnter(Collider other)
