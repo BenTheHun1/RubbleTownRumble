@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Final");
+        credits.SetActive(false);
     }
 
     public void ShowCredits()
