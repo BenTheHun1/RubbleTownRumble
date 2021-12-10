@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAICharacterJoints : MonoBehaviour
 {
 	public ParticleSystem particleEffect;
+	public ParticleSystem bloodEffect;
 	public Vector3 lastPos;
 	public GameObject rootJoint;
 	public Rigidbody rootRigid;
@@ -141,6 +142,8 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public void Slashed()
     {
 		Health -= hs.AttackAmount;
+		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
+		bloodParticle.Play();
 		if (Health <= 0)
 		{
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
