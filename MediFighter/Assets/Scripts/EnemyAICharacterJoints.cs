@@ -142,8 +142,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public void Slashed()
     {
 		Health -= hs.AttackAmount;
-		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		bloodParticle.Play();
 		if (Health <= 0)
 		{
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -239,10 +237,13 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator InvincibilityFrame()
 	{
+		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
+		bloodParticle.Play();
 		invincible = true;
 		yield return new WaitForSeconds(0.75f);
 		color = new Color32(255, 255, 255, 0);
 		rend.material.color = color;
-		invincible = false;	
+		invincible = false;
+		Destroy(bloodParticle);
 	}
 }
