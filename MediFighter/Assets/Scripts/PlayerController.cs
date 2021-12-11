@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public GameObject foot;
 
     public GameObject buyableItem;
-    private Text shopInfo;
+    private TextMeshProUGUI shopInfo;
     public SphereCollider footCollider;
     public HealthSystem hs;
 
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
+        shopInfo = GameObject.Find("ShopInfo").GetComponent<TextMeshProUGUI>();
         juice = GameObject.Find("Juice");
         canKick = true;
         foot.SetActive(false);
