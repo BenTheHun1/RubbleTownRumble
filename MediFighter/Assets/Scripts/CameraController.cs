@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     private float xRotation = 0f;
     private RaycastHit hit;
 
+
     public bool inControl;
     void Start()
     {

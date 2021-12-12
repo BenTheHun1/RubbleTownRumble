@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject optionsMenu;
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -22,34 +24,41 @@ public class Pause : MonoBehaviour
             {
                 PauseGame();
             }
-            else
+            else if (Time.timeScale == 0)
             {
-                if (Time.timeScale == 0)
-                {
-                    ResumeGame();
-                }
+                ResumeGame();
             }
-            
         }
     }
 
     public void PauseGame()
     {
-            Time.timeScale = 0;
-            pauseMenu.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
+        optionsMenu.SetActive(false);
         pauseMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
-    
+
+    public void Options()
+    {
+        optionsMenu.SetActive(!optionsMenu.activeSelf);
+    }
 
     public void ToMenu()
     {
         SceneManager.LoadScene("Menu");
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }

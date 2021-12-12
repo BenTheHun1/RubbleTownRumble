@@ -9,7 +9,7 @@ public class KickController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("EnemyRoot"))
         {
             GetComponent<SphereCollider>().enabled = false;
             collision.gameObject.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z) * kickForce, ForceMode.Impulse);
