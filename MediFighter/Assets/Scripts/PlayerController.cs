@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,7 +32,8 @@ public class PlayerController : MonoBehaviour
     public GameObject foot;
 
     public GameObject buyableItem;
-    private Text shopInfo;
+    private TextMeshProUGUI shopInfo;
+    public SphereCollider footCollider;
     public HealthSystem hs;
 
     bool blocking;
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        shopInfo = GameObject.Find("ShopInfo").GetComponent<Text>();
+        shopInfo = GameObject.Find("ShopInfo").GetComponent<TextMeshProUGUI>();
         juice = GameObject.Find("Juice");
         canKick = true;
         foot.SetActive(false);
@@ -108,7 +110,6 @@ public class PlayerController : MonoBehaviour
         //Sword Animatons
         if (Input.GetKeyDown(KeyCode.Mouse0) && !blocking)
         {
-            hitBox.enabled = true;
             if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
             {
                 animSword.SetTrigger("Swing2");
@@ -123,6 +124,7 @@ public class PlayerController : MonoBehaviour
         //Kicking
         if (Input.GetKeyDown(KeyCode.F) && canKick && !blocking)
         {
+            footCollider.enabled = true;
             canKick = false;
             foot.SetActive(true);
             StartCoroutine(FootDissapear());
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour
         //Bringing up info on buyable item you're looking at
         if (ray.transform != null)
         {
-            if (ray.transform.gameObject.CompareTag("Item"))
+            if (ray.transform.gameObject.CompareTag("Item") && Vector3.Distance(ray.transform.position, gameObject.transform.position) < 4f)
             {
                 buyableItem = ray.transform.gameObject;
                 if (buyableItem.name == "ArmorKit")
@@ -148,7 +150,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (buyableItem.name == "BuyShield")
                 {
-                    shopInfo.text = "Defend yourself with a shield.\n10 Beards\n\nBuy with [E]";
+                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n10 Beards\n\nBuy with [E]";
                 }
                 else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
@@ -185,6 +187,7 @@ public class PlayerController : MonoBehaviour
                 hs.beards -= 20;
                 hs.maxHealth += 5;
                 hs.playerHealth += 5;
+                hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
             }
             else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
             {
@@ -195,6 +198,7 @@ public class PlayerController : MonoBehaviour
             {
                 hs.beards -= 10;
                 hs.playerHealth = hs.maxHealth;
+                hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
             }
             else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
             {
@@ -226,7 +230,9 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Slaying()
     {
-        yield return new WaitForSeconds(1f); //Change time based on anim speed 1.5 speed = 0.5 seconds
+        yield return new WaitForSeconds(0.3f);
+        hitBox.enabled = true;
+        yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
         hitBox.enabled = false;
     }
 }

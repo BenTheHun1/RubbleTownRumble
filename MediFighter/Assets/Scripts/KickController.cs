@@ -4,24 +4,15 @@ using UnityEngine;
 
 public class KickController : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int kickForce;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("EnemyRoot"))
         {
-            collision.gameObject.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z), ForceMode.Impulse);
+            GetComponent<SphereCollider>().enabled = false;
+            collision.gameObject.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z) * kickForce, ForceMode.Impulse);
         }
     }
 }

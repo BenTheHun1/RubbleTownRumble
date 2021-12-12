@@ -103,6 +103,10 @@ public class SpawnManager : MonoBehaviour
         var randomSpawn = Random.Range(0, spawns.Count);
         Vector3 spawnPosEnemy = spawns[randomSpawn].transform.position;
 
+        if (enemyType.GetComponent<IsDrunk>().drunk == true)
+        {
+            spawnPosEnemy = spawns[randomSpawn].transform.position + new Vector3(0, 1, 0);
+        }
         enemyAmount.Add(Instantiate(enemyType, spawnPosEnemy, enemyType.transform.rotation));
         yield return new WaitForSeconds(spawnRate);
         canSpawn = true;

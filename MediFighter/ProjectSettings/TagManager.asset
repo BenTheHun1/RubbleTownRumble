@@ -10,6 +10,7 @@ TagManager:
   - Item
   - Boot
   - EnemyAxe
+  - EnemyRoot
   layers:
   - Default
   - TransparentFX
@@ -19,14 +20,14 @@ TagManager:
   - UI
   - Enemy
   - Ground
+  - EnemyRoot
   - 
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
+  - FPS
   - 
   - 
   - 
