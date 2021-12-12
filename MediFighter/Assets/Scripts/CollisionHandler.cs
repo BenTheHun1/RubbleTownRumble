@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    public EnemyAICharacterJoints enemyAI;
+    //public EnemyAICharacterJoints enemyAI;
+    public BoomEnemyAI enemyAI;
     private CapsuleCollider playerSword;
     private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyAI = transform.root.GetComponent<EnemyAICharacterJoints>();
+        enemyAI = transform.root.GetComponent<BoomEnemyAI>();
         playerSword = GameObject.Find("Sword").GetComponent<CapsuleCollider>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
@@ -53,8 +54,8 @@ public class CollisionHandler : MonoBehaviour
         }
         if (other.transform.root != transform.root && other.gameObject.CompareTag("EnemyRoot") && enemyAI.isRagdoll && enemyAI.isKicked == true)
         {
-            other.gameObject.GetComponent<EnemyAICharacterJoints>().isKicked = true;
-            other.gameObject.GetComponent<EnemyAICharacterJoints>().Ragdoll();
+            other.gameObject.GetComponent<BoomEnemyAI>().isKicked = true;
+            other.gameObject.GetComponent<BoomEnemyAI>().Ragdoll();
         }
     }
 }

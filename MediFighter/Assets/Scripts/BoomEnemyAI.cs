@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAICharacterJoints : MonoBehaviour
+public class BoomEnemyAI : MonoBehaviour
 {
 	public ParticleSystem particleEffect;
 	public ParticleSystem bloodEffect;
@@ -34,7 +34,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Start()
 	{
-		Health = 5;
+		Health = 15;
 		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
