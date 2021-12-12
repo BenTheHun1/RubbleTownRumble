@@ -257,12 +257,11 @@ public class BoomEnemyAI : MonoBehaviour
 
 	IEnumerator Kaboom()
 	{
-		kegAnim.SetTrigger("Explode");
+		kegAnim.SetTrigger("Explosion");
 		isWalking = false;
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
-		yield return new WaitForSeconds(0.1f);
-		//color = new Color32(0, 0, 255, 0);
-		//rend.material.color = color;
+		yield return new WaitForSeconds(1f);
+		Destroy(gameObject);
 	}
 }
