@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     bool hasShield;
 
+    private bool m_isAxisInUse = false;
+
     public GameObject juice;
 
     void Start()
@@ -107,22 +109,31 @@ public class PlayerController : MonoBehaviour
             shield.SetActive(false);
         }
 
-        //Sword Animatons
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !blocking)
+
+        //Make sword swing only occur once
+        if (Input.GetAxisRaw("Fire1") != 0 && !blocking)
         {
-            if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            if (m_isAxisInUse == false)
             {
-                animSword.SetTrigger("Swing2");
+                if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+                {
+                    animSword.SetTrigger("Swing2");
+                }
+                else
+                {
+                    animSword.SetTrigger("Swing");
+                }
+                StartCoroutine(Slaying());
+                m_isAxisInUse = true;
             }
-            else
-            {
-                animSword.SetTrigger("Swing");
-            }
-            StartCoroutine(Slaying());
+        }
+        if (Input.GetAxisRaw("Fire1") == 0)
+        {
+            m_isAxisInUse = false;
         }
 
         //Kicking
-        if (Input.GetKeyDown(KeyCode.F) && canKick && !blocking)
+        if (Input.GetAxis("Fire3") > 0f && canKick && !blocking)
         {
             footCollider.enabled = true;
             canKick = false;
@@ -180,7 +191,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Buy buyable item you're looking at
-        if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
+        if (Input.GetAxis("Fire2") > 0f && buyableItem != null)
         {
             if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
             {
