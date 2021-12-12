@@ -14,6 +14,7 @@ public class BoomEnemyAI : MonoBehaviour
 	public CapsuleCollider[] capColliders;
 	public BoxCollider[] boxColliders;
 	public Animator animEnemy;
+	public Animator kegAnim;
 	public Renderer rend;
 	public int Health;
 	public float movementSpeed;
@@ -34,6 +35,7 @@ public class BoomEnemyAI : MonoBehaviour
 
 	void Start()
 	{
+		isWalking = true;
 		Health = 15;
 		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
 		rootRigid = GetComponent<Rigidbody>();
@@ -52,7 +54,7 @@ public class BoomEnemyAI : MonoBehaviour
 		lookDirection.y = 0;
 		qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
 		rootJoint.transform.SetParent(transform, true);
-		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
+		if (isWalking && Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
 		{
 			isWalking = true;
 			isAttacking = false;
@@ -65,11 +67,9 @@ public class BoomEnemyAI : MonoBehaviour
 		}
 		else
 		{
-			if (!isRagdoll)
+			if (!isRagdoll && Vector3.Distance(player.transform.position, transform.position) <= stoppingradius)
 			{
-				isAttacking = true;
-				isWalking = false;
-				animEnemy.SetTrigger("Attacking");
+				StartCoroutine(Kaboom());
 			}
 		}
 
@@ -155,7 +155,6 @@ public class BoomEnemyAI : MonoBehaviour
 			{
 				color = new Color32(255, 0, 0, 0);
 				rend.material.color = color;
-				StartCoroutine(InvincibilityFrame());
 			}
 		}
 	}
@@ -254,5 +253,16 @@ public class BoomEnemyAI : MonoBehaviour
 		animEnemy.ResetTrigger("Ouch");
 		yield return new WaitForSeconds(0.74f);
 		Destroy(bloodParticle);
+	}
+
+	IEnumerator Kaboom()
+	{
+		kegAnim.SetTrigger("Explode");
+		isWalking = false;
+		animEnemy.ResetTrigger("Walking");
+		animEnemy.ResetTrigger("Attacking");
+		yield return new WaitForSeconds(0.1f);
+		//color = new Color32(0, 0, 255, 0);
+		//rend.material.color = color;
 	}
 }
