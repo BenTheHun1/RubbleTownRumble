@@ -6,6 +6,7 @@ public class BoomEnemyAI : MonoBehaviour
 {
 	public ParticleSystem particleEffect;
 	public ParticleSystem bloodEffect;
+	public ParticleSystem fuseEffect;
 	public Vector3 lastPos;
 	public GameObject rootJoint;
 	public Rigidbody rootRigid;
@@ -24,6 +25,7 @@ public class BoomEnemyAI : MonoBehaviour
 	public bool isWalking;
 	public bool GetUp;
 	public bool invincible;
+	public bool kaboom;
 	public bool skipDeathStruggle;
 	private Quaternion qTo;
 	private GameObject player;
@@ -32,7 +34,6 @@ public class BoomEnemyAI : MonoBehaviour
 	private float stoppingradius = 1.7f;
 	private Color32 color;
 	private HealthSystem hs;
-
 	void Start()
 	{
 		isWalking = true;
@@ -69,6 +70,7 @@ public class BoomEnemyAI : MonoBehaviour
 		{
 			if (!isRagdoll && Vector3.Distance(player.transform.position, transform.position) <= stoppingradius)
 			{
+				kaboom = true;
 				StartCoroutine(Kaboom());
 			}
 		}
@@ -85,6 +87,11 @@ public class BoomEnemyAI : MonoBehaviour
 			rootJoint.transform.rotation = Quaternion.Slerp(rootJoint.transform.rotation, q, Time.deltaTime * lookSpeed);
 			rootJoint.transform.localPosition = Vector3.Slerp(rootJoint.transform.localPosition, new Vector3(rootJoint.transform.localPosition.x, rootJoint.transform.localPosition.y + 0.3f, rootJoint.transform.localPosition.z), Time.deltaTime * 2f);
 		}
+
+		if (kaboom)
+        {
+			fuseEffect.Emit(1);
+        }
 	}
 
 	void ResetColliders()
@@ -262,6 +269,20 @@ public class BoomEnemyAI : MonoBehaviour
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		yield return new WaitForSeconds(1f);
+		Vector3 explosionPos = rootJoint.transform.position;
+		Collider[] colliders = Physics.OverlapSphere(explosionPos, 3);
+		foreach (Collider hit in colliders)
+		{
+			Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+			if (rb != null && rb.gameObject != rootJoint && rb.gameObject.CompareTag("Enemy"))
+            {
+				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Health = 0;
+				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Ragdoll();
+				//yield return new WaitForSeconds(0.1f);
+				rb.AddExplosionForce(800, rootJoint.transform.position, 2, 0.3f, ForceMode.Impulse);
+			}
+		}
 		Destroy(gameObject);
 	}
 }
