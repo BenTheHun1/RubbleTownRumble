@@ -6,14 +6,12 @@ public class CollisionHandler : MonoBehaviour
 {
     //public EnemyAICharacterJoints enemyAI;
     public EnemyAICharacterJoints enemyAI;
-    private CapsuleCollider playerSword;
     private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyAI = transform.root.GetComponent<EnemyAICharacterJoints>();
-        playerSword = GameObject.Find("Sword").GetComponent<CapsuleCollider>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -34,7 +32,6 @@ public class CollisionHandler : MonoBehaviour
         {
             if (playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe") || playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
             {
-                playerSword.enabled = false;
                 enemyAI.Slashed();
             }
         }
@@ -59,8 +56,6 @@ public class CollisionHandler : MonoBehaviour
                 AIenemy.isKicked = true;
                 AIenemy.Ragdoll();
             }
-            //other.transform.root.GetComponent<EnemyAICharacterJoints>().isKicked = true;
-            //other.transform.root.GetComponent<EnemyAICharacterJoints>().Ragdoll();
         }
     }
 }

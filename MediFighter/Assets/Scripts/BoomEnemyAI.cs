@@ -37,7 +37,7 @@ public class BoomEnemyAI : MonoBehaviour
 	void Start()
 	{
 		isWalking = true;
-		Health = 15;
+		Health = 30;
 		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
@@ -148,7 +148,7 @@ public class BoomEnemyAI : MonoBehaviour
 	}
 	public void Slashed()
     {
-		Health -= hs.AttackAmount;
+		Health = 0;
 		if (Health <= 0)
 		{
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -177,6 +177,15 @@ public class BoomEnemyAI : MonoBehaviour
 			GetUp = true;
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 			StartCoroutine(WakingUp());
+		}
+		else
+        {
+			if (Health <= 0)
+			{
+				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+				GetUp = false;
+				StartCoroutine(FinalDeath());
+			}
 		}
 	}
 
@@ -225,7 +234,6 @@ public class BoomEnemyAI : MonoBehaviour
 		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		bloodParticle.Play();
 		yield return new WaitForSeconds(3f);
-		Destroy(bloodParticle);
 		if (!skipDeathStruggle)
         {
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
@@ -241,8 +249,6 @@ public class BoomEnemyAI : MonoBehaviour
 		hs.beards++;
 		Destroy(gameObject);
 		yield return new WaitForSeconds(1.2f);
-		Destroy(particle);
-
 	}
 
 	IEnumerator InvincibilityFrame()
@@ -259,7 +265,6 @@ public class BoomEnemyAI : MonoBehaviour
 		invincible = false;
 		animEnemy.ResetTrigger("Ouch");
 		yield return new WaitForSeconds(0.74f);
-		Destroy(bloodParticle);
 	}
 
 	IEnumerator Kaboom()
@@ -279,7 +284,6 @@ public class BoomEnemyAI : MonoBehaviour
             {
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Health = 0;
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Ragdoll();
-				//yield return new WaitForSeconds(0.1f);
 				rb.AddExplosionForce(800, rootJoint.transform.position, 2, 0.3f, ForceMode.Impulse);
 			}
 		}
