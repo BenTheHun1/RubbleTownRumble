@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyAICharacterJoints : MonoBehaviour
 {
-
 	public ParticleSystem particleEffect;
 	public ParticleSystem bloodEffect;
 	public Vector3 lastPos;
