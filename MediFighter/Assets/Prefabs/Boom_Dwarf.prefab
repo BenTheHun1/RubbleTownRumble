@@ -1089,6 +1089,8 @@ MonoBehaviour:
   bloodEffect: {fileID: 8680671185178151383, guid: fb55bb02a02f382429243726c5eb104a,
     type: 3}
   fuseEffect: {fileID: 1624125038316846369}
+  explosionEffect: {fileID: 2026035411553372488, guid: 4a2afcf77ca659e4a856c2dd4812d30c,
+    type: 3}
   lastPos: {x: 0, y: 0, z: 0}
   rootJoint: {fileID: 7577537162866392585}
   rootRigid: {fileID: 0}
@@ -2372,6 +2374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61421925929b53340b380adb0b8428f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 0}
 --- !u!1 &8552837130194977136
 GameObject:
   m_ObjectHideFlags: 0
