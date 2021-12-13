@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     bool hasShield;
 
     private bool m_isAxisInUse = false;
+    private bool kicking = false;
 
     public GameObject juice;
 
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Crouching System
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetAxis("Crouch") > 0)
         {
             desiredHeight = 1f;
         }
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour
         }
         controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
 
-        if (Input.GetKey(KeyCode.Mouse1) && hasShield)
+        if (Input.GetAxis("Shield") > 0 && hasShield)
         {
             blocking = true;
             shield.SetActive(true);
@@ -133,12 +134,20 @@ public class PlayerController : MonoBehaviour
         }
 
         //Kicking
-        if (Input.GetAxis("Fire3") > 0f && canKick && !blocking)
+        if (Input.GetAxisRaw("Fire3") > 0f && canKick && !blocking)
         {
-            footCollider.enabled = true;
-            canKick = false;
-            foot.SetActive(true);
-            StartCoroutine(FootDissapear());
+            if (!kicking)
+            {
+                footCollider.enabled = true;
+                canKick = false;
+                foot.SetActive(true);
+                StartCoroutine(FootDissapear());
+                kicking = true;
+            }
+        }
+        if (Input.GetAxisRaw("Fire3") == 0)
+        {
+            kicking = false;
         }
 
         //Bringing up info on buyable item you're looking at

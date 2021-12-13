@@ -7,6 +7,9 @@ public class Pause : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject optionsMenu;
+
+    public bool press_esc = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,16 +21,24 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetAxisRaw("Cancel") > 0)
         {
-            if (Time.timeScale == 1)
+            if (!press_esc)
             {
-                PauseGame();
+                if (Time.timeScale == 1)
+                {
+                    PauseGame();
+                }
+                else if (Time.timeScale == 0)
+                {
+                    ResumeGame();
+                }
+                press_esc = true;
             }
-            else if (Time.timeScale == 0)
-            {
-                ResumeGame();
-            }
+        }
+        if (Input.GetAxisRaw("Cancel") == 0)
+        {
+            press_esc = false;
         }
     }
 
