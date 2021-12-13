@@ -250,6 +250,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Slaying()
     {
+        hitBox.gameObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.3f);
         hitBox.enabled = true;
         yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
