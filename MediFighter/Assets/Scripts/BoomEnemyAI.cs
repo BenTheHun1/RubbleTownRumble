@@ -33,12 +33,10 @@ public class BoomEnemyAI : MonoBehaviour
 	private float lookSpeed = 2.0f;
 	private float stoppingradius = 1.7f;
 	private Color32 color;
-	private HealthSystem hs;
 	void Start()
 	{
 		isWalking = true;
-		Health = 30;
-		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
+		Health = 1;
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
 		rigids = GetComponentsInChildren<Rigidbody>();
@@ -94,20 +92,6 @@ public class BoomEnemyAI : MonoBehaviour
         }
 	}
 
-	void ResetColliders()
-	{
-		if (rootRigid == null)
-        {
-			rootRigid = gameObject.AddComponent<Rigidbody>();
-			rootRigid.constraints = RigidbodyConstraints.FreezeRotation;
-		}
-		rootCapCollide = gameObject.AddComponent<CapsuleCollider>();
-		rootCapCollide.center = new Vector3(0, 3, 0);
-		rootCapCollide.direction = 1;
-		rootCapCollide.radius = 1.4f;
-		rootCapCollide.height = 6.6f;
-	}
-
 	public void Ragdoll()
 	{
 		animEnemy.ResetTrigger("Walking");
@@ -144,7 +128,7 @@ public class BoomEnemyAI : MonoBehaviour
 			color = new Color32(108, 0, 0, 0);
 			rend.material.color = color;
 		}
-		StartCoroutine(KnockDown());
+		StartCoroutine(Kaboom());
 	}
 	public void Slashed()
     {
@@ -154,7 +138,6 @@ public class BoomEnemyAI : MonoBehaviour
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 			GetUp = false;
 			Ragdoll();
-			StartCoroutine(FinalDeath());
 		}
 		else
         {
@@ -164,107 +147,6 @@ public class BoomEnemyAI : MonoBehaviour
 				rend.material.color = color;
 			}
 		}
-	}
-
-	IEnumerator KnockDown()
-	{
-		isKicked = true;
-		yield return new WaitForSeconds(0.5f);
-		isKicked = false;
-		yield return new WaitForSeconds(3f);
-		if (Health > 0)
-        {
-			GetUp = true;
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-			StartCoroutine(WakingUp());
-		}
-		else
-        {
-			if (Health <= 0)
-			{
-				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-				GetUp = false;
-				StartCoroutine(FinalDeath());
-			}
-		}
-	}
-
-	IEnumerator WakingUp()
-    {
-		yield return new WaitForSeconds(3f);
-        {
-			if (Health > 0)
-            {
-				GetUp = false;
-				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-				isRagdoll = false;
-				foreach (Rigidbody rb in rigids)
-				{
-					if (rb != null)
-					{
-						rb.gameObject.transform.rotation = Quaternion.identity;
-						rb.isKinematic = true;
-					}
-				}
-				foreach (CapsuleCollider cc in capColliders)
-				{
-					if (cc != null)
-					{
-						cc.enabled = false;
-					}
-				}
-				foreach (BoxCollider bc in boxColliders)
-				{
-					if (bc != null && bc.gameObject.name != "RootJoint")
-					{
-						bc.enabled = false;
-					}
-				}
-				animEnemy.enabled = true;
-				lastPos = rootJoint.transform.position;
-				transform.position = lastPos;
-				rootJoint.transform.position = lastPos;
-				ResetColliders();
-				invincible = false;
-			}
-		}
-	}
-	IEnumerator FinalDeath()
-	{
-		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		bloodParticle.Play();
-		yield return new WaitForSeconds(3f);
-		if (!skipDeathStruggle)
-        {
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-			GetUp = true;
-		}
-		yield return new WaitForSeconds(2f);
-		GetUp = false;
-		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-		yield return new WaitForSeconds(2f);
-		var particle = Instantiate(particleEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		particle.Play();
-		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
-		hs.beards++;
-		Destroy(gameObject);
-		yield return new WaitForSeconds(1.2f);
-	}
-
-	IEnumerator InvincibilityFrame()
-	{
-		animEnemy.SetTrigger("Ouch");
-		animEnemy.ResetTrigger("Walking");
-		animEnemy.ResetTrigger("Attacking");
-		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		bloodParticle.Play();
-		yield return new WaitForSeconds(0.1f);
-		invincible = false;
-		color = new Color32(255, 255, 255, 0);
-		rend.material.color = color;
-		invincible = false;
-		animEnemy.ResetTrigger("Ouch");
-		yield return new WaitForSeconds(0.74f);
 	}
 
 	IEnumerator Kaboom()
