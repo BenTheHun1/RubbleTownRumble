@@ -7,6 +7,7 @@ public class BoomEnemyAI : MonoBehaviour
 	public ParticleSystem particleEffect;
 	public ParticleSystem bloodEffect;
 	public ParticleSystem fuseEffect;
+	public ParticleSystem explosionEffect;
 	public Vector3 lastPos;
 	public GameObject rootJoint;
 	public Rigidbody rootRigid;
@@ -56,7 +57,6 @@ public class BoomEnemyAI : MonoBehaviour
 		if (isWalking && Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
 		{
 			isWalking = true;
-			isAttacking = false;
 			animEnemy.SetTrigger("Walking");
 			transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
 			if (animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
@@ -77,13 +77,6 @@ public class BoomEnemyAI : MonoBehaviour
 		{
 			spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 			Destroy(gameObject);
-		}
-
-		if (GetUp)
-		{
-			Quaternion q = Quaternion.FromToRotation(rootJoint.transform.up, Vector3.up) * rootJoint.transform.rotation;
-			rootJoint.transform.rotation = Quaternion.Slerp(rootJoint.transform.rotation, q, Time.deltaTime * lookSpeed);
-			rootJoint.transform.localPosition = Vector3.Slerp(rootJoint.transform.localPosition, new Vector3(rootJoint.transform.localPosition.x, rootJoint.transform.localPosition.y + 0.3f, rootJoint.transform.localPosition.z), Time.deltaTime * 2f);
 		}
 
 		if (kaboom)
@@ -132,21 +125,15 @@ public class BoomEnemyAI : MonoBehaviour
 	}
 	public void Slashed()
     {
+		animEnemy.SetTrigger("Ouch");
+		animEnemy.ResetTrigger("Walking");
+		animEnemy.ResetTrigger("Attacking");
+		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
+		bloodParticle.Play();
 		Health = 0;
-		if (Health <= 0)
-		{
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-			GetUp = false;
-			Ragdoll();
-		}
-		else
-        {
-			if (Health > 0)
-			{
-				color = new Color32(255, 0, 0, 0);
-				rend.material.color = color;
-			}
-		}
+		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+		GetUp = false;
+		Ragdoll();
 	}
 
 	IEnumerator Kaboom()
@@ -163,12 +150,18 @@ public class BoomEnemyAI : MonoBehaviour
 			Rigidbody rb = hit.GetComponent<Rigidbody>();
 
 			if (rb != null && rb.gameObject != rootJoint && rb.gameObject.CompareTag("Enemy"))
-            {
+			{
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Health = 0;
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Ragdoll();
 				rb.AddExplosionForce(800, rootJoint.transform.position, 2, 0.3f, ForceMode.Impulse);
 			}
+			//else
+            //{
+			//	if 
+            //}
 		}
+		var explosionParticle = Instantiate(explosionEffect, rootJoint.transform.position, rootJoint.transform.rotation);
+		explosionParticle.Play();
 		Destroy(gameObject);
 	}
 }
