@@ -34,7 +34,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Start()
 	{
-		Health = 5;
+		Health = 15;
 		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
@@ -141,6 +141,11 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	}
 	public void Slashed()
     {
+		animEnemy.SetTrigger("Ouch");
+		animEnemy.ResetTrigger("Walking");
+		animEnemy.ResetTrigger("Attacking");
+		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
+		bloodParticle.Play();
 		Health -= hs.AttackAmount;
 		if (Health <= 0)
 		{
@@ -171,6 +176,15 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			GetUp = true;
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 			StartCoroutine(WakingUp());
+		}
+		else
+		{
+			if (Health <= 0)
+			{
+				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+				GetUp = false;
+				StartCoroutine(FinalDeath());
+			}
 		}
 	}
 
@@ -216,10 +230,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	}
 	IEnumerator FinalDeath()
 	{
-		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		bloodParticle.Play();
 		yield return new WaitForSeconds(3f);
-		Destroy(bloodParticle);
 		if (!skipDeathStruggle)
         {
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
@@ -234,25 +245,15 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 		hs.beards++;
 		Destroy(gameObject);
-		yield return new WaitForSeconds(1.2f);
-		Destroy(particle);
-
 	}
 
 	IEnumerator InvincibilityFrame()
 	{
-		animEnemy.SetTrigger("Ouch");
-		animEnemy.ResetTrigger("Walking");
-		animEnemy.ResetTrigger("Attacking");
-		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		bloodParticle.Play();
 		yield return new WaitForSeconds(0.1f);
 		invincible = false;
 		color = new Color32(255, 255, 255, 0);
 		rend.material.color = color;
 		invincible = false;
 		animEnemy.ResetTrigger("Ouch");
-		yield return new WaitForSeconds(0.74f);
-		Destroy(bloodParticle);
 	}
 }
