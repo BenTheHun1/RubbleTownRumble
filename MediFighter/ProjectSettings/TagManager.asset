@@ -11,6 +11,7 @@ TagManager:
   - Boot
   - EnemyAxe
   - EnemyRoot
+  - Slope
   layers:
   - Default
   - TransparentFX

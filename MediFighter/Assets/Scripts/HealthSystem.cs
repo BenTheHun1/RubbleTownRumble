@@ -42,7 +42,23 @@ public class HealthSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       disBeards.text = beards.ToString() + " x";
+        disBeards.text = beards.ToString() + " x";
+    }
+
+    public void DamagePlayer()
+    {
+        isDamaged = true;
+        if (playerHealth > 0)
+        {
+            playerHealth -= 4;
+            hurtDisplay.gameObject.SetActive(true);
+            disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
+        }
+        if (playerHealth <= 0)
+        {
+            StartCoroutine(GameOver());
+        }
+        StartCoroutine(Damage());
     }
 
     void OnTriggerEnter(Collider other)
