@@ -32,7 +32,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	private HealthSystem hs;
 	private NavMeshAgent navMeshAgent;
 
-    void Start()
+	void Start()
 	{
 		isResettingAttack = true;
 		Health = 15;
@@ -60,9 +60,9 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			navMeshAgent.speed = 0;
 		}
 		else
-        {
+		{
 			navMeshAgent.speed = movementSpeed;
-        }
+		}
 
 		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
 		{
@@ -95,6 +95,14 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 	}
 
+	void OnCollisionStay(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Slope"))
+        {
+			rootRigid.AddForce(new Vector3(0, 20, 0), ForceMode.Force);
+        }
+    }
+
 	public void Hit()
 	{
 		animEnemy.SetTrigger("Ouch");
@@ -103,7 +111,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		bloodParticle.Play();
 		Health -= hs.AttackAmount;
-		if (Health <= 0)
+		if (Health <= 0 & !isRagdoll)
 		{
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 			GetUp = false;
@@ -133,6 +141,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		{
 			if (rb != null)
 			{
+				rb.useGravity = true;
 				rb.isKinematic = false;
 			}
 		}
@@ -170,7 +179,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 			StartCoroutine(WakingUp());
 		}
-		else
+		/*else
 		{
 			if (Health <= 0)
 			{
@@ -178,7 +187,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				GetUp = false;
 				StartCoroutine(FinalDeath());
 			}
-		}
+		}*/
 	}
 
 	IEnumerator WakingUp()
@@ -195,6 +204,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 					if (rb != null)
 					{
 						rb.gameObject.transform.rotation = Quaternion.identity;
+						rb.useGravity = false;
 						rb.isKinematic = true;
 					}
 				}
