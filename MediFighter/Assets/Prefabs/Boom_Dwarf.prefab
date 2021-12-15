@@ -698,7 +698,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: d0f3ea4a42c990741b60ec92019332e2, type: 3}
+  - {fileID: 2100000, guid: f98ed1aaa155a2d41a870af13705fd58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -987,6 +987,7 @@ GameObject:
   - component: {fileID: 4204211930190857184}
   - component: {fileID: 4204211930190857187}
   - component: {fileID: 1428355402012001066}
+  - component: {fileID: 202789378}
   m_Layer: 8
   m_Name: Boom_Dwarf
   m_TagString: EnemyRoot
@@ -1091,12 +1092,32 @@ MonoBehaviour:
   movementSpeed: 2
   isRagdoll: 0
   isKicked: 0
-  isAttacking: 0
-  isWalking: 0
   GetUp: 0
   invincible: 0
   kaboom: 0
   skipDeathStruggle: 0
+--- !u!195 &202789378
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204211930190857188}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &4482144708438669174
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BoomEnemyAI : MonoBehaviour
 {
@@ -31,10 +32,17 @@ public class BoomEnemyAI : MonoBehaviour
 	private GameObject spawnManager;
 	private float lookSpeed = 2.0f;
 	private float stoppingradius = 1.7f;
+	private float explosionRadius;
 	private Color32 color;
+	private NavMeshAgent navMeshAgent;
+	private HealthSystem hs;
+
 	void Start()
 	{
 		Health = 1;
+		explosionRadius = 3f;
+		navMeshAgent = GetComponent<NavMeshAgent>();
+		navMeshAgent.speed = movementSpeed;
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
 		rigids = GetComponentsInChildren<Rigidbody>();
@@ -42,6 +50,7 @@ public class BoomEnemyAI : MonoBehaviour
 		boxColliders = GetComponentsInChildren<BoxCollider>();
 		animEnemy = transform.root.GetComponent<Animator>();
 		player = GameObject.Find("Player");
+		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
 		spawnManager = GameObject.Find("Spawns");
 	}
 
@@ -51,14 +60,20 @@ public class BoomEnemyAI : MonoBehaviour
 		lookDirection.y = 0;
 		qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
 		rootJoint.transform.SetParent(transform, true);
+		if (!animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk") || isRagdoll)
+		{
+			navMeshAgent.speed = 0;
+		}
+		else
+		{
+			navMeshAgent.speed = movementSpeed;
+		}
+
 		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
 		{
 			animEnemy.SetTrigger("Walking");
 			transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
-			if (animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-			{
-				transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed * Time.deltaTime);
-			}
+			navMeshAgent.destination = player.transform.position;
 		}
 		else
 		{
@@ -79,6 +94,14 @@ public class BoomEnemyAI : MonoBehaviour
         {
 			fuseEffect.Emit(1);
         }
+	}
+
+	void OnCollisionStay(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Slope"))
+		{
+			rootRigid.AddForce(new Vector3(0, 20, 0), ForceMode.Force);
+		}
 	}
 
 	public void Ragdoll()
@@ -138,6 +161,11 @@ public class BoomEnemyAI : MonoBehaviour
 		yield return new WaitForSeconds(1f);
 		Vector3 explosionPos = rootJoint.transform.position;
 		Collider[] colliders = Physics.OverlapSphere(explosionPos, 3);
+		float dist = Vector3.Distance(player.transform.position, transform.position);
+		if (dist < explosionRadius)
+        {
+			hs.DamagePlayer();
+		}
 		foreach (Collider hit in colliders)
 		{
 			Rigidbody rb = hit.GetComponent<Rigidbody>();
