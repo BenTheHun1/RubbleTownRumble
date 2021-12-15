@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public CameraController cc;
     public SpawnManager sm;
     public Animator animSword;
+    public GameObject swordObjectReal;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
@@ -122,6 +123,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     animSword.SetTrigger("Swing");
+                    swordObjectReal.GetComponent<AudioSource>().Play();
                 }
                 m_isAxisInUse = true;
             }
