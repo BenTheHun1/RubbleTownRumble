@@ -48,7 +48,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip Swing1;
     public AudioClip Swing2;
 
-
+    private bool Swing1Playing;
+    private bool Swing2Playing;
 
 
     void Start()
@@ -125,12 +126,10 @@ public class PlayerController : MonoBehaviour
                 if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
                 {
                     animSword.SetTrigger("Swing2");
-                    audioSourc.PlayOneShot(Swing2);
                 }
                 else
                 {
                     animSword.SetTrigger("Swing");
-                    audioSourc.PlayOneShot(Swing1);
                 }
                 m_isAxisInUse = true;
             }
@@ -138,6 +137,25 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxisRaw("Fire1") == 0)
         {
             m_isAxisInUse = false;
+        }
+
+        if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe") && !audioSourc.isPlaying && Swing1Playing)
+        {
+            Swing1Playing = false;
+            audioSourc.PlayOneShot(Swing1);
+        }
+        else if (!animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+        {
+            Swing1Playing = true;
+        }
+        if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe2") && !audioSourc.isPlaying && Swing2Playing)
+        {
+            Swing2Playing = false;
+            audioSourc.PlayOneShot(Swing2);
+        }
+        else if (!animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe2"))
+        {
+            Swing2Playing = true;
         }
 
         //Kicking

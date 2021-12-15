@@ -20,6 +20,8 @@ public class HealthSystem : MonoBehaviour
     private GameObject cam;
     private TextMeshProUGUI disBeards;
 
+    public AudioClip hurtSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +73,7 @@ public class HealthSystem : MonoBehaviour
                 {
                     playerHealth -= 1;
                     hurtDisplay.gameObject.SetActive(true);
+                    gameObject.GetComponent<AudioSource>().PlayOneShot(hurtSound);
                     disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
                 }
                 if (playerHealth <= 0)
