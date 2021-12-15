@@ -28,11 +28,11 @@ public class CollisionHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Sword") && !enemyAI.invincible)
+        if (other.gameObject.CompareTag("Sword"))
         {
             if (playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe") || playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
             {
-                enemyAI.Slashed();
+                enemyAI.Hit();
             }
         }
         else

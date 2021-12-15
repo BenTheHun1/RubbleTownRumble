@@ -103,7 +103,7 @@ public class SpawnManager : MonoBehaviour
         var randomSpawn = Random.Range(0, spawns.Count);
         Vector3 spawnPosEnemy = spawns[randomSpawn].transform.position;
 
-        if (enemyType.GetComponent<IsDrunk>().drunk == true)
+        if (enemyType.GetComponent<EnemyAIConfigurableJoints>())
         {
             spawnPosEnemy = spawns[randomSpawn].transform.position + new Vector3(0, 1, 0);
         }

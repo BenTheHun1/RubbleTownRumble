@@ -986,7 +986,6 @@ GameObject:
   - component: {fileID: 4204211930190857190}
   - component: {fileID: 4204211930190857184}
   - component: {fileID: 4204211930190857187}
-  - component: {fileID: 4587592857450339044}
   - component: {fileID: 1428355402012001066}
   m_Layer: 8
   m_Name: Boom_Dwarf
@@ -1059,19 +1058,6 @@ CapsuleCollider:
   m_Height: 6.6
   m_Direction: 1
   m_Center: {x: 0, y: 3, z: 0}
---- !u!114 &4587592857450339044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4204211930190857188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73082ba8f9a448b49b629c825adbe1c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drunk: 0
 --- !u!114 &1428355402012001066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1089,6 +1075,8 @@ MonoBehaviour:
   bloodEffect: {fileID: 8680671185178151383, guid: fb55bb02a02f382429243726c5eb104a,
     type: 3}
   fuseEffect: {fileID: 1624125038316846369}
+  explosionEffect: {fileID: 2026035411553372488, guid: 4a2afcf77ca659e4a856c2dd4812d30c,
+    type: 3}
   lastPos: {x: 0, y: 0, z: 0}
   rootJoint: {fileID: 7577537162866392585}
   rootRigid: {fileID: 0}
@@ -2372,6 +2360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61421925929b53340b380adb0b8428f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAI: {fileID: 0}
 --- !u!1 &8552837130194977136
 GameObject:
   m_ObjectHideFlags: 0
