@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public CameraController cc;
     public SpawnManager sm;
     public Animator animSword;
-    public CapsuleCollider hitBox;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
@@ -40,7 +39,18 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     bool hasShield;
 
+    private bool m_isAxisInUse = false;
+    private bool kicking = false;
+
     public GameObject juice;
+
+    public AudioSource audioSourc;
+    public AudioClip Swing1;
+    public AudioClip Swing2;
+
+    private bool Swing1Playing;
+    private bool Swing2Playing;
+
 
     void Start()
     {
@@ -86,7 +96,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Crouching System
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetAxis("Crouch") > 0)
         {
             desiredHeight = 1f;
         }
@@ -96,7 +106,7 @@ public class PlayerController : MonoBehaviour
         }
         controller.height = Mathf.Lerp(controller.height, desiredHeight, 0.1f);
 
-        if (Input.GetKey(KeyCode.Mouse1) && hasShield)
+        if (Input.GetAxis("Shield") > 0 && hasShield)
         {
             blocking = true;
             shield.SetActive(true);
@@ -107,27 +117,62 @@ public class PlayerController : MonoBehaviour
             shield.SetActive(false);
         }
 
-        //Sword Animatons
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !blocking)
+
+        //Make sword swing only occur once
+        if (Input.GetAxisRaw("Fire1") != 0 && !blocking)
         {
-            if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            if (m_isAxisInUse == false)
             {
-                animSword.SetTrigger("Swing2");
+                if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+                {
+                    animSword.SetTrigger("Swing2");
+                }
+                else
+                {
+                    animSword.SetTrigger("Swing");
+                }
+                m_isAxisInUse = true;
             }
-            else
-            {
-                animSword.SetTrigger("Swing");
-            }
-            StartCoroutine(Slaying());
+        }
+        if (Input.GetAxisRaw("Fire1") == 0)
+        {
+            m_isAxisInUse = false;
+        }
+
+        if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe") && !audioSourc.isPlaying && Swing1Playing)
+        {
+            Swing1Playing = false;
+            audioSourc.PlayOneShot(Swing1);
+        }
+        else if (!animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+        {
+            Swing1Playing = true;
+        }
+        if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe2") && !audioSourc.isPlaying && Swing2Playing)
+        {
+            Swing2Playing = false;
+            audioSourc.PlayOneShot(Swing2);
+        }
+        else if (!animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe2"))
+        {
+            Swing2Playing = true;
         }
 
         //Kicking
-        if (Input.GetKeyDown(KeyCode.F) && canKick && !blocking)
+        if (Input.GetAxisRaw("Fire3") > 0f && canKick && !blocking)
         {
-            footCollider.enabled = true;
-            canKick = false;
-            foot.SetActive(true);
-            StartCoroutine(FootDissapear());
+            if (!kicking)
+            {
+                footCollider.enabled = true;
+                canKick = false;
+                foot.SetActive(true);
+                StartCoroutine(FootDissapear());
+                kicking = true;
+            }
+        }
+        if (Input.GetAxisRaw("Fire3") == 0)
+        {
+            kicking = false;
         }
 
         //Bringing up info on buyable item you're looking at
@@ -180,7 +225,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Buy buyable item you're looking at
-        if (Input.GetKeyDown(KeyCode.E) && buyableItem != null)
+        if (Input.GetAxis("Fire2") > 0f && buyableItem != null)
         {
             if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
             {
@@ -226,13 +271,5 @@ public class PlayerController : MonoBehaviour
         cc.inControl = true;
         foot.SetActive(false);
         canKick = true;
-    }
-
-    IEnumerator Slaying()
-    {
-        yield return new WaitForSeconds(0.3f);
-        hitBox.enabled = true;
-        yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
-        hitBox.enabled = false;
     }
 }

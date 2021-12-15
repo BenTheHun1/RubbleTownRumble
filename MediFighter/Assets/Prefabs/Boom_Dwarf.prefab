@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 2551146203193144058}
   - component: {fileID: 9002921947890772424}
   - component: {fileID: 4319005078898635108}
+  - component: {fileID: 777405437}
   m_Layer: 6
   m_Name: PowderKeg
   m_TagString: Untagged
@@ -169,7 +170,8 @@ Transform:
   m_LocalRotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
   m_LocalPosition: {x: 0.344935, y: 1.103608, z: -0.09283161}
   m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
-  m_Children: []
+  m_Children:
+  - {fileID: 1624125038316846368}
   m_Father: {fileID: 7450890621686351875}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -236,6 +238,25 @@ CapsuleCollider:
   m_Height: 2.4
   m_Direction: 1
   m_Center: {x: -0.64999616, y: 0, z: -1.1844839e-23}
+--- !u!95 &777405437
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313659166356050334}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6ade92f8de92c6f44a96ae8fc0ec0464, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1072048881639848960
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,7 +698,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: d0f3ea4a42c990741b60ec92019332e2, type: 3}
+  - {fileID: 2100000, guid: f98ed1aaa155a2d41a870af13705fd58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -965,8 +986,8 @@ GameObject:
   - component: {fileID: 4204211930190857190}
   - component: {fileID: 4204211930190857184}
   - component: {fileID: 4204211930190857187}
-  - component: {fileID: 4587592857450339044}
   - component: {fileID: 1428355402012001066}
+  - component: {fileID: 202789378}
   m_Layer: 8
   m_Name: Boom_Dwarf
   m_TagString: EnemyRoot
@@ -1038,19 +1059,6 @@ CapsuleCollider:
   m_Height: 6.6
   m_Direction: 1
   m_Center: {x: 0, y: 3, z: 0}
---- !u!114 &4587592857450339044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4204211930190857188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73082ba8f9a448b49b629c825adbe1c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drunk: 0
 --- !u!114 &1428355402012001066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,6 +1075,9 @@ MonoBehaviour:
     type: 3}
   bloodEffect: {fileID: 8680671185178151383, guid: fb55bb02a02f382429243726c5eb104a,
     type: 3}
+  fuseEffect: {fileID: 1624125038316846369}
+  explosionEffect: {fileID: 2026035411553372488, guid: 4a2afcf77ca659e4a856c2dd4812d30c,
+    type: 3}
   lastPos: {x: 0, y: 0, z: 0}
   rootJoint: {fileID: 7577537162866392585}
   rootRigid: {fileID: 0}
@@ -1075,16 +1086,38 @@ MonoBehaviour:
   capColliders: []
   boxColliders: []
   animEnemy: {fileID: 4204211930190857184}
+  kegAnim: {fileID: 777405437}
   rend: {fileID: 5893616051363158938}
   Health: 0
   movementSpeed: 2
   isRagdoll: 0
   isKicked: 0
-  isAttacking: 0
-  isWalking: 0
   GetUp: 0
   invincible: 0
+  kaboom: 0
   skipDeathStruggle: 0
+--- !u!195 &202789378
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204211930190857188}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &4482144708438669174
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,7 +2314,7 @@ GameObject:
   - component: {fileID: 1259860468115999266}
   - component: {fileID: 7577537162866392584}
   - component: {fileID: 7551993829747423559}
-  - component: {fileID: 4587592857515528907}
+  - component: {fileID: 2467184495718582409}
   m_Layer: 0
   m_Name: RootJoint
   m_TagString: Enemy
@@ -2336,7 +2369,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.623481, y: 7, z: 4.9999995}
   m_Center: {x: -0.13965824, y: 0.99999976, z: 0}
---- !u!114 &4587592857515528907
+--- !u!114 &2467184495718582409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2345,7 +2378,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7577537162866392585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a629b7500148a4094c827da5f545f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 61421925929b53340b380adb0b8428f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAI: {fileID: 0}
@@ -2492,3 +2525,84 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1001 &4587592856886109501
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2104012536311434459}
+    m_Modifications:
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.208
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.416
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -8.659561e-17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963485634467043358, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+        type: 3}
+      propertyPath: m_Name
+      value: FuseLit
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6aa40892f0f5657448cb83362ff6a2c2, type: 3}
+--- !u!4 &1624125038316846368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2963485634467043357, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4587592856886109501}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1624125038316846369 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2963485634467043356, guid: 6aa40892f0f5657448cb83362ff6a2c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4587592856886109501}
+  m_PrefabAsset: {fileID: 0}

@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAICharacterJoints : MonoBehaviour
 {
+	public AudioSource dwarfSource;
+	public AudioClip axeSwing;
+	public AudioClip[] callout;
+	public AudioClip[] death;
+	public AudioClip[] hurt;
+	public Material[] outfits;
 	public ParticleSystem particleEffect;
 	public ParticleSystem bloodEffect;
 	public Vector3 lastPos;
@@ -19,26 +26,36 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public float movementSpeed;
 	public bool isRagdoll;
 	public bool isKicked;
-	public bool isAttacking;
-	public bool isWalking;
 	public bool GetUp;
-	public bool invincible;
 	public bool skipDeathStruggle;
-	private Quaternion qTo;
+	private bool isResettingAttack;
+	private int chance = 1;
 	private GameObject player;
 	private GameObject spawnManager;
+	private Quaternion qTo;
+	private Color32 color;
 	private float lookSpeed = 2.0f;
 	private float stoppingradius = 1.7f;
-	private Color32 color;
 	private HealthSystem hs;
+	private NavMeshAgent navMeshAgent;
 
 	void Start()
 	{
-		Health = 5;
+		dwarfSource = GetComponent<AudioSource>();
+		isResettingAttack = true;
+		Health = 15;
+		navMeshAgent = GetComponent<NavMeshAgent>();
+		navMeshAgent.speed = movementSpeed;
 		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
 		rigids = GetComponentsInChildren<Rigidbody>();
+		chance = Random.Range(0, 2);
+		if (chance == 1)
+        {
+			rend.material = outfits[Random.Range(0, outfits.Length)];
+		}
+		
 		capColliders = GetComponentsInChildren<CapsuleCollider>();
 		boxColliders = GetComponentsInChildren<BoxCollider>();
 		animEnemy = transform.root.GetComponent<Animator>();
@@ -52,30 +69,35 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		lookDirection.y = 0;
 		qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
 		rootJoint.transform.SetParent(transform, true);
-		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
+		if (!animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk") || isRagdoll)
 		{
-			isWalking = true;
-			isAttacking = false;
-			animEnemy.SetTrigger("Walking");
-			transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
-			if (animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-			{
-				transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed * Time.deltaTime);
-			}
+			navMeshAgent.speed = 0;
 		}
 		else
 		{
-			if (!isRagdoll)
+			navMeshAgent.speed = movementSpeed;
+		}
+
+		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
+		{
+			animEnemy.SetTrigger("Walking");
+			transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
+			navMeshAgent.destination = player.transform.position;
+		}
+		else
+		{
+			if (!isRagdoll && isResettingAttack)
 			{
-				isAttacking = true;
-				isWalking = false;
 				animEnemy.SetTrigger("Attacking");
+				isResettingAttack = false;
+				StartCoroutine(ResetAttack());
 			}
 		}
 
 		if (gameObject.transform.position.y < -25)
 		{
 			spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
+			spawnManager.GetComponent<SpawnManager>().enemiesToSpawn++;
 			Destroy(gameObject);
 		}
 
@@ -87,18 +109,38 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 	}
 
-	void ResetColliders()
+	void OnCollisionStay(Collision collision)
 	{
-		if (rootRigid == null)
+		if (collision.gameObject.CompareTag("Slope"))
         {
-			rootRigid = gameObject.AddComponent<Rigidbody>();
-			rootRigid.constraints = RigidbodyConstraints.FreezeRotation;
+			rootRigid.AddForce(new Vector3(0, 20, 0), ForceMode.Force);
+        }
+    }
+
+	public void Hit()
+	{
+		animEnemy.SetTrigger("Ouch");
+		animEnemy.ResetTrigger("Walking");
+		animEnemy.ResetTrigger("Attacking");
+		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
+		bloodParticle.Play();
+		Health -= hs.AttackAmount;
+		if (Health <= 0 & !isRagdoll)
+		{
+			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+			GetUp = false;
+			Ragdoll();
+			StartCoroutine(FinalDeath());
 		}
-		rootCapCollide = gameObject.AddComponent<CapsuleCollider>();
-		rootCapCollide.center = new Vector3(0, 3, 0);
-		rootCapCollide.direction = 1;
-		rootCapCollide.radius = 1.4f;
-		rootCapCollide.height = 6.6f;
+		else
+		{
+			if (Health > 0)
+			{
+				color = new Color32(255, 0, 0, 0);
+				rend.material.color = color;
+				StartCoroutine(React());
+			}
+		}
 	}
 
 	public void Ragdoll()
@@ -106,8 +148,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isRagdoll = true;
-		isAttacking = false;
-		isWalking = false;
 		animEnemy.enabled = false;
 		Destroy(rootRigid);
 		Destroy(rootCapCollide);
@@ -115,6 +155,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		{
 			if (rb != null)
 			{
+				rb.useGravity = true;
 				rb.isKinematic = false;
 			}
 		}
@@ -137,49 +178,38 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			color = new Color32(108, 0, 0, 0);
 			rend.material.color = color;
 		}
-		StartCoroutine(KnockDown());
-	}
-	public void Slashed()
-    {
-		Health -= hs.AttackAmount;
-		if (Health <= 0)
-		{
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-			GetUp = false;
-			Ragdoll();
-			StartCoroutine(FinalDeath());
-		}
-		else
-        {
-			if (Health > 0)
-			{
-				color = new Color32(255, 0, 0, 0);
-				rend.material.color = color;
-				StartCoroutine(InvincibilityFrame());
-			}
-		}
+		StartCoroutine(KnockedDown());
 	}
 
-	IEnumerator KnockDown()
+	IEnumerator KnockedDown()
 	{
 		isKicked = true;
 		yield return new WaitForSeconds(0.5f);
 		isKicked = false;
 		yield return new WaitForSeconds(3f);
 		if (Health > 0)
-        {
+		{
 			GetUp = true;
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 			StartCoroutine(WakingUp());
 		}
+		else
+		{
+			if (Health <= 0)
+			{
+				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+				GetUp = false;
+				StartCoroutine(FinalDeath());
+			}
+		}
 	}
 
 	IEnumerator WakingUp()
-    {
+	{
 		yield return new WaitForSeconds(3f);
-        {
+		{
 			if (Health > 0)
-            {
+			{
 				GetUp = false;
 				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 				isRagdoll = false;
@@ -188,6 +218,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 					if (rb != null)
 					{
 						rb.gameObject.transform.rotation = Quaternion.identity;
+						rb.useGravity = false;
 						rb.isKinematic = true;
 					}
 				}
@@ -209,17 +240,23 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				lastPos = rootJoint.transform.position;
 				transform.position = lastPos;
 				rootJoint.transform.position = lastPos;
-				ResetColliders();
-				invincible = false;
+				if (rootRigid == null)
+				{
+					rootRigid = gameObject.AddComponent<Rigidbody>();
+					rootRigid.constraints = RigidbodyConstraints.FreezeRotation;
+				}
+				rootCapCollide = gameObject.AddComponent<CapsuleCollider>();
+				rootCapCollide.center = new Vector3(0, 3, 0);
+				rootCapCollide.direction = 1;
+				rootCapCollide.radius = 1.4f;
+				rootCapCollide.height = 6.6f;
 			}
 		}
 	}
+
 	IEnumerator FinalDeath()
 	{
-		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		bloodParticle.Play();
 		yield return new WaitForSeconds(3f);
-		Destroy(bloodParticle);
 		if (!skipDeathStruggle)
         {
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
@@ -234,25 +271,21 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 		hs.beards++;
 		Destroy(gameObject);
-		yield return new WaitForSeconds(1.2f);
-		Destroy(particle);
-
 	}
 
-	IEnumerator InvincibilityFrame()
+	IEnumerator React()
 	{
-		animEnemy.SetTrigger("Ouch");
-		animEnemy.ResetTrigger("Walking");
-		animEnemy.ResetTrigger("Attacking");
-		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
-		bloodParticle.Play();
-		yield return new WaitForSeconds(0.1f);
-		invincible = false;
+		yield return new WaitForSeconds(0.05f);
 		color = new Color32(255, 255, 255, 0);
 		rend.material.color = color;
-		invincible = false;
 		animEnemy.ResetTrigger("Ouch");
-		yield return new WaitForSeconds(0.74f);
-		Destroy(bloodParticle);
+	}
+
+	IEnumerator ResetAttack()
+	{
+		yield return new WaitForSeconds(1f);
+		animEnemy.SetTrigger("Walking");
+		animEnemy.ResetTrigger("Attacking");
+		isResettingAttack = true;
 	}
 }

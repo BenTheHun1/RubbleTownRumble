@@ -41,6 +41,10 @@ GameObject:
   - component: {fileID: 4778532378369830904}
   - component: {fileID: 8100083604407891735}
   - component: {fileID: 5580846886877545662}
+  - component: {fileID: 3759834679139894188}
+  - component: {fileID: 5360279317160078230}
+  - component: {fileID: 5438646331550917040}
+  - component: {fileID: 6533515140176244666}
   m_Layer: 0
   m_Name: pCube316
   m_TagString: Untagged
@@ -114,6 +118,58 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3759834679139894188
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518089733219168093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 300.13345, y: 13.387164, z: 300.13342}
+  m_Center: {x: -149.93336, y: -8.40457, z: -150.067}
+--- !u!65 &5360279317160078230
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518089733219168093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 25.735712, y: 315.23138, z: 88.583466}
+  m_Center: {x: -12.734485, y: 142.51755, z: -44.292023}
+--- !u!65 &5438646331550917040
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518089733219168093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 26.228958, y: 315.23138, z: 90.96117}
+  m_Center: {x: -12.981102, y: 142.51755, z: -254.65303}
+--- !u!65 &6533515140176244666
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518089733219168093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 23.45224, y: 82.1888, z: 99.204254}
+  m_Center: {x: -11.592743, y: 259.03845, z: -151.2371}
 --- !u!1 &3570398772042734312
 GameObject:
   m_ObjectHideFlags: 0

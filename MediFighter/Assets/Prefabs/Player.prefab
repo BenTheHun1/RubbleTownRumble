@@ -131,7 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1562648d6a6adc143b6954ac3d2d1448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kickForce: 4
+  kickForce: 2
+  audioSorc: {fileID: 9096803999163811699}
+  hitSound: {fileID: 8300000, guid: 08b705f340b92954fa1b336df3c121b6, type: 3}
 --- !u!136 &1891570381
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -141,7 +143,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4727061832764698456}
   m_Material: {fileID: 13400000, guid: 4fdc34cb2a988c14ca96ece7e7725bb2, type: 2}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.8
   m_Height: 7.2
   m_Direction: 1
@@ -185,10 +187,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4932589195320033710}
-  - component: {fileID: 4932589195320033705}
   - component: {fileID: 4932589195320033711}
   - component: {fileID: 1466808218}
   - component: {fileID: 1466808219}
+  - component: {fileID: 4932589195320033705}
+  - component: {fileID: 9096803999163811699}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -213,35 +216,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4932589195320033705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4932589195320033708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a6f4da2037ac5243a163f8d4b7e3bd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 4932589195320033711}
-  cc: {fileID: 4932589195579258792}
-  sm: {fileID: 0}
-  animSword: {fileID: 9166715548836056437}
-  hitBox: {fileID: 1891570381}
-  groundCheck: {fileID: 4932589195270346316}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 128
-  velocity: {x: 0, y: 0, z: 0}
-  isOnGround: 0
-  foot: {fileID: 6489439178350646131}
-  buyableItem: {fileID: 0}
-  footCollider: {fileID: 1870430619}
-  hs: {fileID: 1466808219}
-  shield: {fileID: 5239228349188284885}
-  juice: {fileID: 0}
 --- !u!143 &4932589195320033711
 CharacterController:
   m_ObjectHideFlags: 0
@@ -291,7 +265,136 @@ MonoBehaviour:
   maxHealth: 0
   disHealth: {fileID: 0}
   AttackAmount: 0
-  beards: 0
+  beards: 1000
+  hurtSound: {fileID: 8300000, guid: a4b108e657b10774a8dc808be7807c16, type: 3}
+--- !u!114 &4932589195320033705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932589195320033708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6f4da2037ac5243a163f8d4b7e3bd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 4932589195320033711}
+  cc: {fileID: 4932589195579258792}
+  sm: {fileID: 0}
+  animSword: {fileID: 9166715548836056437}
+  groundCheck: {fileID: 4932589195270346316}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 128
+  velocity: {x: 0, y: 0, z: 0}
+  isOnGround: 0
+  foot: {fileID: 6489439178350646131}
+  buyableItem: {fileID: 0}
+  footCollider: {fileID: 1870430619}
+  hs: {fileID: 1466808219}
+  shield: {fileID: 5239228349188284885}
+  juice: {fileID: 0}
+  audioSourc: {fileID: 9096803999163811699}
+  Swing1: {fileID: 8300000, guid: f890aa704dce3f544afaa77d6c6dd0db, type: 3}
+  Swing2: {fileID: 8300000, guid: 81f89ff89fd7afc4196474a0cf94e35f, type: 3}
+--- !u!82 &9096803999163811699
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932589195320033708}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -7440148944100253376, guid: 857b0e584adfbae4abe3721e5925afc6,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4932589195579258796
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,12 +810,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c0c9616635a38ca448e089c7ed3a4a7f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.862
+      value: -1.07
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c0c9616635a38ca448e089c7ed3a4a7f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.858
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c0c9616635a38ca448e089c7ed3a4a7f,
         type: 3}

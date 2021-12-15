@@ -5,15 +5,13 @@ using UnityEngine;
 public class CollisionHandler : MonoBehaviour
 {
     //public EnemyAICharacterJoints enemyAI;
-    public BoomEnemyAI enemyAI;
-    private CapsuleCollider playerSword;
+    public EnemyAICharacterJoints enemyAI;
     private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyAI = transform.root.GetComponent<BoomEnemyAI>();
-        playerSword = GameObject.Find("Sword").GetComponent<CapsuleCollider>();
+        enemyAI = transform.root.GetComponent<EnemyAICharacterJoints>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -30,12 +28,11 @@ public class CollisionHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Sword") && !enemyAI.invincible)
+        if (other.gameObject.CompareTag("Sword"))
         {
             if (playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe") || playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
             {
-                playerSword.enabled = false;
-                enemyAI.Slashed();
+                enemyAI.Hit();
             }
         }
         else
@@ -52,10 +49,13 @@ public class CollisionHandler : MonoBehaviour
             enemyAI.skipDeathStruggle = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
-        if (other.transform.root != transform.root && other.gameObject.CompareTag("EnemyRoot") && enemyAI.isRagdoll && enemyAI.isKicked == true)
+        if (other.transform.root != null && other.transform.root != transform.root && other.gameObject.CompareTag("Enemy") && enemyAI.isRagdoll && enemyAI.isKicked == true)
         {
-            other.gameObject.GetComponent<BoomEnemyAI>().isKicked = true;
-            other.gameObject.GetComponent<BoomEnemyAI>().Ragdoll();
+            if (other.transform.root.TryGetComponent(out EnemyAICharacterJoints AIenemy))
+            {
+                AIenemy.isKicked = true;
+                AIenemy.Ragdoll();
+            }
         }
     }
 }

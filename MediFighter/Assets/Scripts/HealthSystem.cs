@@ -7,18 +7,20 @@ using TMPro;
 
 public class HealthSystem : MonoBehaviour
 {
-    private GameObject mimic;
-    private RawImage hurtDisplay;
-    private GameObject gameOverText;
-    private GameObject player;
-    private GameObject cam;
     public bool isDamaged;
     public int playerHealth;
     public int maxHealth;
     public Image disHealth;
     public int AttackAmount;
     public int beards;
+    private GameObject mimic;
+    private RawImage hurtDisplay;
+    private GameObject gameOverText;
+    private GameObject player;
+    private GameObject cam;
     private TextMeshProUGUI disBeards;
+
+    public AudioClip hurtSound;
 
     // Start is called before the first frame update
     void Start()
@@ -40,20 +42,54 @@ public class HealthSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       disBeards.text = beards.ToString() + " x";
+        disBeards.text = beards.ToString() + " x";
+    }
+
+    public void DamagePlayer()
+    {
+        isDamaged = true;
+        if (playerHealth > 0)
+        {
+            playerHealth -= 4;
+            hurtDisplay.gameObject.SetActive(true);
+            disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
+        }
+        if (playerHealth <= 0)
+        {
+            StartCoroutine(GameOver());
+        }
+        StartCoroutine(Damage());
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("EnemyAxe") && other.transform.root.GetComponent<IsDrunk>().drunk == true && !isDamaged)
+        if (other.gameObject.CompareTag("EnemyAxe") && !isDamaged)
         {
-            if (other.transform.root.GetComponent<EnemyAIConfigurableJoints>().isRagdoll == false)
+            object isEnemyRagdoll = true;
+            object isActiveRagdoll = true;
+            if (other.transform.root.GetComponent<EnemyAICharacterJoints>())
+            {
+                isEnemyRagdoll = other.transform.root.GetComponent<EnemyAICharacterJoints>().isRagdoll;
+                isActiveRagdoll = other.transform.root.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Attack");
+            }
+            else
+            {
+                if (other.transform.root.GetComponent<EnemyAIConfigurableJoints>())
+                {
+                    isEnemyRagdoll = other.transform.root.GetComponent<EnemyAIConfigurableJoints>().isRagdoll;
+                    isActiveRagdoll = mimic.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Attack");
+                }
+            }
+
+                
+            if (!(bool)isEnemyRagdoll && (bool)isActiveRagdoll)
             {
                 isDamaged = true;
                 if (playerHealth > 0)
                 {
                     playerHealth -= 1;
                     hurtDisplay.gameObject.SetActive(true);
+                    gameObject.GetComponent<AudioSource>().PlayOneShot(hurtSound);
                     disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
                 }
                 if (playerHealth <= 0)
@@ -62,27 +98,6 @@ public class HealthSystem : MonoBehaviour
                 }
                 StartCoroutine(Damage());
             }    
-        }
-        else
-        {
-            if (other.gameObject.CompareTag("EnemyAxe") && other.transform.root.GetComponent<IsDrunk>().drunk == false && !isDamaged)
-            {
-                if (other.transform.root.GetComponent<EnemyAICharacterJoints>().isRagdoll == false && other.transform.root.GetComponent<EnemyAICharacterJoints>().isAttacking == true && other.transform.root.GetComponent<EnemyAICharacterJoints>().animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-                {
-                    isDamaged = true;
-                    if (playerHealth > 0)
-                    {
-                        playerHealth -= 1;
-                        hurtDisplay.gameObject.SetActive(true);
-                        disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
-                    }
-                    if (playerHealth <= 0)
-                    {
-                        StartCoroutine(GameOver());
-                    }
-                    StartCoroutine(Damage());
-                }
-            }
         }
     }
 
@@ -101,7 +116,6 @@ public class HealthSystem : MonoBehaviour
         hurtDisplay.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         isDamaged = false;
-        
     }
 
 }

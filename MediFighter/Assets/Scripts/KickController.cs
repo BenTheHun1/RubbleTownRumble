@@ -6,13 +6,16 @@ public class KickController : MonoBehaviour
 {
     public int kickForce;
 
+    public AudioSource audioSorc;
+    public AudioClip hitSound;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("EnemyRoot"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            GetComponent<SphereCollider>().enabled = false;
-            collision.gameObject.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z) * kickForce, ForceMode.Impulse);
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z) * kickForce, ForceMode.Impulse);
+            audioSorc.PlayOneShot(hitSound);
         }
     }
 }
