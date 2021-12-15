@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShopMusic : MonoBehaviour
 {
     private AudioSource shopMusic;
+    public SpawnManager sm;
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +15,7 @@ public class ShopMusic : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && !shopMusic.isPlaying)
+        if (other.gameObject.CompareTag("Player") && !shopMusic.isPlaying && sm.enemiesLeft + sm.enemiesToSpawn <= 0)
         {
             shopMusic.Play();
         }

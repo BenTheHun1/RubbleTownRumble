@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1562648d6a6adc143b6954ac3d2d1448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kickForce: 4
+  kickForce: 2
 --- !u!136 &1891570381
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4727061832764698456}
   m_Material: {fileID: 13400000, guid: 4fdc34cb2a988c14ca96ece7e7725bb2, type: 2}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.8
   m_Height: 7.2
   m_Direction: 1
@@ -229,7 +229,7 @@ MonoBehaviour:
   cc: {fileID: 4932589195579258792}
   sm: {fileID: 0}
   animSword: {fileID: 9166715548836056437}
-  hitBox: {fileID: 1891570381}
+  swordObjectReal: {fileID: 4727061832764698456}
   groundCheck: {fileID: 4932589195270346316}
   groundMask:
     serializedVersion: 2
@@ -291,7 +291,7 @@ MonoBehaviour:
   maxHealth: 0
   disHealth: {fileID: 0}
   AttackAmount: 0
-  beards: 0
+  beards: 1000
 --- !u!1 &4932589195579258796
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,12 +707,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c0c9616635a38ca448e089c7ed3a4a7f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.862
+      value: -1.07
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c0c9616635a38ca448e089c7ed3a4a7f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.858
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c0c9616635a38ca448e089c7ed3a4a7f,
         type: 3}
