@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public CameraController cc;
     public SpawnManager sm;
     public Animator animSword;
-    public GameObject swordObjectReal;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
@@ -44,6 +43,13 @@ public class PlayerController : MonoBehaviour
     private bool kicking = false;
 
     public GameObject juice;
+
+    public AudioSource audioSourc;
+    public AudioClip Swing1;
+    public AudioClip Swing2;
+
+
+
 
     void Start()
     {
@@ -119,11 +125,12 @@ public class PlayerController : MonoBehaviour
                 if (animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
                 {
                     animSword.SetTrigger("Swing2");
+                    audioSourc.PlayOneShot(Swing2);
                 }
                 else
                 {
                     animSword.SetTrigger("Swing");
-                    swordObjectReal.GetComponent<AudioSource>().Play();
+                    audioSourc.PlayOneShot(Swing1);
                 }
                 m_isAxisInUse = true;
             }
