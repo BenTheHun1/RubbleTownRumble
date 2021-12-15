@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public CameraController cc;
     public SpawnManager sm;
     public Animator animSword;
-    public CapsuleCollider hitBox;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
@@ -124,7 +123,6 @@ public class PlayerController : MonoBehaviour
                 {
                     animSword.SetTrigger("Swing");
                 }
-                StartCoroutine(Slaying());
                 m_isAxisInUse = true;
             }
         }
@@ -246,13 +244,5 @@ public class PlayerController : MonoBehaviour
         cc.inControl = true;
         foot.SetActive(false);
         canKick = true;
-    }
-
-    IEnumerator Slaying()
-    {
-        yield return new WaitForSeconds(0.3f);
-        hitBox.enabled = true;
-        yield return new WaitForSeconds(0.5f); //Change time based on anim speed 1.5 speed = 0.5 seconds
-        hitBox.enabled = false;
     }
 }

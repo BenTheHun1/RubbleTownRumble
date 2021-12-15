@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 428469907858631507}
   - component: {fileID: 428469907858631508}
   - component: {fileID: 428469907858631504}
-  - component: {fileID: 2144711255}
+  - component: {fileID: 157574961}
   m_Layer: 8
   m_Name: Normal_Dwarf (Character Joints)
   m_TagString: EnemyRoot
@@ -210,10 +210,7 @@ MonoBehaviour:
   movementSpeed: 2
   isRagdoll: 0
   isKicked: 0
-  isAttacking: 0
-  isWalking: 0
   GetUp: 0
-  invincible: 0
   skipDeathStruggle: 0
 --- !u!136 &428469907858631504
 CapsuleCollider:
@@ -229,19 +226,28 @@ CapsuleCollider:
   m_Height: 6.6
   m_Direction: 1
   m_Center: {x: 0, y: 3, z: 0}
---- !u!114 &2144711255
-MonoBehaviour:
+--- !u!195 &157574961
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 428469907858631511}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73082ba8f9a448b49b629c825adbe1c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drunk: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &715263891716868619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,7 +1371,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6233745509557671610}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0036734692, y: 2.2347295, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

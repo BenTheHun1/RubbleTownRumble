@@ -22,8 +22,6 @@ public class BoomEnemyAI : MonoBehaviour
 	public float movementSpeed;
 	public bool isRagdoll;
 	public bool isKicked;
-	public bool isAttacking;
-	public bool isWalking;
 	public bool GetUp;
 	public bool invincible;
 	public bool kaboom;
@@ -36,7 +34,6 @@ public class BoomEnemyAI : MonoBehaviour
 	private Color32 color;
 	void Start()
 	{
-		isWalking = true;
 		Health = 1;
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
@@ -54,9 +51,8 @@ public class BoomEnemyAI : MonoBehaviour
 		lookDirection.y = 0;
 		qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
 		rootJoint.transform.SetParent(transform, true);
-		if (isWalking && Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
+		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
 		{
-			isWalking = true;
 			animEnemy.SetTrigger("Walking");
 			transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
 			if (animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
@@ -90,8 +86,6 @@ public class BoomEnemyAI : MonoBehaviour
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isRagdoll = true;
-		isAttacking = false;
-		isWalking = false;
 		animEnemy.enabled = false;
 		Destroy(rootRigid);
 		Destroy(rootCapCollide);
@@ -139,7 +133,6 @@ public class BoomEnemyAI : MonoBehaviour
 	IEnumerator Kaboom()
 	{
 		kegAnim.SetTrigger("Explosion");
-		isWalking = false;
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		yield return new WaitForSeconds(1f);
@@ -155,10 +148,6 @@ public class BoomEnemyAI : MonoBehaviour
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Ragdoll();
 				rb.AddExplosionForce(800, rootJoint.transform.position, 2, 0.3f, ForceMode.Impulse);
 			}
-			//else
-            //{
-			//	if 
-            //}
 		}
 		var explosionParticle = Instantiate(explosionEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		explosionParticle.Play();
