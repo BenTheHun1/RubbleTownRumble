@@ -5,6 +5,12 @@ using UnityEngine.AI;
 
 public class EnemyAICharacterJoints : MonoBehaviour
 {
+	public AudioSource dwarfSource;
+	public AudioClip axeSwing;
+	public AudioClip[] callout;
+	public AudioClip[] death;
+	public AudioClip[] hurt;
+	public Material[] outfits;
 	public ParticleSystem particleEffect;
 	public ParticleSystem bloodEffect;
 	public Vector3 lastPos;
@@ -23,6 +29,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public bool GetUp;
 	public bool skipDeathStruggle;
 	private bool isResettingAttack;
+	private int chance = 1;
 	private GameObject player;
 	private GameObject spawnManager;
 	private Quaternion qTo;
@@ -34,6 +41,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Start()
 	{
+		dwarfSource = GetComponent<AudioSource>();
 		isResettingAttack = true;
 		Health = 15;
 		navMeshAgent = GetComponent<NavMeshAgent>();
@@ -42,6 +50,12 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		rootRigid = GetComponent<Rigidbody>();
 		rootCapCollide = GetComponent<CapsuleCollider>();
 		rigids = GetComponentsInChildren<Rigidbody>();
+		chance = Random.Range(0, 2);
+		if (chance == 1)
+        {
+			rend.material = outfits[Random.Range(0, outfits.Length)];
+		}
+		
 		capColliders = GetComponentsInChildren<CapsuleCollider>();
 		boxColliders = GetComponentsInChildren<BoxCollider>();
 		animEnemy = transform.root.GetComponent<Animator>();
@@ -179,7 +193,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 			StartCoroutine(WakingUp());
 		}
-		/*else
+		else
 		{
 			if (Health <= 0)
 			{
@@ -187,7 +201,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				GetUp = false;
 				StartCoroutine(FinalDeath());
 			}
-		}*/
+		}
 	}
 
 	IEnumerator WakingUp()
