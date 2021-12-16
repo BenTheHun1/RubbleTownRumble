@@ -32,6 +32,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public bool skipDeathStruggle;
 	public bool exploded;
 	private bool isResettingAttack;
+	private bool isDEAD;
 	private int chance = 1;
 	private GameObject player;
 	private GameObject spawnManager;
@@ -133,11 +134,14 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
 		}
 		Health -= hs.AttackAmount;
-		if (Health <= 0 & !isRagdoll)
+		if (Health <= 0 && !isDEAD)
 		{
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-			GetUp = false;
-			Ragdoll();
+			if (!isRagdoll)
+			{
+				Ragdoll();
+				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+				GetUp = false;
+			}
 			StartCoroutine(FinalDeath());
 		}
 		else
@@ -180,11 +184,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			{
 				bc.enabled = true;
 			}
-		}
-		if (Health <= 0)
-		{
-			color = new Color32(108, 0, 0, 0);
-			rend.material.color = color;
 		}
 		StartCoroutine(KnockedDown());
 	}
@@ -268,9 +267,12 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator FinalDeath()
 	{
+		color = new Color32(108, 0, 0, 0);
+		rend.material.color = color;
+		isDEAD = true;
 		beard.transform.parent = null;
 		beard.AddComponent<Rigidbody>();
-		beard.GetComponent<SphereCollider>().enabled = true;
+		beard.GetComponent<BoxCollider>().enabled = true;
 		beard.gameObject.tag = "Item";
 		yield return new WaitForSeconds(3f);
 		if (!skipDeathStruggle)
@@ -285,7 +287,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		var particle = Instantiate(particleEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		particle.Play();
 		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
-		hs.beards++;
 		Destroy(gameObject);
 	}
 
