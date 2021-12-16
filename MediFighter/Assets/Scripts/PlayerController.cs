@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject buyableItem;
     private TextMeshProUGUI shopInfo;
+    private TextMeshProUGUI shopTalk;
+    private GameObject shopTalkContainer;
     public SphereCollider footCollider;
     public HealthSystem hs;
 
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
     private bool m_isAxisInUse = false;
     private bool kicking = false;
+    private bool buying = false;
 
     public GameObject juice;
 
@@ -51,10 +54,16 @@ public class PlayerController : MonoBehaviour
     private bool Swing1Playing;
     private bool Swing2Playing;
 
+    private int costPotion = 10;
+    private int costArmor = 25;
+    private int costSword = 20;
+    private int costShield = 8;
 
     void Start()
     {
         shopInfo = GameObject.Find("ShopInfo").GetComponent<TextMeshProUGUI>();
+        shopTalk = GameObject.Find("ShopKeepText").GetComponent<TextMeshProUGUI>();
+        shopTalkContainer = GameObject.Find("ShopKeepTalk");
         juice = GameObject.Find("Juice");
         canKick = true;
         foot.SetActive(false);
@@ -183,19 +192,19 @@ public class PlayerController : MonoBehaviour
                 buyableItem = ray.transform.gameObject;
                 if (buyableItem.name == "ArmorKit")
                 {
-                    shopInfo.text = "Upgrade your Armor, increasing your max health.\n20 Beards\n\nBuy with [E]"; // \n = New line
+                    shopInfo.text = "Upgrade your Armor, increasing your max health.\n" + costArmor + " Beards\n\nBuy with [E]";
                 }
                 else if (buyableItem.name == "SwordUpgrade")
                 {
-                    shopInfo.text = "Upgrade your Sword, increasing your attack power.\n25 Beards\n\nBuy with [E]";
+                    shopInfo.text = "Upgrade your Sword, increasing your attack power.\n" + costSword + " Beards\n\nBuy with [E]";
                 }
                 else if (buyableItem.name == "HealthPotion")
                 {
-                    shopInfo.text = "Heal yourself back to full health.\n10 Beards\n\nBuy with [E]";
+                    shopInfo.text = "Heal yourself back to full health.\n" + costPotion + " Beards\n\nBuy with [E]";
                 }
                 else if (buyableItem.name == "BuyShield")
                 {
-                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n10 Beards\n\nBuy with [E]";
+                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n" + costShield + " Beards\n\nBuy with [E]";
                 }
                 else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
@@ -206,61 +215,109 @@ public class PlayerController : MonoBehaviour
                 {
                     shopInfo.text = "Pick up [E]";
                 }
+                else if (buyableItem.name == "Shopkeep")
+                {
+                    shopTalkContainer.SetActive(true);
+                    if (shopTalk.text == "")
+                    {
+                        int dialogueChoice = Random.Range(1, 8);
+                        switch (dialogueChoice)
+                        {
+                            case 1:
+                                shopTalk.text = "Welcome.";
+                                break;
+                            case 2:
+                                shopTalk.text = "Keep 'em sober, keep 'em shaven!";
+                                break;
+                            case 3:
+                                shopTalk.text = "I got anything ye' need!";
+                                break;
+                            case 4:
+                                shopTalk.text = "No need to push.";
+                                break;
+                            case 5:
+                                shopTalk.text = "Enjoy the wares!";
+                                break;
+                            case 6:
+                                shopTalk.text = "Need your sword to be razor sharp? Buy a whetstone!";
+                                break;
+                            case 7:
+                                shopTalk.text = "Those jerks like their beards, but I like 'em more.";
+                                break;
+                        }
+                    }
+                }
                 else
                 {
                     shopInfo.text = "";
+                    shopTalk.text = "";
+                    shopTalkContainer.SetActive(false);
                     buyableItem = null;
                 }
             }
             else
             {
                 shopInfo.text = "";
+                shopTalk.text = "";
+                shopTalkContainer.SetActive(false);
                 buyableItem = null;
             }
         }
         else
         {
             shopInfo.text = "";
+            shopTalk.text = "";
+            shopTalkContainer.SetActive(false);
             buyableItem = null;
         }
 
         //Buy buyable item you're looking at
-        if (Input.GetAxis("Fire2") > 0f && buyableItem != null)
+        if (Input.GetAxisRaw("Fire2") > 0f && buyableItem != null)
         {
-            if (buyableItem.name == "ArmorKit" && hs.beards >= 20)
+            if (!buying)
             {
-                hs.beards -= 20;
-                hs.maxHealth += 5;
-                hs.playerHealth += 5;
-                hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
+                buying = true;
+                if (buyableItem.name == "ArmorKit" && hs.beards >= costArmor)
+                {
+                    hs.beards -= costArmor;
+                    costArmor += 5;
+                    hs.maxHealth += 5;
+                    hs.playerHealth += 5;
+                    hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
+                }
+                else if (buyableItem.name == "SwordUpgrade" && hs.beards >= costSword)
+                {
+                    hs.beards -= 25;
+                    costSword += 5;
+                    hs.AttackAmount++;
+                }
+                else if (buyableItem.name == "HealthPotion" && hs.beards >= costPotion)
+                {
+                    hs.beards -= 10;
+                    hs.playerHealth = hs.maxHealth;
+                    hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
+                }
+                else if (buyableItem.name == "BuyShield" && hs.beards >= costShield)
+                {
+                    hs.beards -= 10;
+                    hs.playerHealth = hs.maxHealth;
+                    buyableItem.SetActive(false);
+                    hasShield = true;
+                }
+                else if (buyableItem.name == "StartGame" && juice.activeSelf)
+                {
+                    sm.startWave = true;
+                }
+                else if (buyableItem.name == "Beard")
+                {
+                    hs.beards++;
+                    Destroy(buyableItem);
+                }
             }
-            else if (buyableItem.name == "SwordUpgrade" && hs.beards >= 25)
-            {
-                hs.beards -= 25;
-                hs.AttackAmount++;
-            }
-            else if (buyableItem.name == "HealthPotion" && hs.beards >= 10)
-            {
-                hs.beards -= 10;
-                hs.playerHealth = hs.maxHealth;
-                hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
-            }
-            else if (buyableItem.name == "BuyShield" && hs.beards >= 10)
-            {
-                hs.beards -= 10;
-                hs.playerHealth = hs.maxHealth;
-                buyableItem.SetActive(false);
-                hasShield = true;
-            }
-            else if (buyableItem.name == "StartGame" && juice.activeSelf)
-            {
-                sm.startWave = true;
-            }
-            else if (buyableItem.name == "Beard")
-            {
-                hs.beards++;
-                Destroy(buyableItem);
-            }
+        }
+        if (Input.GetAxisRaw("Fire2") == 0)
+        {
+            buying = false;
         }
     }
 
