@@ -178,13 +178,23 @@ public class BoomEnemyAI : MonoBehaviour
 		{
 			Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-			if (rb != null && rb.gameObject != rootJoint && rb.gameObject.CompareTag("Enemy"))
+			if (rb != null && rb.gameObject != rootJoint && rb.gameObject.CompareTag("Enemy") && rb.transform.root.GetComponent<EnemyAICharacterJoints>())
 			{
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().exploded = true;
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Health = 0;
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Ragdoll();
 				rb.AddExplosionForce(800, rootJoint.transform.position, 2, 0.3f, ForceMode.Impulse);
 			}
+			else
+            {
+				if(rb != null && rb.gameObject != rootJoint && rb.gameObject.CompareTag("Enemy") && rb.transform.root.GetComponent<BoomEnemyAI>())
+                {
+					//rb.transform.root.GetComponent<EnemyAICharacterJoints>().exploded = true;
+					rb.transform.root.GetComponent<BoomEnemyAI>().Health = 0;
+					rb.transform.root.GetComponent<BoomEnemyAI>().Ragdoll();
+					rb.AddExplosionForce(800, rootJoint.transform.position, 2, 0.3f, ForceMode.Impulse);
+				}
+            }
 		}
 		var explosionParticle = Instantiate(explosionEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		explosionParticle.Play();
