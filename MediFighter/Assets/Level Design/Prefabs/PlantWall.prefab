@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 747156937164042791}
   - component: {fileID: 3753837441802736135}
   - component: {fileID: 7667482005941203400}
-  - component: {fileID: 8812317371751584436}
+  - component: {fileID: 1073190169033614532}
   m_Layer: 7
   m_Name: pPlane29
   m_TagString: Untagged
@@ -303,7 +303,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8812317371751584436
+--- !u!65 &1073190169033614532
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -314,8 +314,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 314.72778, y: 92.20515, z: 113.18192}
-  m_Center: {x: 149.99988, y: 54.4, z: -50.00002}
+  m_Size: {x: 314.72784, y: 101.68154, z: 113.18195}
+  m_Center: {x: 157.36388, y: 51.143013, z: 56.59096}
 --- !u!1 &6952600549267629108
 GameObject:
   m_ObjectHideFlags: 0

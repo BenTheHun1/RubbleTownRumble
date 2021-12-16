@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyAICharacterJoints : MonoBehaviour
 {
 	public AudioSource dwarfSource;
+	public AudioClip[] swordHit;
 	public AudioClip axeSwing;
 	public AudioClip[] callout;
 	public AudioClip[] death;
@@ -15,6 +16,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public ParticleSystem bloodEffect;
 	public Vector3 lastPos;
 	public GameObject rootJoint;
+	public GameObject beard;
 	public Rigidbody rootRigid;
 	public CapsuleCollider rootCapCollide;
 	public Rigidbody[] rigids;
@@ -28,7 +30,9 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public bool isKicked;
 	public bool GetUp;
 	public bool skipDeathStruggle;
+	public bool exploded;
 	private bool isResettingAttack;
+	private bool isDEAD;
 	private int chance = 1;
 	private GameObject player;
 	private GameObject spawnManager;
@@ -55,12 +59,12 @@ public class EnemyAICharacterJoints : MonoBehaviour
         {
 			rend.material = outfits[Random.Range(0, outfits.Length)];
 		}
-		
 		capColliders = GetComponentsInChildren<CapsuleCollider>();
 		boxColliders = GetComponentsInChildren<BoxCollider>();
 		animEnemy = transform.root.GetComponent<Animator>();
 		player = GameObject.Find("Player");
 		spawnManager = GameObject.Find("Spawns");
+		StartCoroutine(Bark());
 	}
 
 	void Update()
@@ -124,12 +128,20 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		animEnemy.ResetTrigger("Attacking");
 		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		bloodParticle.Play();
-		Health -= hs.AttackAmount;
-		if (Health <= 0 & !isRagdoll)
+		dwarfSource.PlayOneShot(swordHit[Random.Range(0, swordHit.Length)]);
+		if (Health <= hs.AttackAmount && !dwarfSource.isPlaying)
 		{
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-			GetUp = false;
-			Ragdoll();
+			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
+		}
+		Health -= hs.AttackAmount;
+		if (Health <= 0 && !isDEAD)
+		{
+			if (!isRagdoll)
+			{
+				Ragdoll();
+				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+				GetUp = false;
+			}
 			StartCoroutine(FinalDeath());
 		}
 		else
@@ -173,16 +185,15 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				bc.enabled = true;
 			}
 		}
-		if (Health <= 0)
-		{
-			color = new Color32(108, 0, 0, 0);
-			rend.material.color = color;
-		}
 		StartCoroutine(KnockedDown());
 	}
 
 	IEnumerator KnockedDown()
 	{
+		if (Health <= 0 && exploded && !dwarfSource.isPlaying)
+		{
+			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
+		}
 		isKicked = true;
 		yield return new WaitForSeconds(0.5f);
 		isKicked = false;
@@ -195,7 +206,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 		else
 		{
-			if (Health <= 0)
+			if (Health <= 0 && exploded)
 			{
 				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 				GetUp = false;
@@ -256,6 +267,13 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator FinalDeath()
 	{
+		color = new Color32(108, 0, 0, 0);
+		rend.material.color = color;
+		isDEAD = true;
+		beard.transform.parent = null;
+		beard.AddComponent<Rigidbody>();
+		beard.GetComponent<BoxCollider>().enabled = true;
+		beard.gameObject.tag = "Item";
 		yield return new WaitForSeconds(3f);
 		if (!skipDeathStruggle)
         {
@@ -269,12 +287,12 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		var particle = Instantiate(particleEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		particle.Play();
 		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
-		hs.beards++;
 		Destroy(gameObject);
 	}
 
 	IEnumerator React()
 	{
+		dwarfSource.PlayOneShot(hurt[Random.Range(0, hurt.Length)]);
 		yield return new WaitForSeconds(0.05f);
 		color = new Color32(255, 255, 255, 0);
 		rend.material.color = color;
@@ -283,9 +301,20 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	IEnumerator ResetAttack()
 	{
+		dwarfSource.PlayOneShot(axeSwing);
 		yield return new WaitForSeconds(1f);
 		animEnemy.SetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isResettingAttack = true;
+	}
+
+	IEnumerator Bark()
+	{
+		if (!isRagdoll && !dwarfSource.isPlaying)
+        {
+			dwarfSource.PlayOneShot(callout[Random.Range(0, callout.Length)]);
+		}
+		yield return new WaitForSeconds(Random.Range(10, 30));
+		StartCoroutine(Bark());
 	}
 }
