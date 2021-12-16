@@ -7,6 +7,7 @@ public class CollisionHandlerBOOM : MonoBehaviour
     //public EnemyAICharacterJoints enemyAI;
     public BoomEnemyAI enemyAI;
     private PlayerController playerController;
+    private bool isKICKED;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,7 @@ public class CollisionHandlerBOOM : MonoBehaviour
         }
         else
         {
-            if (other.gameObject.CompareTag("Boot") && !enemyAI.isRagdoll)
+            if (other.gameObject.CompareTag("Boot") && !enemyAI.isRagdoll && !isKICKED)
             {
                 enemyAI.isKicked = true;
                 enemyAI.Ragdoll();

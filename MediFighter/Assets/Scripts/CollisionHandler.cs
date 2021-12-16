@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    //public EnemyAICharacterJoints enemyAI;
     public EnemyAICharacterJoints enemyAI;
     private PlayerController playerController;
+    private bool isKICKED;
 
     // Start is called before the first frame update
     void Start()
@@ -37,10 +37,12 @@ public class CollisionHandler : MonoBehaviour
         }
         else
         {
-            if (other.gameObject.CompareTag("Boot") && !enemyAI.isRagdoll)
+            if (other.gameObject.CompareTag("Boot") && !enemyAI.isRagdoll && !isKICKED)
             {
+                isKICKED = true;
                 enemyAI.isKicked = true;
                 enemyAI.Ragdoll();
+                StartCoroutine(cooldown());
             }
         }
 
@@ -57,5 +59,10 @@ public class CollisionHandler : MonoBehaviour
                 AIenemy.Ragdoll();
             }
         }
+    }
+    IEnumerator cooldown()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isKICKED = false;
     }
 }

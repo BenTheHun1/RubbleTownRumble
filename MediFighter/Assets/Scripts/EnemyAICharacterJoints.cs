@@ -162,7 +162,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		isRagdoll = true;
 		animEnemy.enabled = false;
 		Destroy(rootRigid);
-		Destroy(rootCapCollide);
+		rootCapCollide.enabled = false;
 		foreach (Rigidbody rb in rigids)
 		{
 			if (rb != null)
@@ -173,14 +173,14 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 		foreach (CapsuleCollider cc in capColliders)
 		{
-			if (cc != null)
+			if (cc != null && cc != rootCapCollide)
 			{
 				cc.enabled = true;
 			}
 		}
 		foreach (BoxCollider bc in boxColliders)
 		{
-			if (bc != null && bc.gameObject.name != "RootJoint")
+			if (bc != null && bc.gameObject.name != "RootJoint" && bc.gameObject.name != "Beard")
 			{
 				bc.enabled = true;
 			}
@@ -242,7 +242,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 				}
 				foreach (BoxCollider bc in boxColliders)
 				{
-					if (bc != null && bc.gameObject.name != "RootJoint")
+					if (bc != null && bc.gameObject.name != "RootJoint" && bc.gameObject.name != "Beard")
 					{
 						bc.enabled = false;
 					}
@@ -256,11 +256,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 					rootRigid = gameObject.AddComponent<Rigidbody>();
 					rootRigid.constraints = RigidbodyConstraints.FreezeRotation;
 				}
-				rootCapCollide = gameObject.AddComponent<CapsuleCollider>();
-				rootCapCollide.center = new Vector3(0, 3, 0);
-				rootCapCollide.direction = 1;
-				rootCapCollide.radius = 1.4f;
-				rootCapCollide.height = 6.6f;
+				rootCapCollide.enabled = true;
 			}
 		}
 	}
