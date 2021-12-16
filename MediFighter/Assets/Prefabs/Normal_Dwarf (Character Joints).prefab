@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 428469907858631508}
   - component: {fileID: 428469907858631504}
   - component: {fileID: 157574961}
+  - component: {fileID: 1551631542}
   m_Layer: 8
   m_Name: Normal_Dwarf (Character Joints)
   m_TagString: EnemyRoot
@@ -193,6 +194,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc700b0ed94a4b34ba791ab90939edd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dwarfSource: {fileID: 0}
+  swordHit:
+  - {fileID: 8300000, guid: b619dff5539462a4b9b6fdb0b6cf3dcd, type: 3}
+  - {fileID: 8300000, guid: 154bd5d43bb704d40b41d93c2583f8be, type: 3}
+  - {fileID: 8300000, guid: c410784611a7ddc43a4a364757cf3434, type: 3}
+  - {fileID: 8300000, guid: d5c46c4b4e475ff4a98075759fb93ca2, type: 3}
+  - {fileID: 8300000, guid: 68a147c7bf34cb14283811f723f469b1, type: 3}
   axeSwing: {fileID: 8300000, guid: 0fdf087b1dbc37343a0dca1eb00172aa, type: 3}
   callout:
   - {fileID: 8300000, guid: 5acecdc273381e04fb2f44e9497dea22, type: 3}
@@ -267,6 +275,7 @@ MonoBehaviour:
     type: 3}
   lastPos: {x: 0, y: 0, z: 0}
   rootJoint: {fileID: 6233745509557671610}
+  beard: {fileID: 8504067016415668687}
   rootRigid: {fileID: 0}
   rootCapCollide: {fileID: 0}
   rigids: []
@@ -280,6 +289,7 @@ MonoBehaviour:
   isKicked: 0
   GetUp: 0
   skipDeathStruggle: 0
+  exploded: 0
 --- !u!136 &428469907858631504
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -316,6 +326,111 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!82 &1551631542
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428469907858631511}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 4
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.25
+      value: 1
+      inSlope: -4.0016
+      outSlope: -4.0016
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: -1.0004
+      outSlope: -1.0004
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.2501
+      outSlope: -0.2501
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &715263891716868619
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +713,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.110343374, y: 1.2280186, z: 0.8515756}
+  m_ConnectedAnchor: {x: -0.110343374, y: 1.2280186, z: 0.85157233}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -1096,7 +1211,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000001937151, y: -0.0000003874302, z: 1.3747286}
+  m_ConnectedAnchor: {x: 0.0000001937151, y: -0.0000003874302, z: 1.37473}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2223,6 +2338,7 @@ GameObject:
   - component: {fileID: 1916214254621699615}
   - component: {fileID: 8504067016415668685}
   - component: {fileID: 8504067016415668684}
+  - component: {fileID: 590417867}
   m_Layer: 6
   m_Name: Beard
   m_TagString: Untagged
@@ -2422,6 +2538,19 @@ Cloth:
   - {x: 0.6666667, y: 0.16666667, z: 0.16666667}
   - {x: 0.5, y: 0.5, z: 0}
   m_VirtualParticleIndices: 
+--- !u!135 &590417867
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8504067016415668687}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 1.6
+  m_Center: {x: -1.128372, y: -0.75750816, z: -0.0050966144}
 --- !u!1 &8523510287145849457
 GameObject:
   m_ObjectHideFlags: 0
