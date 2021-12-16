@@ -335,7 +335,8 @@ AudioSource:
   m_GameObject: {fileID: 428469907858631511}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7440148944100253376, guid: 857b0e584adfbae4abe3721e5925afc6,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1211,7 +1212,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000001937151, y: -0.0000003874302, z: 1.37473}
+  m_ConnectedAnchor: {x: 0.0000001937151, y: -0.0000003874302, z: 1.3747286}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -1852,7 +1853,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.114016294, y: 0.70099235, z: 0}
+  m_ConnectedAnchor: {x: 0.114016294, y: 0.70099187, z: 0}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -2338,7 +2339,7 @@ GameObject:
   - component: {fileID: 1916214254621699615}
   - component: {fileID: 8504067016415668685}
   - component: {fileID: 8504067016415668684}
-  - component: {fileID: 590417867}
+  - component: {fileID: 8003659352601537657}
   m_Layer: 6
   m_Name: Beard
   m_TagString: Untagged
@@ -2538,8 +2539,8 @@ Cloth:
   - {x: 0.6666667, y: 0.16666667, z: 0.16666667}
   - {x: 0.5, y: 0.5, z: 0}
   m_VirtualParticleIndices: 
---- !u!135 &590417867
-SphereCollider:
+--- !u!65 &8003659352601537657
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2549,8 +2550,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 1.6
-  m_Center: {x: -1.128372, y: -0.75750816, z: -0.0050966144}
+  m_Size: {x: 2.1936545, y: 0.78086644, z: 0.9482039}
+  m_Center: {x: -1.1359239, y: -0.84864074, z: 0.03928596}
 --- !u!1 &8523510287145849457
 GameObject:
   m_ObjectHideFlags: 0
