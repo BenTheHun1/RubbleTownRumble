@@ -198,6 +198,7 @@ public class BoomEnemyAI : MonoBehaviour
 		}
 		var explosionParticle = Instantiate(explosionEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		explosionParticle.Play();
+		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 		Destroy(gameObject);
 	}
 }
