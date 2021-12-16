@@ -5,7 +5,7 @@ using UnityEngine;
 public class KickController : MonoBehaviour
 {
     public int kickForce;
-
+    public GameObject player;
     public AudioSource audioSorc;
     public AudioClip hitSound;
 
@@ -14,7 +14,7 @@ public class KickController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             gameObject.GetComponent<SphereCollider>().enabled = false;
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(gameObject.transform.position.x, 0, 0) * kickForce, ForceMode.Impulse);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(player.transform.position.x, 0, player.transform.position.z) * kickForce, ForceMode.Impulse);
             audioSorc.PlayOneShot(hitSound);
         }
     }
