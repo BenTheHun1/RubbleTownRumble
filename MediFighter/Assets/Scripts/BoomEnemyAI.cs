@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class BoomEnemyAI : MonoBehaviour
 {
+	public AudioSource dwarfSource;
+	public AudioClip hiss;
 	public ParticleSystem particleEffect;
 	public ParticleSystem bloodEffect;
 	public ParticleSystem fuseEffect;
@@ -41,6 +43,7 @@ public class BoomEnemyAI : MonoBehaviour
 	{
 		Health = 1;
 		explosionRadius = 3f;
+		dwarfSource = GetComponent<AudioSource>();
 		navMeshAgent = GetComponent<NavMeshAgent>();
 		navMeshAgent.speed = movementSpeed;
 		rootRigid = GetComponent<Rigidbody>();
@@ -155,9 +158,14 @@ public class BoomEnemyAI : MonoBehaviour
 
 	IEnumerator Kaboom()
 	{
+		animEnemy.SetTrigger("AboutToExplode");
 		kegAnim.SetTrigger("Explosion");
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
+		if (!dwarfSource.isPlaying)
+        {
+			dwarfSource.PlayOneShot(hiss);
+		}
 		yield return new WaitForSeconds(1f);
 		Vector3 explosionPos = rootJoint.transform.position;
 		Collider[] colliders = Physics.OverlapSphere(explosionPos, 3);
@@ -172,6 +180,7 @@ public class BoomEnemyAI : MonoBehaviour
 
 			if (rb != null && rb.gameObject != rootJoint && rb.gameObject.CompareTag("Enemy"))
 			{
+				rb.transform.root.GetComponent<EnemyAICharacterJoints>().exploded = true;
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Health = 0;
 				rb.transform.root.GetComponent<EnemyAICharacterJoints>().Ragdoll();
 				rb.AddExplosionForce(800, rootJoint.transform.position, 2, 0.3f, ForceMode.Impulse);
