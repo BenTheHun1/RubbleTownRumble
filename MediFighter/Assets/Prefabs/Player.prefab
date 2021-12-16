@@ -266,7 +266,7 @@ MonoBehaviour:
   maxHealth: 0
   disHealth: {fileID: 0}
   AttackAmount: 0
-  beards: 1000
+  beards: 0
   hurtSound: {fileID: 8300000, guid: a4b108e657b10774a8dc808be7807c16, type: 3}
 --- !u!114 &4932589195320033705
 MonoBehaviour:
