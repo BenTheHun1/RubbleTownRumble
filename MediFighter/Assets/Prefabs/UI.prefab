@@ -1368,12 +1368,12 @@ MonoBehaviour:
     [Right Click] or [LT] to Raise Shield (If bought)
 
     [E] 
-    or [A Button] to interact with objects
+    or [X Button] to interact with objects
 
     [Ctrl] or press [Left Stick] to Crouch
 
     [Space]
-    or [Y Button] to Jump'
+    or [A Button] to Jump'
 --- !u!1 &1063704428072158096
 GameObject:
   m_ObjectHideFlags: 0

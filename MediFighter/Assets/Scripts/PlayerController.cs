@@ -192,28 +192,28 @@ public class PlayerController : MonoBehaviour
                 buyableItem = ray.transform.gameObject;
                 if (buyableItem.name == "ArmorKit")
                 {
-                    shopInfo.text = "Upgrade your Armor, increasing your max health.\n" + costArmor + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Upgrade your Armor, increasing your max health.\n" + costArmor + " Beards\n\nBuy with [E] or [X Button]";
                 }
                 else if (buyableItem.name == "SwordUpgrade")
                 {
-                    shopInfo.text = "Upgrade your Sword, increasing your attack power.\n" + costSword + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Upgrade your Sword, increasing your attack power.\n" + costSword + " Beards\n\nBuy with [E] or [X Button]";
                 }
                 else if (buyableItem.name == "HealthPotion")
                 {
-                    shopInfo.text = "Heal yourself back to full health.\n" + costPotion + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Heal yourself back to full health.\n" + costPotion + " Beards\n\nBuy with [E] or [X Button]";
                 }
                 else if (buyableItem.name == "BuyShield")
                 {
-                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n" + costShield + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n" + costShield + " Beards\n\nBuy with [E] or [X Button]";
                 }
                 else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
                     var NextWaveNum = sm.waveNum + 1;
-                    shopInfo.text = "Bring on the Dwarves!\n" + "Wave: " + NextWaveNum.ToString() + "\nPress [E]";
+                    shopInfo.text = "Bring on the Dwarves!\n" + "Wave: " + NextWaveNum.ToString() + "\nPress [E] or [X Button]";
                 }
                 else if (buyableItem.name == "Beard")
                 {
-                    shopInfo.text = "Pick up [E]";
+                    shopInfo.text = "Pick up [E] or [A Button]";
                 }
                 else if (buyableItem.name == "Shopkeep")
                 {
