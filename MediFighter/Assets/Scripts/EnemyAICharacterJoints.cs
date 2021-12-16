@@ -129,7 +129,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		bloodParticle.Play();
 		dwarfSource.PlayOneShot(swordHit[Random.Range(0, swordHit.Length)]);
-		if (Health <= hs.AttackAmount && !dwarfSource.isPlaying)
+		if (Health <= hs.AttackAmount)
 		{
 			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
 		}

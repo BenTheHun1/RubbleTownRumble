@@ -82,7 +82,6 @@ public class BoomEnemyAI : MonoBehaviour
 		{
 			if (!isRagdoll && Vector3.Distance(player.transform.position, transform.position) <= stoppingradius)
 			{
-				kaboom = true;
 				StartCoroutine(Kaboom());
 			}
 		}
@@ -162,6 +161,7 @@ public class BoomEnemyAI : MonoBehaviour
 		kegAnim.SetTrigger("Explosion");
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
+		kaboom = true;
 		if (!dwarfSource.isPlaying)
         {
 			dwarfSource.PlayOneShot(hiss);

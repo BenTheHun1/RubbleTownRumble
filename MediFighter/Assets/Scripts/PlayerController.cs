@@ -287,19 +287,19 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (buyableItem.name == "SwordUpgrade" && hs.beards >= costSword)
                 {
-                    hs.beards -= 25;
+                    hs.beards -= costSword;
                     costSword += 5;
                     hs.AttackAmount++;
                 }
                 else if (buyableItem.name == "HealthPotion" && hs.beards >= costPotion)
                 {
-                    hs.beards -= 10;
+                    hs.beards -= costPotion;
                     hs.playerHealth = hs.maxHealth;
                     hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
                 }
                 else if (buyableItem.name == "BuyShield" && hs.beards >= costShield)
                 {
-                    hs.beards -= 10;
+                    hs.beards -= costShield;
                     hs.playerHealth = hs.maxHealth;
                     buyableItem.SetActive(false);
                     hasShield = true;
