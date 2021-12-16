@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kickForce: 4
+  player: {fileID: 4932589195320033708}
   audioSorc: {fileID: 9096803999163811699}
   hitSound: {fileID: 8300000, guid: 08b705f340b92954fa1b336df3c121b6, type: 3}
 --- !u!136 &1891570381
