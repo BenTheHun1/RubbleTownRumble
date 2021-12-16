@@ -848,7 +848,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 84e2d891f57dda442999ba8ec7c51eea, type: 3}
-    m_FontSize: 28
+    m_FontSize: 26
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -858,20 +858,21 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
-    m_LineSpacing: 1.1
+    m_LineSpacing: 1.2
   m_Text: 'Ben Hunsicker - Producer, Programmer, Game Designer, 2D Artist, 3D Modeller,
     UI Designer, Git Kraker
 
-    David Rozell - Programmer, Game Designer
+    David Rozell - Programmer, Game Designer, Ragdoll
+    Maniac
 
-    Ben
-    Pielocik - 3D Modeller, Concept Artist, Game Designer
+    Ben Pielocik - 3D Modeller, Animator, Concept Artist, Game Designer,
+    Sound Designer, Voice Actor, Title Screen Artist
 
-    Kalynn Vazquez - 3D
-    Modeller, Level Designer, Texture Artist
+    Kalynn Vazquez - 3D Modeller,
+    Level Designer, Texture Artist
 
-    Max "eXimius" - 2D Artist, Concept
-    Artist, UI Artist
+    Max "eXimius" - 2D Artist, Concept Artist,
+    UI Artist
 
     Shane Pielocik - Music'
 --- !u!222 &1449503111
