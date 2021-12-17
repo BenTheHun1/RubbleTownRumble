@@ -96,13 +96,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-
         controller.Move(velocity * Time.deltaTime);
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Quick Reload of Scene
-        }
 
         //Crouching System
         if (Input.GetAxis("Crouch") > 0)
