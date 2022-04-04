@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        /*Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
             playerBody.gameObject.GetComponent<PlayerController>().ray = hit;
@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour
                 inControl = true;
             }
         }
-        playerBody.Rotate(Vector3.up * mouseX);
+        playerBody.Rotate(Vector3.up * mouseX);*/
         
 
     }

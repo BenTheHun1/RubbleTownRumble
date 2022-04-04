@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
+    /*void Update()
     {
         isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //Checks if you are on a Ground layer object
 
@@ -322,5 +322,5 @@ public class PlayerController : MonoBehaviour
         cc.inControl = true;
         foot.SetActive(false);
         canKick = true;
-    }
+    }*/
 }

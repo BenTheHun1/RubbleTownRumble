@@ -21,7 +21,7 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxisRaw("Cancel") > 0)
+        /*if (Input.GetAxisRaw("Cancel") > 0)
         {
             if (!press_esc)
             {
@@ -39,7 +39,7 @@ public class Pause : MonoBehaviour
         if (Input.GetAxisRaw("Cancel") == 0)
         {
             press_esc = false;
-        }
+        }*/
     }
 
     public void PauseGame()
