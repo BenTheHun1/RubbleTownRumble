@@ -35,7 +35,7 @@ public class CollisionHandler : MonoBehaviour
                 enemyAI.Hit();
             }*/
 
-            if (other.GetComponent<Rigidbody>().velocity.magnitude > 0.5)
+            if (other.GetComponent<Rigidbody>().velocity.magnitude > 0.1f)
             {
                 enemyAI.Hit();
             }
