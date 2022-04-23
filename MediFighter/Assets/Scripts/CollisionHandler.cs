@@ -30,10 +30,17 @@ public class CollisionHandler : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Sword"))
         {
-            if (playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe") || playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            /*if (playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe") || playerController.animSword.GetCurrentAnimatorStateInfo(0).IsName("Swipe"))
+            {
+                enemyAI.Hit();
+            }*/
+
+            if (other.GetComponent<Rigidbody>().velocity.magnitude > 0.5)
             {
                 enemyAI.Hit();
             }
+            //Debug.Log(other.GetComponent<Rigidbody>().velocity.magnitude);
+
         }
         else
         {

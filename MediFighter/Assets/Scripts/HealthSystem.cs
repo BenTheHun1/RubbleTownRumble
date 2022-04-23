@@ -41,9 +41,9 @@ public class HealthSystem : MonoBehaviour
         cam = GameObject.Find("Main Camera");
         disHealth = GameObject.Find("HP").GetComponent<Image>();
         disBeards = GameObject.Find("BeardAmount").GetComponent<TextMeshProUGUI>();
-        hurtDisplay = GameObject.Find("Hurt").GetComponent<RawImage>();
+        hurtDisplay = GameObject.Find("HurtVR").GetComponent<RawImage>();
         hurtDisplay.gameObject.SetActive(false);
-        gameOverText = GameObject.Find("GameOver");
+        gameOverText = GameObject.Find("GameOverVR");
         gameOverText.SetActive(false);
     }
 
@@ -112,8 +112,8 @@ public class HealthSystem : MonoBehaviour
     IEnumerator GameOver()
     {
         gameOverText.gameObject.SetActive(true);
-        player.GetComponent<PlayerController>().enabled = false;
-        cam.GetComponent<CameraController>().enabled = false;
+        //player.GetComponent<PlayerController>().enabled = false;
+        //cam.GetComponent<CameraController>().enabled = false;
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
