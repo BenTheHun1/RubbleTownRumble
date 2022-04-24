@@ -928,9 +928,9 @@ MonoBehaviour:
   m_PlayHapticsOnSelectCanceled: 0
   m_HapticSelectCancelIntensity: 0
   m_HapticSelectCancelDuration: 0
-  m_PlayHapticsOnHoverEntered: 0
+  m_PlayHapticsOnHoverEntered: 1
   m_HapticHoverEnterIntensity: 0.1
-  m_HapticHoverEnterDuration: 0.25
+  m_HapticHoverEnterDuration: 0.01
   m_PlayHapticsOnHoverExited: 0
   m_HapticHoverExitIntensity: 0
   m_HapticHoverExitDuration: 0
@@ -2222,9 +2222,9 @@ MonoBehaviour:
   m_PlayHapticsOnSelectCanceled: 0
   m_HapticSelectCancelIntensity: 0
   m_HapticSelectCancelDuration: 0
-  m_PlayHapticsOnHoverEntered: 0
+  m_PlayHapticsOnHoverEntered: 1
   m_HapticHoverEnterIntensity: 0.1
-  m_HapticHoverEnterDuration: 0.25
+  m_HapticHoverEnterDuration: 0.01
   m_PlayHapticsOnHoverExited: 0
   m_HapticHoverExitIntensity: 0
   m_HapticHoverExitDuration: 0
