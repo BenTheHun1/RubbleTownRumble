@@ -16,7 +16,7 @@ public class HealthSystem : MonoBehaviour
     public int beards;
     private GameObject mimic;
     private RawImage hurtDisplay;
-    private GameObject gameOverText;
+    private Image gameOverText;
     private GameObject player;
     private GameObject cam;
     private TextMeshProUGUI disBeards;
@@ -39,18 +39,16 @@ public class HealthSystem : MonoBehaviour
         mimic = GameObject.Find("Mimic");
         player = GameObject.Find("Player");
         cam = GameObject.Find("Main Camera");
-        disHealth = GameObject.Find("HP").GetComponent<Image>();
-        disBeards = GameObject.Find("BeardAmount").GetComponent<TextMeshProUGUI>();
+        //disHealth = GameObject.Find("HP").GetComponent<Image>();
+        //disBeards = GameObject.Find("BeardAmount").GetComponent<TextMeshProUGUI>();
         hurtDisplay = GameObject.Find("HurtVR").GetComponent<RawImage>();
-        hurtDisplay.gameObject.SetActive(false);
-        gameOverText = GameObject.Find("GameOverVR");
-        gameOverText.SetActive(false);
+        gameOverText = GameObject.Find("GameOverVR").GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        disBeards.text = beards.ToString() + " x";
+        //disBeards.text = beards.ToString() + " x";
     }
 
     public void DamagePlayer()
@@ -96,9 +94,9 @@ public class HealthSystem : MonoBehaviour
                 if (playerHealth > 0 && !god)
                 {
                     playerHealth -= 1;
-                    hurtDisplay.gameObject.SetActive(true);
+                    hurtDisplay.enabled = true;
                     gameObject.GetComponent<AudioSource>().PlayOneShot(hurtSound);
-                    disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
+                    //disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
                 }
                 if (playerHealth <= 0)
                 {
@@ -111,7 +109,7 @@ public class HealthSystem : MonoBehaviour
 
     IEnumerator GameOver()
     {
-        gameOverText.gameObject.SetActive(true);
+        gameOverText.enabled = true;
         //player.GetComponent<PlayerController>().enabled = false;
         //cam.GetComponent<CameraController>().enabled = false;
         yield return new WaitForSeconds(5);
@@ -121,7 +119,7 @@ public class HealthSystem : MonoBehaviour
     IEnumerator Damage()
     {
         yield return new WaitForSeconds(0.5f);
-        hurtDisplay.gameObject.SetActive(false);
+        hurtDisplay.enabled = false;
         yield return new WaitForSeconds(0.5f);
         isDamaged = false;
     }

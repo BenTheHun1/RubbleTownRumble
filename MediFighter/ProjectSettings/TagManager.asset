@@ -22,8 +22,8 @@ TagManager:
   - Enemy
   - Ground
   - EnemyRoot
-  - 
-  - 
+  - Weapon
+  - Player
   - 
   - 
   - 
