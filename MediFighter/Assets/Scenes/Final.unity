@@ -2587,6 +2587,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 428469907858631509, guid: b4024eb8312d03644b265b05d131768f,
         type: 3}
+      propertyPath: m_Drag
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 428469907858631509, guid: b4024eb8312d03644b265b05d131768f,
+        type: 3}
       propertyPath: m_Mass
       value: 100
       objectReference: {fileID: 0}
@@ -3655,7 +3660,7 @@ MonoBehaviour:
       m_Calls: []
   m_AttachTransform: {fileID: 0}
   m_AttachEaseInTime: 0.15
-  m_MovementType: 0
+  m_MovementType: 1
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
