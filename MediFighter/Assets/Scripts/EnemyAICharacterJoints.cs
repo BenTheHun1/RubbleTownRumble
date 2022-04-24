@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class EnemyAICharacterJoints : MonoBehaviour
 {
@@ -47,7 +48,6 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	{
 		dwarfSource = GetComponent<AudioSource>();
 		isResettingAttack = true;
-		Health = 15;
 		navMeshAgent = GetComponent<NavMeshAgent>();
 		navMeshAgent.speed = movementSpeed;
 		hs = GameObject.Find("Player").GetComponent<HealthSystem>();
@@ -274,8 +274,11 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		rend.material.color = color;
 		isDEAD = true;
 		beard.transform.parent = null;
+		beard.AddComponent<XRGrabInteractable>();
+		beard.layer = LayerMask.NameToLayer("Beard");
 		beard.AddComponent<Rigidbody>();
-		beard.GetComponent<BoxCollider>().enabled = true;
+		beard.GetComponent<MeshCollider>().enabled = true;
+		beard.GetComponent<Cloth>().clothSolverFrequency = 175;
 		beard.gameObject.tag = "Item";
 		yield return new WaitForSeconds(3f);
 		if (!skipDeathStruggle)
