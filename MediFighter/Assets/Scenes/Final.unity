@@ -3008,7 +3008,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraToLookAt: {fileID: 0}
-  healthDisplay: {fileID: 0}
 --- !u!114 &1216496232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3439,7 +3438,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraToLookAt: {fileID: 420728443}
-  healthDisplay: {fileID: 1974023540}
 --- !u!114 &1355355925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4132,6 +4130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd8aa3eaa65aae44a508d694fc58c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left: {fileID: 0}
+  right: {fileID: 0}
 --- !u!1 &1703521339
 GameObject:
   m_ObjectHideFlags: 0
@@ -5339,7 +5339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDamaged: 0
-  god: 1
+  god: 0
   playerHealth: 0
   maxHealth: 0
   disHealth: {fileID: 0}
