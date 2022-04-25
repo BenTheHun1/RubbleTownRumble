@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -25,6 +26,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public BoxCollider[] boxColliders;
 	public Animator animEnemy;
 	public Renderer rend;
+	public Text healthDisplay;
 	public float Health;
 	public float movementSpeed;
 	public bool isRagdoll;
@@ -69,6 +71,16 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Update()
 	{
+
+		if (transform.root.GetComponent<EnemyAICharacterJoints>().Health < 0)
+		{
+			healthDisplay.text = "0";
+		}
+		else
+		{
+			healthDisplay.text = transform.root.GetComponent<EnemyAICharacterJoints>().Health.ToString("N0");
+		}
+
 		if (navMeshAgent.velocity.magnitude > 0)
         {
 			Vector3 lookDirection = navMeshAgent.velocity.normalized;//(player.transform.position - transform.position).normalized;
