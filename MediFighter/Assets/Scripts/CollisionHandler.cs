@@ -53,7 +53,7 @@ public class CollisionHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Debug.Log(gameObject.GetComponent<Rigidbody>().angularVelocity.magnitude);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -69,12 +69,13 @@ public class CollisionHandler : MonoBehaviour
             {
                 enemyAI.Hit();
             }*/
-
-            if (other.GetComponent<Rigidbody>().angularVelocity.magnitude > 3f)
+            
+            if (other.GetComponent<Rigidbody>().angularVelocity.magnitude > 0.5f)
             {
                 //Debug.Log(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
                 SendHaptics(false, 0.2f, 0.5f);
-                enemyAI.Hit();
+                enemyAI.Hit(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
+                Debug.Log("Hit! for " + other.GetComponent<Rigidbody>().angularVelocity.magnitude.ToString("N1"));
             }
 
         }

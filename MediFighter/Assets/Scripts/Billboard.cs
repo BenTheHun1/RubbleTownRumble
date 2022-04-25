@@ -23,7 +23,7 @@ public class Billboard : MonoBehaviour
         }
         else
         {
-            healthDisplay.text = transform.root.GetComponent<EnemyAICharacterJoints>().Health.ToString();
+            healthDisplay.text = transform.root.GetComponent<EnemyAICharacterJoints>().Health.ToString("N0");
         }
     }
 

@@ -25,7 +25,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public BoxCollider[] boxColliders;
 	public Animator animEnemy;
 	public Renderer rend;
-	public int Health;
+	public float Health;
 	public float movementSpeed;
 	public bool isRagdoll;
 	public bool isKicked;
@@ -128,7 +128,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
         }
     }
 
-	public void Hit()
+	public void Hit(float damage)
 	{
 		animEnemy.SetTrigger("Ouch");
 		animEnemy.ResetTrigger("Walking");
@@ -140,7 +140,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		{
 			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
 		}
-		Health -= hs.AttackAmount;
+		Health -= damage / 2;
 		if (Health <= 0 && !isDEAD)
 		{
 			if (!isRagdoll)
