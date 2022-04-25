@@ -3090,6 +3090,11 @@ PrefabInstance:
       propertyPath: near clip plane
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 8356392724853321116, guid: cdf66788ada4ab145a640a19b4af6f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdf66788ada4ab145a640a19b4af6f65, type: 3}
 --- !u!1 &1270014031 stripped
@@ -3876,6 +3881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd8aa3eaa65aae44a508d694fc58c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left: {fileID: 441405903}
+  right: {fileID: 1165573830}
 --- !u!1 &1703521339
 GameObject:
   m_ObjectHideFlags: 0
