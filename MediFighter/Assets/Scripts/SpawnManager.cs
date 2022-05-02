@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class SpawnManager : MonoBehaviour
 {
     public bool startWave;
-    public GameObject waveText;
+    public Image waveText;
+    public GameObject juice;
     public GameObject[] enemyPrefabs;
     public List <GameObject> spawns;
     public List <GameObject> enemyAmount;
@@ -21,14 +22,13 @@ public class SpawnManager : MonoBehaviour
     private bool nextWave;
     private bool loadingWave;
 
-    private PlayerController pc;
+    private GameObject pc;
 
     // Start is called before the first frame update
     void Start()
     {
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        waveText = GameObject.Find("Wave");
-        waveText.gameObject.SetActive(false);
+        pc = GameObject.Find("Player");
+        waveText.enabled = false;
         foreach (Transform spawn in transform)
         {
             if (spawn.tag == "SpawnPoint")
@@ -57,8 +57,9 @@ public class SpawnManager : MonoBehaviour
 
         if (enemiesLeft + enemiesToSpawn <= 0 && !loadingWave)
         {
-            pc.juice.SetActive(true);
-            pc.juice.transform.root.GetComponent<AudioSource>().Stop();
+            juice.SetActive(true);
+            juice.transform.root.GetComponent<AudioSource>().Stop();
+            juice.transform.root.GetComponent<MeshCollider>().enabled = true;
         }
 
         if (!nextWave && startWave)
@@ -67,8 +68,9 @@ public class SpawnManager : MonoBehaviour
             loadingWave = true;
             startWave = false;
             StartCoroutine(NextWave());
-            pc.juice.SetActive(false);
-            pc.juice.transform.root.GetComponent<AudioSource>().Play();
+            juice.SetActive(false);
+            juice.transform.root.GetComponent<AudioSource>().Play();
+            juice.transform.root.GetComponent<MeshCollider>().enabled = false;
         }
     }
 
@@ -82,9 +84,9 @@ public class SpawnManager : MonoBehaviour
         enemiesToSpawn = enemySpawnInterval * waveNum;
         enemiesLeft = enemiesToSpawn;
         yield return new WaitForSeconds(3);
-        waveText.gameObject.SetActive(true);
+        waveText.enabled = true;
         yield return new WaitForSeconds(nextWaveDelay);
-        waveText.gameObject.SetActive(false);
+        waveText.enabled = false;
         nextWave = false;
         canSpawn = true;
         loadingWave = false;

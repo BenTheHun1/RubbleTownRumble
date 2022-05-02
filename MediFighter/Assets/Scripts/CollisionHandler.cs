@@ -45,8 +45,8 @@ public class CollisionHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        leftHand = left;
-        rightHand = right;
+        leftHand = GameObject.Find("LeftHand Controller").GetComponent<XRBaseController>();
+        rightHand = GameObject.Find("RightHand Controller").GetComponent<XRBaseController>();
         enemyAI = transform.root.GetComponent<EnemyAICharacterJoints>();
         //playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
