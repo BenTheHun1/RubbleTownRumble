@@ -22,7 +22,7 @@ public class Sword : MonoBehaviour
         rCon.TryGetFeatureValue()*/
         leftHand = left;
         rightHand = right;
-        gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 20f;
+        gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 50f;
     }
 
     // Update is called once per frame
