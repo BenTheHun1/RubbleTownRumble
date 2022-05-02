@@ -16,6 +16,7 @@ public class CollisionHandler : MonoBehaviour
     public float defaultAmplitude = 0.2f;
     public float defaultDuration = 0.1f;
 
+    private bool canAttack = true;
 
     [ContextMenu("Send Haptics")]
     public void SendHaptics()
@@ -61,6 +62,13 @@ public class CollisionHandler : MonoBehaviour
 
     }
 
+    IEnumerator hitCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(0.5f);
+        canAttack = true;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Sword"))
@@ -70,12 +78,12 @@ public class CollisionHandler : MonoBehaviour
                 enemyAI.Hit();
             }*/
             
-            if (other.GetComponent<Rigidbody>().angularVelocity.magnitude > 0.5f)
+            if (other.GetComponent<Rigidbody>().angularVelocity.magnitude > 0.5f && canAttack)
             {
                 //Debug.Log(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
                 SendHaptics(false, 0.2f, 0.5f);
                 enemyAI.Hit(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
-                Debug.Log("Hit! for " + other.GetComponent<Rigidbody>().angularVelocity.magnitude.ToString("N1"));
+                StartCoroutine("hitCooldown");
             }
 
         }

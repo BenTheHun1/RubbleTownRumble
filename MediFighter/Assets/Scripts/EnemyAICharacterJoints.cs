@@ -152,7 +152,8 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		{
 			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
 		}
-		Health -= damage / 2;
+		Health -= damage / hs.AttackAmount;
+		Debug.Log("Hit! for " + damage / hs.AttackAmount);
 		if (Health <= 0 && !isDEAD)
 		{
 			if (!isRagdoll)

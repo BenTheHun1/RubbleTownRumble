@@ -28,11 +28,11 @@ public class HealthSystem : MonoBehaviour
     {
         if (god)
         {
-            AttackAmount = 99;
+            AttackAmount = 1;
         }
         else
         {
-            AttackAmount = 1;
+            AttackAmount = 10;
         }
         maxHealth = 5;
         playerHealth = maxHealth;
