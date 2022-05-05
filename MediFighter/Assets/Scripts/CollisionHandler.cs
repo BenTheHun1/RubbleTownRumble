@@ -83,11 +83,39 @@ public class CollisionHandler : MonoBehaviour
                 //Debug.Log(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
                 SendHaptics(false, 0.2f, 0.5f);
                 enemyAI.Hit(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
+
+                if (other.GetComponent<Rigidbody>().angularVelocity.magnitude > 40f && canAttack)
+                {
+                    SendHaptics(false, 0.7f, 1.3f);
+                    enemyAI.Ragdoll();
+                }
+
+                if (enemyAI.isDEAD)
+                {
+                    enemyAI.rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    enemyAI.GetUp = false;
+                }
+
                 StartCoroutine("hitCooldown");
             }
-
         }
-        else
+
+        if (other.gameObject.CompareTag("Shield"))
+        {
+            if (other.GetComponent<Rigidbody>().angularVelocity.magnitude > 10f)
+            {
+                //Debug.Log(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
+                SendHaptics(false, 0.7f, 1.3f);
+                enemyAI.Ragdoll();
+
+                if (enemyAI.isDEAD)
+                {
+                    enemyAI.rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    enemyAI.GetUp = false;
+                }
+            }
+        }
+        /*else
         {
             if (other.gameObject.CompareTag("Boot") && !enemyAI.isRagdoll && !isKICKED)
             {
@@ -102,8 +130,9 @@ public class CollisionHandler : MonoBehaviour
         {
             enemyAI.skipDeathStruggle = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        }
-        if (other.transform.root != null && other.transform.root != transform.root && other.gameObject.CompareTag("Enemy") && enemyAI.isRagdoll && enemyAI.isKicked == true)
+        }*/
+
+        if (other.gameObject.CompareTag("Enemy") && enemyAI.isRagdoll && enemyAI.rootJoint.GetComponent<Rigidbody>().velocity.magnitude > 10f)//enemyAI.isKicked == true)
         {
             if (other.transform.root.TryGetComponent(out EnemyAICharacterJoints AIenemy))
             {
@@ -112,9 +141,9 @@ public class CollisionHandler : MonoBehaviour
             }
         }
     }
-    IEnumerator cooldown()
+    /*IEnumerator cooldown()
     {
         yield return new WaitForSeconds(0.5f);
         isKICKED = false;
-    }
+    }*/
 }

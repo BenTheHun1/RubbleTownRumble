@@ -34,8 +34,12 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public bool GetUp;
 	public bool skipDeathStruggle;
 	public bool exploded;
+	public bool isDEAD;
+	public bool isOnGround;
+	public Transform groundCheck;
+	public LayerMask groundMask;
+	private float groundDistance = 0.4f;
 	private bool isResettingAttack;
-	private bool isDEAD;
 	private int chance = 1;
 	private GameObject player;
 	private GameObject spawnManager;
@@ -63,7 +67,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		}
 		capColliders = GetComponentsInChildren<CapsuleCollider>();
 		boxColliders = GetComponentsInChildren<BoxCollider>();
-		animEnemy = transform.root.GetComponent<Animator>();
+		animEnemy = gameObject.GetComponent<Animator>();
 		player = GameObject.Find("Player");
 		spawnManager = GameObject.Find("Spawns");
 		StartCoroutine(Bark());
@@ -72,13 +76,23 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	void Update()
 	{
 
-		if (transform.root.GetComponent<EnemyAICharacterJoints>().Health < 0)
+		isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //Checks if you are on a Ground layer object	
+
+		if (isRagdoll)
+        {
+			rootJoint.transform.parent = null;
+			gameObject.transform.parent = rootJoint.transform;
+			gameObject.transform.position = rootJoint.transform.position;
+			gameObject.transform.rotation = rootJoint.transform.rotation;
+        }
+
+		if (gameObject.GetComponent<EnemyAICharacterJoints>().Health < 0)
 		{
 			healthDisplay.text = "0";
 		}
 		else
 		{
-			healthDisplay.text = transform.root.GetComponent<EnemyAICharacterJoints>().Health.ToString("N0");
+			healthDisplay.text = gameObject.GetComponent<EnemyAICharacterJoints>().Health.ToString("N0");
 		}
 
 		if (navMeshAgent.velocity.magnitude > 0)
@@ -177,6 +191,9 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	public void Ragdoll()
 	{
+		Physics.IgnoreLayerCollision(6,10, true);
+		Physics.IgnoreLayerCollision(8, 10, true);
+		rootJoint.GetComponent<XRGrabInteractable>().enabled = true;
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
 		isRagdoll = true;
@@ -217,11 +234,9 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		isKicked = true;
 		yield return new WaitForSeconds(0.5f);
 		isKicked = false;
-		yield return new WaitForSeconds(3f);
+		//yield return new WaitForSeconds(3f);
 		if (Health > 0)
 		{
-			GetUp = true;
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 			StartCoroutine(WakingUp());
 		}
 		else
@@ -238,11 +253,15 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	IEnumerator WakingUp()
 	{
 		yield return new WaitForSeconds(3f);
+		if (Health > 0 && isOnGround)
 		{
-			if (Health > 0)
-			{
+			rootJoint.GetComponent<XRGrabInteractable>().enabled = false;
+			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+			GetUp = true;
+			yield return new WaitForSeconds(3f);
+			if (!isDEAD)
+            {
 				GetUp = false;
-				rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 				isRagdoll = false;
 				foreach (Rigidbody rb in rigids)
 				{
@@ -268,45 +287,55 @@ public class EnemyAICharacterJoints : MonoBehaviour
 					}
 				}
 				animEnemy.enabled = true;
-				lastPos = rootJoint.transform.position;
-				transform.position = lastPos;
-				rootJoint.transform.position = lastPos;
+				gameObject.transform.parent = null;
+				gameObject.transform.position = rootJoint.transform.position;
+				rootJoint.transform.parent = gameObject.transform;
 				if (rootRigid == null)
 				{
 					rootRigid = gameObject.AddComponent<Rigidbody>();
 					rootRigid.constraints = RigidbodyConstraints.FreezeRotation;
 				}
 				rootCapCollide.enabled = true;
+				rootJoint.GetComponent<XRGrabInteractable>().enabled = false;
+				Physics.IgnoreLayerCollision(6, 10, false);
+				Physics.IgnoreLayerCollision(8, 10, false);
 			}
 		}
+		else
+        {
+			StartCoroutine(WakingUp());
+        }
 	}
 
 	IEnumerator FinalDeath()
 	{
+		Destroy(rootJoint.GetComponent<XRGrabInteractable>());
 		color = new Color32(108, 0, 0, 0);
 		rend.material.color = color;
 		isDEAD = true;
-		beard.transform.parent = null;
-		beard.AddComponent<XRGrabInteractable>();
-		beard.layer = LayerMask.NameToLayer("Beard");
-		beard.AddComponent<Rigidbody>();
-		beard.GetComponent<MeshCollider>().enabled = true;
-		beard.GetComponent<Cloth>().clothSolverFrequency = 175;
-		beard.gameObject.tag = "Item";
+		yield return new WaitForSeconds(0.3f);
+		rootJoint.AddComponent<XRGrabInteractable>();
+		rootJoint.GetComponent<XRGrabInteractable>().enabled = true;
+		rootJoint.GetComponent<XRGrabInteractable>().throwVelocityScale = 50f;
 		yield return new WaitForSeconds(3f);
-		if (!skipDeathStruggle)
-        {
-			rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-			GetUp = true;
-		}
+		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+		GetUp = true;
 		yield return new WaitForSeconds(2f);
 		GetUp = false;
 		rootJoint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		yield return new WaitForSeconds(2f);
+		Destroy(rootJoint.GetComponent<XRGrabInteractable>());
 		var particle = Instantiate(particleEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		particle.Play();
 		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
+		beard.transform.parent = null;
+		beard.layer = LayerMask.NameToLayer("Beard");
+		beard.GetComponent<MeshCollider>().enabled = true;
+		beard.GetComponent<Cloth>().clothSolverFrequency = 175;
+		beard.gameObject.tag = "Item";
+		beard.AddComponent<XRGrabInteractable>();
 		Destroy(gameObject);
+		Destroy(rootJoint);
 	}
 
 	IEnumerator React()

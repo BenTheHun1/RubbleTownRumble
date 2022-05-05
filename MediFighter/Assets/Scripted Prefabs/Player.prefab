@@ -262,6 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDamaged: 0
+  god: 0
   playerHealth: 0
   maxHealth: 0
   disHealth: {fileID: 0}
