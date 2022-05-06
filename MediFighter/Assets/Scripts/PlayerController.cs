@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        //XRDevice.SetTrackingSpaceType(UnityEngine.XR.TrackingSpaceType.RoomScale);
+        //XRInputSubsystem.TrySetTrackingOriginMode(TrackingOriginModeFlags.Device);
         shopInfo = GameObject.Find("ShopInfo").GetComponent<TextMeshProUGUI>();
         shopTalk = GameObject.Find("ShopKeepText").GetComponent<TextMeshProUGUI>();
         shopTalkContainer = GameObject.Find("ShopKeepTalk");

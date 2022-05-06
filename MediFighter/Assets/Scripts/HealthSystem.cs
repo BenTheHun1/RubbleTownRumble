@@ -26,14 +26,8 @@ public class HealthSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (god)
-        {
-            AttackAmount = 1;
-        }
-        else
-        {
-            AttackAmount = 10;
-        }
+        AttackAmount = 10;
+        
         maxHealth = 5;
         playerHealth = maxHealth;
         mimic = GameObject.Find("Mimic");

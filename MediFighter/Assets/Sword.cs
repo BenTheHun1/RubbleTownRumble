@@ -9,9 +9,17 @@ public class Sword : MonoBehaviour
     private InputDevice rCon;
     public static XRBaseController leftHand, rightHand;
     public ActionBasedController left, right;
+    private XRGrabInteractable grab;
 
     private Vector3 d1, d2;
     public Vector3 speed;
+
+    public bool isSword;
+    public Transform rest;
+
+    private InteractionLayerMask nothing = 0;
+    private InteractionLayerMask everything = ~0;
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
@@ -23,20 +31,23 @@ public class Sword : MonoBehaviour
         leftHand = left;
         rightHand = right;
         gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 50f;
+        grab = gameObject.GetComponent<XRGrabInteractable>();
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void grabbed()
     {
-        //Debug.Log(gameObject.GetComponent<Rigidbody>().angularVelocity.magnitude.ToString("N0") + " " + gameObject.GetComponent<Rigidbody>().velocity.magnitude.ToString("N0"));
-        //Debug.Log(right.transform.position);
-        d1 = gameObject.transform.position;
+        //ab.interactionLayers = nothing;
+        rb.constraints = RigidbodyConstraints.None;
+        rb.useGravity = true;
     }
 
-    private void LateUpdate()
+    public void letgo()
     {
-        d2 = gameObject.transform.position;
-        speed = (d2 - d1) / Time.deltaTime;
-        //Debug.Log(speed);
+        //ab.interactionLayers = everything;
+        gameObject.transform.parent = rest;
+        rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+
     }
 }
