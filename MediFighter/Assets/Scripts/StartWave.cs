@@ -21,7 +21,8 @@ public class StartWave : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(gameObject.transform.position, cam.transform.position) < 0.2f && ((gameObject.transform.rotation.x > 90f || gameObject.transform.rotation.x < -90f) || (gameObject.transform.rotation.z > 90f || gameObject.transform.rotation.z < -90f)))
+        Debug.Log(Vector3.Distance(gameObject.transform.position, cam.transform.position));
+        if (Vector3.Distance(gameObject.transform.position, cam.transform.position) < 0.2f && ((gameObject.transform.eulerAngles.x > 90f || gameObject.transform.eulerAngles.x < -90f) || (gameObject.transform.eulerAngles.z > 90f || gameObject.transform.eulerAngles.z < -90f)))
         {
             sm.startWave = true;
         }

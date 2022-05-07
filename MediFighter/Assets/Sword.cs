@@ -46,6 +46,8 @@ public class Sword : MonoBehaviour
     {
         //ab.interactionLayers = everything;
         gameObject.transform.parent = rest;
+        gameObject.transform.localPosition = Vector3.zero;
+        gameObject.transform.localEulerAngles = Vector3.zero;
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeAll;
 
