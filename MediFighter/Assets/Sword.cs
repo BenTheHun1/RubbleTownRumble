@@ -35,11 +35,21 @@ public class Sword : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
     }
 
+    private void Update()
+    {
+        if (rb.useGravity == false && isSword)
+        {
+            gameObject.transform.localPosition = Vector3.zero;
+
+        }
+    }
+
     public void grabbed()
     {
         //ab.interactionLayers = nothing;
         rb.constraints = RigidbodyConstraints.None;
         rb.useGravity = true;
+        rb.isKinematic = false;
     }
 
     public void letgo()
@@ -49,6 +59,7 @@ public class Sword : MonoBehaviour
         gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localEulerAngles = Vector3.zero;
         rb.useGravity = false;
+        rb.isKinematic = true;
         rb.constraints = RigidbodyConstraints.FreezeAll;
 
     }
