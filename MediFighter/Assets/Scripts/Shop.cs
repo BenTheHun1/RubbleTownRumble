@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Shop : MonoBehaviour
 {
     public HealthSystem hs;
+    public GameObject shield;
     private Canvas upgradeSwordUI;
     private Canvas upgradeArmorUI;
     private Canvas restoreHealthUI;
@@ -45,7 +46,7 @@ public class Shop : MonoBehaviour
         {
             hs.beards -= costSword;
             costSword += 5;
-            hs.AttackAmount++;
+            hs.AttackAmount--;
             Debug.Log("Successfully upgraded sword");
         }
         else
@@ -128,6 +129,7 @@ public class Shop : MonoBehaviour
         {
             hs.beards -= costShield;
             hs.playerHealth = hs.maxHealth;
+            Instantiate(shield, buyShield.transform.position, Quaternion.identity);
             buyShield.SetActive(false);
             buyShieldUI.gameObject.SetActive(false);
             Debug.Log("Sucessfully bought shield");
