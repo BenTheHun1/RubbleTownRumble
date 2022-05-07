@@ -13,6 +13,7 @@ TagManager:
   - EnemyRoot
   - Slope
   - Shield
+  - Beard
   layers:
   - Default
   - TransparentFX
