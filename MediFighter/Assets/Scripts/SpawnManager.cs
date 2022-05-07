@@ -60,6 +60,8 @@ public class SpawnManager : MonoBehaviour
             juice.SetActive(true);
             juice.transform.root.GetComponent<AudioSource>().Stop();
             juice.transform.root.GetComponent<MeshCollider>().enabled = true;
+            juice.transform.parent.position = juice.transform.parent.gameObject.GetComponent<StartWave>().defaultPos;
+            juice.transform.parent.rotation = juice.transform.parent.gameObject.GetComponent<StartWave>().defaultRot;
         }
 
         if (!nextWave && startWave)
