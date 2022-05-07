@@ -58,7 +58,7 @@ public class SpawnManager : MonoBehaviour
         if (enemiesLeft + enemiesToSpawn <= 0 && !loadingWave)
         {
             juice.SetActive(true);
-            juice.transform.root.GetComponent<AudioSource>().Stop();
+            gameObject.GetComponent<AudioSource>().Stop();
             juice.transform.root.GetComponent<MeshCollider>().enabled = true;
             juice.transform.parent.position = juice.transform.parent.gameObject.GetComponent<StartWave>().defaultPos;
             juice.transform.parent.rotation = juice.transform.parent.gameObject.GetComponent<StartWave>().defaultRot;
@@ -72,6 +72,7 @@ public class SpawnManager : MonoBehaviour
             StartCoroutine(NextWave());
             juice.SetActive(false);
             juice.transform.root.GetComponent<AudioSource>().Play();
+            gameObject.GetComponent<AudioSource>().Play();
             juice.transform.root.GetComponent<MeshCollider>().enabled = false;
         }
     }
