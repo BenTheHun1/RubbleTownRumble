@@ -22,7 +22,7 @@ public class StartWave : MonoBehaviour
     private void Update()
     {
         //Debug.Log(Vector3.Distance(gameObject.transform.position, cam.transform.position));
-        if (Vector3.Distance(gameObject.transform.position, cam.transform.position) < 0.6f && ((gameObject.transform.eulerAngles.x > 90f || gameObject.transform.eulerAngles.x < -90f) || (gameObject.transform.eulerAngles.z > 90f || gameObject.transform.eulerAngles.z < -90f)) && !sm.startWave && sm.juice.gameObject.activeSelf)
+        if (Vector3.Distance(gameObject.transform.position, cam.transform.position) < 0.3f && ((gameObject.transform.eulerAngles.x > 90f || gameObject.transform.eulerAngles.x < -90f) || (gameObject.transform.eulerAngles.z > 90f || gameObject.transform.eulerAngles.z < -90f)) && !sm.startWave && sm.juice.gameObject.activeSelf)
         {
             sm.startWave = true;
         }
