@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UI;
+using TMPro;
 
 public class Shop : MonoBehaviour
 {
@@ -12,7 +14,12 @@ public class Shop : MonoBehaviour
     private Canvas restoreHealthUI;
     private Canvas buyShieldUI;
     private GameObject buyShield;
+    private string swordUpgradeText;
+    private string armorUpgradeText;
+    private string healthPotionText;
+    private string buyShieldText;
     private bool isHovered;
+    private bool buyCoolDown;
     private int costPotion = 10;
     private int costArmor = 25;
     private int costSword = 20;
@@ -26,6 +33,10 @@ public class Shop : MonoBehaviour
         restoreHealthUI = GameObject.Find("RestoreHealthUI").GetComponent<Canvas>();
         buyShieldUI = GameObject.Find("BuyShieldUI").GetComponent<Canvas>();
         buyShield = GameObject.Find("BuyShield");
+        swordUpgradeText = upgradeSwordUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+        armorUpgradeText = upgradeArmorUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+        healthPotionText = restoreHealthUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+        buyShieldText = buyShieldUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text;
     }
 
     public void SwordUpgradeHoverEnter()
@@ -42,16 +53,16 @@ public class Shop : MonoBehaviour
 
     public void SwordUpgrade()
     {
-        if (hs.beards >= costSword)
+        if (hs.beards >= costSword && !buyCoolDown && isHovered)
         {
             hs.beards -= costSword;
             costSword += 5;
             hs.AttackAmount--;
-            Debug.Log("Successfully upgraded sword");
+            StartCoroutine(AffordableSwordUpgrade());
         }
         else
         {
-            Debug.Log("Not enough beards");
+            StartCoroutine(NotAffordableSwordUpgrade());
         }
     }
 
@@ -69,18 +80,18 @@ public class Shop : MonoBehaviour
 
     public void ArmorUpgrade()
     {
-        if (hs.beards >= costArmor)
+        if (hs.beards >= costArmor && !buyCoolDown && isHovered)
         {
             hs.beards -= costArmor;
             costArmor += 5;
             hs.maxHealth += 5;
             hs.playerHealth += 5;
-            //hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
-            Debug.Log("Sucessfully upgraded armor");
+            hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
+            StartCoroutine(AffordableArmorUpgrade());
         }
         else
         {
-            Debug.Log("Not enough beards");
+            StartCoroutine(NotAffordableArmorUpgrade());
         }
     }
 
@@ -98,16 +109,16 @@ public class Shop : MonoBehaviour
 
     public void RestoreHealth()
     {
-        if (hs.beards >= costPotion)
+        if (hs.beards >= costPotion && !buyCoolDown && isHovered)
         {
             hs.beards -= costPotion;
             hs.playerHealth = hs.maxHealth;
-            //hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
-            Debug.Log("Sucessfully restored all health");
+            hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
+            StartCoroutine(AffordableHealthPotion());
         }
         else
         {
-            Debug.Log("Not enough beards");
+            StartCoroutine(NotAffordableHealthPotion());
         }
     }
 
@@ -119,24 +130,100 @@ public class Shop : MonoBehaviour
 
     public void BuyShieldHoverExit()
     {
-        buyShieldUI.enabled = false;
-        isHovered = false;
+        if (!buyCoolDown)
+        {
+            buyShieldUI.enabled = false;
+            isHovered = false;
+        }
     }
 
     public void BuyShield()
     {
-        if (hs.beards >= costShield)
+        if (hs.beards >= costShield && !buyCoolDown && isHovered)
         {
             hs.beards -= costShield;
             hs.playerHealth = hs.maxHealth;
             Instantiate(shield, buyShield.transform.position, Quaternion.identity);
-            buyShield.SetActive(false);
-            buyShieldUI.gameObject.SetActive(false);
-            Debug.Log("Sucessfully bought shield");
+            StartCoroutine(AffordableShield());
         }
         else
         {
-            Debug.Log("Not enough beards");
+            StartCoroutine(NotAffordableShield());
         }
+    }
+
+
+    IEnumerator NotAffordableSwordUpgrade()
+    {
+        buyCoolDown = true;
+        upgradeSwordUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nNOT ENOUGH BEARDS";
+        yield return new WaitForSeconds(2f);
+        upgradeSwordUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = swordUpgradeText;
+        buyCoolDown = false;
+    }
+
+    IEnumerator NotAffordableArmorUpgrade()
+    {
+        buyCoolDown = true;
+        upgradeArmorUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nNOT ENOUGH BEARDS";
+        yield return new WaitForSeconds(2f);
+        upgradeArmorUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = armorUpgradeText;
+        buyCoolDown = false;
+    }
+
+    IEnumerator NotAffordableHealthPotion()
+    {
+        buyCoolDown = true;
+        restoreHealthUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nNOT ENOUGH BEARDS";
+        yield return new WaitForSeconds(2f);
+        restoreHealthUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = healthPotionText;
+        buyCoolDown = false;
+    }
+
+    IEnumerator NotAffordableShield()
+    {
+        buyCoolDown = true;
+        buyShieldUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nNOT ENOUGH BEARDS";
+        yield return new WaitForSeconds(2f);
+        buyShieldUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = buyShieldText;
+        buyCoolDown = false;
+    }
+
+    IEnumerator AffordableSwordUpgrade()
+    {
+        buyCoolDown = true;
+        upgradeSwordUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nSUCCESSFULLY UPGRADED SWORD";
+        yield return new WaitForSeconds(2f);
+        upgradeSwordUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = swordUpgradeText;
+        buyCoolDown = false;
+    }
+
+    IEnumerator AffordableArmorUpgrade()
+    {
+        buyCoolDown = true;
+        upgradeArmorUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nSUCCESSFULLY UPGRADED ARMOR";
+        yield return new WaitForSeconds(2f);
+        upgradeArmorUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = armorUpgradeText;
+        buyCoolDown = false;
+    }
+
+    IEnumerator AffordableHealthPotion()
+    {
+        buyCoolDown = true;
+        restoreHealthUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nSUCCESSFULLY RESTORED HEALTH TO FULL";
+        yield return new WaitForSeconds(2f);
+        restoreHealthUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = healthPotionText;
+        buyCoolDown = false;
+    }
+
+    IEnumerator AffordableShield()
+    {
+        buyCoolDown = true;
+        buyShieldUI.gameObject.transform.root.GetChild(0).GetComponent<TextMeshProUGUI>().text = "\n\nSUCCESSFULLY BOUGHT SHIELD";
+        buyShield.GetComponent<MeshRenderer>().enabled = false;
+        buyShield.GetComponent<MeshCollider>().enabled = false;
+        buyShield.GetComponent<XRSimpleInteractable>().enabled = false;
+        yield return new WaitForSeconds(2f);
+        buyShieldUI.enabled = false;
     }
 }

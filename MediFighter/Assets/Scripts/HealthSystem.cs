@@ -16,9 +16,8 @@ public class HealthSystem : MonoBehaviour
     public int beards;
     private GameObject mimic;
     private RawImage hurtDisplay;
+    private RawImage gameOverOverlay;
     private Image gameOverText;
-    private GameObject player;
-    private GameObject cam;
     private TextMeshProUGUI disBeards;
 
     public AudioClip hurtSound;
@@ -31,18 +30,17 @@ public class HealthSystem : MonoBehaviour
         maxHealth = 5;
         playerHealth = maxHealth;
         mimic = GameObject.Find("Mimic");
-        player = GameObject.Find("Player");
-        cam = GameObject.Find("Main Camera");
-        //disHealth = GameObject.Find("HP").GetComponent<Image>();
-        //disBeards = GameObject.Find("BeardAmount").GetComponent<TextMeshProUGUI>();
+        disHealth = GameObject.Find("HPVR").GetComponent<Image>();
+        disBeards = GameObject.Find("BeardAmountVR").GetComponent<TextMeshProUGUI>();
         hurtDisplay = GameObject.Find("HurtVR").GetComponent<RawImage>();
         gameOverText = GameObject.Find("GameOverVR").GetComponent<Image>();
+        gameOverOverlay = GameObject.Find("GameOverOverlayVR").GetComponent<RawImage>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //disBeards.text = beards.ToString() + " x";
+        disBeards.text = beards.ToString() + " x";
     }
 
     public void DamagePlayer()
@@ -90,7 +88,7 @@ public class HealthSystem : MonoBehaviour
                     playerHealth -= 1;
                     hurtDisplay.enabled = true;
                     gameObject.GetComponent<AudioSource>().PlayOneShot(hurtSound);
-                    //disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
+                    disHealth.fillAmount = (float)playerHealth / (float)maxHealth;
                 }
                 if (playerHealth <= 0)
                 {
@@ -104,8 +102,7 @@ public class HealthSystem : MonoBehaviour
     IEnumerator GameOver()
     {
         gameOverText.enabled = true;
-        //player.GetComponent<PlayerController>().enabled = false;
-        //cam.GetComponent<CameraController>().enabled = false;
+        gameOverOverlay.enabled = true;
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

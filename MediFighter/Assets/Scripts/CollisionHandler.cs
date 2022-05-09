@@ -87,6 +87,7 @@ public class CollisionHandler : MonoBehaviour
                 if (other.GetComponent<Rigidbody>().angularVelocity.magnitude > 40f && canAttack)
                 {
                     SendHaptics(false, 0.7f, 1.3f);
+                    enemyAI.knockedWithWeapon = true;
                     enemyAI.Ragdoll();
                 }
 
@@ -106,6 +107,7 @@ public class CollisionHandler : MonoBehaviour
             {
                 //Debug.Log(other.GetComponent<Rigidbody>().angularVelocity.magnitude);
                 SendHaptics(false, 0.7f, 1.3f);
+                enemyAI.knockedWithWeapon = true;
                 enemyAI.Ragdoll();
 
                 if (enemyAI.isDEAD)
@@ -133,6 +135,15 @@ public class CollisionHandler : MonoBehaviour
         }*/
 
         if (other.gameObject.CompareTag("Enemy") && enemyAI.isRagdoll && enemyAI.rootJoint.GetComponent<Rigidbody>().velocity.magnitude > 10f)//enemyAI.isKicked == true)
+        {
+            if (other.transform.root.TryGetComponent(out EnemyAICharacterJoints AIenemy))
+            {
+                AIenemy.isKicked = true;
+                AIenemy.Ragdoll();
+            }
+        }
+
+        if (other.gameObject.CompareTag("Enemy") && enemyAI.isRagdoll && enemyAI.isKicked == true && enemyAI.knockedWithWeapon == false)
         {
             if (other.transform.root.TryGetComponent(out EnemyAICharacterJoints AIenemy))
             {

@@ -36,6 +36,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 	public bool exploded;
 	public bool isDEAD;
 	public bool isOnGround;
+	public bool knockedWithWeapon;
 	public Transform groundCheck;
 	public LayerMask groundMask;
 	private float groundDistance = 0.4f;
@@ -131,7 +132,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 			}
 		}
 
-		if (gameObject.transform.position.y < -25)
+		if (gameObject.transform.position.y < -25 && !isDEAD)
 		{
 			spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 			spawnManager.GetComponent<SpawnManager>().enemiesToSpawn++;
@@ -231,13 +232,16 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		{
 			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
 		}
-		isKicked = true;
-		yield return new WaitForSeconds(0.5f);
-		isKicked = false;
-		//yield return new WaitForSeconds(3f);
+		if (!knockedWithWeapon)
+        {
+			isKicked = true;
+			yield return new WaitForSeconds(0.5f);
+			isKicked = false;
+		}
 		if (Health > 0)
 		{
 			StartCoroutine(WakingUp());
+			knockedWithWeapon = false;
 		}
 		else
 		{
@@ -332,8 +336,9 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		beard.layer = LayerMask.NameToLayer("Beard");
 		beard.GetComponent<MeshCollider>().enabled = true;
 		beard.GetComponent<Cloth>().clothSolverFrequency = 175;
-		beard.gameObject.tag = "Item";
 		beard.AddComponent<XRGrabInteractable>();
+		//yield return new WaitForSeconds(0.3f);
+		//beard.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 		Destroy(gameObject);
 		Destroy(rootJoint);
 	}
