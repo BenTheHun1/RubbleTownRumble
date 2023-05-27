@@ -262,6 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDamaged: 0
+  god: 0
   playerHealth: 0
   maxHealth: 0
   disHealth: {fileID: 0}
@@ -299,6 +300,7 @@ MonoBehaviour:
   audioSourc: {fileID: 9096803999163811699}
   Swing1: {fileID: 8300000, guid: f890aa704dce3f544afaa77d6c6dd0db, type: 3}
   Swing2: {fileID: 8300000, guid: 81f89ff89fd7afc4196474a0cf94e35f, type: 3}
+  Gulp: {fileID: 8300000, guid: 96e5d74ef2353c040b23baf98b9d4b3a, type: 3}
 --- !u!82 &9096803999163811699
 AudioSource:
   m_ObjectHideFlags: 0
