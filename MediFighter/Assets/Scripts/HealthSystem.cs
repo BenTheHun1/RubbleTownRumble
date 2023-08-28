@@ -8,6 +8,7 @@ using TMPro;
 public class HealthSystem : MonoBehaviour
 {
     public bool isDamaged;
+    public bool god;
     public int playerHealth;
     public int maxHealth;
     public Image disHealth;
@@ -25,7 +26,14 @@ public class HealthSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AttackAmount = 1;
+        if (god)
+        {
+            AttackAmount = 99;
+        }
+        else
+        {
+            AttackAmount = 1;
+        }
         maxHealth = 5;
         playerHealth = maxHealth;
         mimic = GameObject.Find("Mimic");
@@ -48,7 +56,7 @@ public class HealthSystem : MonoBehaviour
     public void DamagePlayer()
     {
         isDamaged = true;
-        if (playerHealth > 0)
+        if (playerHealth > 0 && !god)
         {
             playerHealth -= 4;
             hurtDisplay.gameObject.SetActive(true);
@@ -85,7 +93,7 @@ public class HealthSystem : MonoBehaviour
             if (!(bool)isEnemyRagdoll && (bool)isActiveRagdoll)
             {
                 isDamaged = true;
-                if (playerHealth > 0)
+                if (playerHealth > 0 && !god)
                 {
                     playerHealth -= 1;
                     hurtDisplay.gameObject.SetActive(true);

@@ -59,9 +59,13 @@ public class BoomEnemyAI : MonoBehaviour
 
 	void Update()
 	{
-		Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-		lookDirection.y = 0;
-		qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
+		if (navMeshAgent.velocity.magnitude > 0)
+		{
+			Vector3 lookDirection = navMeshAgent.velocity.normalized;//(player.transform.position - transform.position).normalized;
+			lookDirection.y = 0;
+			qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
+		}
+
 		rootJoint.transform.SetParent(transform, true);
 		if (!animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk") || isRagdoll)
 		{
@@ -75,14 +79,16 @@ public class BoomEnemyAI : MonoBehaviour
 		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
 		{
 			animEnemy.SetTrigger("Walking");
-			transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
+			if (navMeshAgent.velocity.magnitude > 0)
+			{
+				transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
+			}
 			navMeshAgent.destination = player.transform.position;
 		}
 		else
 		{
 			if (!isRagdoll && Vector3.Distance(player.transform.position, transform.position) <= stoppingradius)
 			{
-				kaboom = true;
 				StartCoroutine(Kaboom());
 			}
 		}
@@ -162,6 +168,7 @@ public class BoomEnemyAI : MonoBehaviour
 		kegAnim.SetTrigger("Explosion");
 		animEnemy.ResetTrigger("Walking");
 		animEnemy.ResetTrigger("Attacking");
+		kaboom = true;
 		if (!dwarfSource.isPlaying)
         {
 			dwarfSource.PlayOneShot(hiss);
@@ -198,6 +205,7 @@ public class BoomEnemyAI : MonoBehaviour
 		}
 		var explosionParticle = Instantiate(explosionEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		explosionParticle.Play();
+		spawnManager.GetComponent<SpawnManager>().enemyAmount.Remove(gameObject);
 		Destroy(gameObject);
 	}
 }

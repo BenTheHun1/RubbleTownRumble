@@ -69,9 +69,13 @@ public class EnemyAICharacterJoints : MonoBehaviour
 
 	void Update()
 	{
-		Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-		lookDirection.y = 0;
-		qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
+		if (navMeshAgent.velocity.magnitude > 0)
+        {
+			Vector3 lookDirection = navMeshAgent.velocity.normalized;//(player.transform.position - transform.position).normalized;
+			lookDirection.y = 0;
+			qTo = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0, 90, 0);
+		}
+
 		rootJoint.transform.SetParent(transform, true);
 		if (!animEnemy.GetCurrentAnimatorStateInfo(0).IsName("Walk") || isRagdoll)
 		{
@@ -85,7 +89,10 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		if (Vector3.Distance(player.transform.position, transform.position) > stoppingradius && !isRagdoll && !animEnemy.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
 		{
 			animEnemy.SetTrigger("Walking");
-			transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
+			if (navMeshAgent.velocity.magnitude > 0)
+			{
+				transform.rotation = Quaternion.Slerp(transform.rotation, qTo, Time.deltaTime * lookSpeed);
+			}
 			navMeshAgent.destination = player.transform.position;
 		}
 		else
@@ -129,7 +136,7 @@ public class EnemyAICharacterJoints : MonoBehaviour
 		var bloodParticle = Instantiate(bloodEffect, rootJoint.transform.position, rootJoint.transform.rotation);
 		bloodParticle.Play();
 		dwarfSource.PlayOneShot(swordHit[Random.Range(0, swordHit.Length)]);
-		if (Health <= hs.AttackAmount && !dwarfSource.isPlaying)
+		if (Health <= hs.AttackAmount)
 		{
 			dwarfSource.PlayOneShot(death[Random.Range(0, death.Length)]);
 		}

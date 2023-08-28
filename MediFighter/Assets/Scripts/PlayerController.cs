@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource audioSourc;
     public AudioClip Swing1;
     public AudioClip Swing2;
+	public AudioClip Gulp;
 
     private bool Swing1Playing;
     private bool Swing2Playing;
@@ -96,13 +97,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-
         controller.Move(velocity * Time.deltaTime);
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Quick Reload of Scene
-        }
 
         //Crouching System
         if (Input.GetAxis("Crouch") > 0)
@@ -192,28 +187,28 @@ public class PlayerController : MonoBehaviour
                 buyableItem = ray.transform.gameObject;
                 if (buyableItem.name == "ArmorKit")
                 {
-                    shopInfo.text = "Upgrade your Armor, increasing your max health.\n" + costArmor + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Upgrade your Armor, increasing your max health.\n" + costArmor + " Beards\n\nBuy: [E] or (X)";
                 }
                 else if (buyableItem.name == "SwordUpgrade")
                 {
-                    shopInfo.text = "Upgrade your Sword, increasing your attack power.\n" + costSword + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Upgrade your Sword, increasing your attack power.\n" + costSword + " Beards\n\nBuy: [E] or (X)";
                 }
                 else if (buyableItem.name == "HealthPotion")
                 {
-                    shopInfo.text = "Heal yourself back to full health.\n" + costPotion + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Heal yourself back to full health.\n" + costPotion + " Beards\n\nBuy: [E] or (X)";
                 }
                 else if (buyableItem.name == "BuyShield")
                 {
-                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n" + costShield + " Beards\n\nBuy with [E]";
+                    shopInfo.text = "Defend yourself with a shield. Right Click to use.\n" + costShield + " Beards\n\nBuy: [E] or (X)";
                 }
                 else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
                     var NextWaveNum = sm.waveNum + 1;
-                    shopInfo.text = "Bring on the Dwarves!\n" + "Wave: " + NextWaveNum.ToString() + "\nPress [E]";
+                    shopInfo.text = "Bring on the Dwarves!\n" + "Wave: " + NextWaveNum.ToString() + "\nStart: [E] or (X)";
                 }
                 else if (buyableItem.name == "Beard")
                 {
-                    shopInfo.text = "Pick up [E]";
+                    shopInfo.text = "Pick up: [E] or (X)";
                 }
                 else if (buyableItem.name == "Shopkeep")
                 {
@@ -287,19 +282,19 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (buyableItem.name == "SwordUpgrade" && hs.beards >= costSword)
                 {
-                    hs.beards -= 25;
+                    hs.beards -= costSword;
                     costSword += 5;
                     hs.AttackAmount++;
                 }
                 else if (buyableItem.name == "HealthPotion" && hs.beards >= costPotion)
                 {
-                    hs.beards -= 10;
+                    hs.beards -= costPotion;
                     hs.playerHealth = hs.maxHealth;
                     hs.disHealth.fillAmount = (float)hs.playerHealth / (float)hs.maxHealth;
                 }
                 else if (buyableItem.name == "BuyShield" && hs.beards >= costShield)
                 {
-                    hs.beards -= 10;
+                    hs.beards -= costShield;
                     hs.playerHealth = hs.maxHealth;
                     buyableItem.SetActive(false);
                     hasShield = true;
@@ -307,6 +302,7 @@ public class PlayerController : MonoBehaviour
                 else if (buyableItem.name == "StartGame" && juice.activeSelf)
                 {
                     sm.startWave = true;
+					audioSourc.PlayOneShot(Gulp);
                 }
                 else if (buyableItem.name == "Beard")
                 {
